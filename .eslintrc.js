@@ -22,11 +22,12 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
-    indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/ban-ts-comment': ['off']
   },
   settings: {
     react: {
