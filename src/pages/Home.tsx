@@ -33,12 +33,10 @@ const Home = () => {
         <NavLink to="/recommend">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color
-            ${
-              isActive &&
-              `border-b-2 border-solid border-b-light_color
-              px-[3px] font-bold text-light_color`
-            }`}
+              className={`px-[2px] text-sm text-border_color ${
+                isActive &&
+                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+              }`}
             >
               推荐
             </span>
@@ -47,12 +45,10 @@ const Home = () => {
         <NavLink to="/singers">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color
-            ${
-              isActive &&
-              `border-b-2 border-solid border-b-light_color
-              px-[3px] font-bold text-light_color`
-            }`}
+              className={`px-[2px] text-sm text-border_color ${
+                isActive &&
+                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+              }`}
             >
               歌手
             </span>
@@ -61,12 +57,10 @@ const Home = () => {
         <NavLink to="/rank">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color
-            ${
-              isActive &&
-              `border-b-2 border-solid border-b-light_color
-              px-[3px] font-bold text-light_color`
-            }`}
+              className={`px-[2px] text-sm text-border_color ${
+                isActive &&
+                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+              }`}
             >
               排行榜
             </span>

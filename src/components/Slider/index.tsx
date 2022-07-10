@@ -17,7 +17,7 @@ const Slider: FC<IProps> = ({ bannerList }) => {
   return (
     <div className="relative -top-1 h-full">
       <div className="absolute h-[60%] w-full bg-theme_color"></div>
-      <div className="mx-auto w-[96%]">
+      <div className="mx-auto w-[98%]">
         <Swiper
           spaceBetween={10}
           slidesPerView={1}
