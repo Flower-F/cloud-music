@@ -1,0 +1,7 @@
+.swiper-pagination-bullet {
+  background-color: var(--theme-color);
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: var(--theme-color);
+}

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --theme-color: #d44439;
+  --theme-color-shadow: rgba(212, 68, 57, .5);
+  ---light-color: #f1f1f1;
+  --desc-color: #2E3030;
+  --desc-color--v2: '#bba8a8';
+  --border-color: #e4e4e4;
+  --background-color: #f2f3f4;
+  --background-color-shadow: rgba(0, 0, 0, 0.3);
+  --highlight-background-color: #fff;
+}
