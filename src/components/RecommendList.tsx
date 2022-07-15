@@ -18,9 +18,8 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
       <h1 className="pl-2 text-sm font-bold leading-10">推荐歌单</h1>
       <div className="flex flex-wrap justify-between">
         {recommendList.map((item, index) => (
-          <div key={index} className="w-[32%]">
+          <div key={index} className="w-[32%] pb-2">
             <div className="relative h-0 pb-[100%]">
-              <div className="h-[36px]bg-desc_color_v2 absolute top-0"></div>
               <img
                 src={`${item.imageUrl}?param=300x300`}
                 alt="音乐歌单"
@@ -34,10 +33,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                 <span className="ml-0.5">1005</span>
               </div>
             </div>
-            <div
-              className="my-0.5 h-10 overflow-hidden py-0.5
-              text-sm leading-snug text-desc_color"
-            >
+            <div className="h-10 overflow-hidden text-sm leading-snug text-desc_color">
               {item.description}
             </div>
           </div>

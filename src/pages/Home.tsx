@@ -17,25 +17,23 @@ const Home = () => {
     <>
       <div
         className="flex items-center justify-between
-        bg-theme_color px-[12px] py-[10px]"
+        bg-theme_color px-3 py-2"
       >
-        <span className="text-xl leading-[40px] text-light_color">
+        <span className="text-xl leading-10 text-light_color">
           <FaBars className="text-xl" />
         </span>
-        <span className="text-xl leading-[40px] text-light_color">
-          Cloud Music
-        </span>
-        <span className="text-xl leading-[40px] text-light_color">
+        <span className="text-xl leading-10 text-light_color">Cloud Music</span>
+        <span className="text-xl leading-10 text-light_color">
           <FaSearch className="text-xl" />
         </span>
       </div>
-      <div className="flex h-[44px] items-center justify-around bg-theme_color">
+      <div className="flex h-10 items-center justify-around bg-theme_color">
         <NavLink to="/recommend">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color ${
+              className={`px-1 text-sm text-border_color ${
                 isActive &&
-                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+                'border-b-2 border-solid border-b-light_color font-bold text-light_color'
               }`}
             >
               推荐
@@ -45,9 +43,9 @@ const Home = () => {
         <NavLink to="/singers">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color ${
+              className={`px-1 text-sm text-border_color ${
                 isActive &&
-                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+                'border-b-2 border-solid border-b-light_color font-bold text-light_color'
               }`}
             >
               歌手
@@ -57,9 +55,9 @@ const Home = () => {
         <NavLink to="/rank">
           {({ isActive }) => (
             <span
-              className={`px-[2px] text-sm text-border_color ${
+              className={`px-1 text-sm text-border_color ${
                 isActive &&
-                'border-b-2 border-solid border-b-light_color px-[3px] font-bold text-light_color'
+                'border-b-2 border-solid border-b-light_color font-bold text-light_color'
               }`}
             >
               排行榜

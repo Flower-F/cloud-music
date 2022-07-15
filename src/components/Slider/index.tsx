@@ -15,8 +15,8 @@ interface IProps {
 
 const Slider: FC<IProps> = ({ bannerList }) => {
   return (
-    <div className="relative -top-1 h-full">
-      <div className="absolute h-[60%] w-full bg-theme_color"></div>
+    <div className="relative mt-1 h-36">
+      <div className="absolute -top-72 h-96 w-full bg-theme_color"></div>
       <div className="mx-auto w-[98%]">
         <Swiper
           spaceBetween={10}

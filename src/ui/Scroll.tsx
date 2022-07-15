@@ -6,11 +6,12 @@ import {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState
+  useState,
+  useEffect,
+  PropsWithChildren
 } from 'react'
 import { noop, debounce } from 'lodash-es'
 import BetterScroll from 'better-scroll'
-import { useEffect } from 'react'
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
 
 interface IProps {
@@ -19,16 +20,15 @@ interface IProps {
   refresh?: boolean // 是否刷新
   pullUp?: () => void // 上拉加载逻辑
   pullDown?: () => void // 下拉加载逻辑
+  onScrollCallback?: () => void // 滑动触发的回调函数
   pullUpLoading?: boolean // 是否显示上拉 loading 动画
   pullDownLoading?: boolean // 是否显示下拉 loading 动画
-  onScrollCallback: () => void // 滑动触发的回调函数
   bounceTop?: boolean // 是否支持向上吸顶
   bounceBottom?: boolean // 是否支持向下吸底
-  children: ReactNode
-  className: string
+  className?: string
 }
 
-const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
+const Scroll = forwardRef((props: PropsWithChildren<IProps>, ref) => {
   const {
     direction = 'vertical',
     click = true,
@@ -60,9 +60,7 @@ const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
         bottom: bounceBottom
       }
     })
-
     setBetterScroll(scroll)
-
     return () => {
       setBetterScroll(null)
     }
@@ -71,10 +69,11 @@ const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
   // 监听回调
   useEffect(() => {
     if (!betterScroll || !onScrollCallback) {
-      betterScroll?.on('scroll', onScrollCallback)
+      return
     }
+    betterScroll.on('scroll', onScrollCallback)
     return () => {
-      betterScroll?.off('scroll', onScrollCallback)
+      betterScroll.off('scroll', onScrollCallback)
     }
   }, [onScrollCallback, betterScroll])
 
@@ -93,7 +92,7 @@ const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
     return () => {
       betterScroll.off('scrollEnd', handlePullUp)
     }
-  }, [betterScroll, pullUpDebounce])
+  }, [betterScroll, pullUpDebounce, pullUp])
 
   // 下拉刷新
   useEffect(() => {
@@ -110,7 +109,7 @@ const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
     return () => {
       betterScroll.off('touchEnd', handlePullDown)
     }
-  }, [betterScroll, pullDownDebounce])
+  }, [betterScroll, pullDownDebounce, pullDown])
 
   //刷新
   useEffect(() => {
@@ -143,23 +142,9 @@ const Scroll: FC<IProps> = forwardRef((props: IProps, ref) => {
   return (
     <div
       ref={scrollRef}
-      className={`h-full w-full overflow-hidden ${props.className}`}
+      className={`h-full w-full overflow-hidden ${props.className || ''}`}
     >
       {props.children}
-      {/* 滑底加载 */}
-      <div
-        className={`absolute left-0 right-0 bottom-1 z-50 m-auto h-14 w-14
-        ${!pullUpLoading && 'hidden'}`}
-      >
-        {/* <Loading /> */}
-      </div>
-      {/* 下拉加载 */}
-      <div
-        className={`absolute left-0 right-0 top-0 z-50 m-auto h-8
-        ${!pullDownLoading && 'hidden'}`}
-      >
-        {/* <Loading /> */}
-      </div>
     </div>
   )
 })
