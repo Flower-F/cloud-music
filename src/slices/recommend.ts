@@ -29,12 +29,7 @@ export const recommendSlice = createSlice({
     builder
       .addCase(getBannerListAndRecommendList.fulfilled, (state, action) => {
         state.bannerList = action.payload[1].banners
-        state.recommendList = action.payload[0].result.map((item) => ({
-          id: item.id,
-          imageUrl: item.picUrl,
-          playCount: item.playCount,
-          description: item.name
-        }))
+        state.recommendList = action.payload[0].result
         state.loading = false
       })
       .addCase(getBannerListAndRecommendList.rejected, (state) => {

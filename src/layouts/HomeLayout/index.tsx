@@ -43,7 +43,7 @@ const Home = () => {
           <FaSearch className="text-xl" />
         </span>
       </div>
-      <div className="flex h-10 items-center justify-around bg-theme_color">
+      <div className="flex h-11 items-center justify-around bg-theme_color">
         {renderLink('推荐', '/recommend')}
         {renderLink('歌手', '/singer')}
         {renderLink('排行榜', '/rank')}

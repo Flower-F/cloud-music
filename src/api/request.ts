@@ -1,10 +1,10 @@
+import { IBanner } from '@/components/BannerList'
+import { IRecommend } from '@/components/RecommendList'
+
 import { request } from './config'
 
-interface IBannerList {
-  imageUrl: string
-}
 export interface IBannerListApi {
-  banners: IBannerList[]
+  banners: IBanner[]
 }
 export const getBannerListApi = () => {
   return request<IBannerListApi>({
@@ -13,14 +13,8 @@ export const getBannerListApi = () => {
   })
 }
 
-interface IRecommendList {
-  picUrl: string
-  id: number
-  playCount: number
-  name: string
-}
 export interface IRecommendListApi {
-  result: IRecommendList[]
+  result: IRecommend[]
 }
 export const getRecommendListApi = () => {
   return request<IRecommendListApi>({

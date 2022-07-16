@@ -18,9 +18,9 @@ interface IProps {
   direction?: 'vertical' | 'horizontal' // 滚动的方向
   click?: boolean // 是否支持点击
   refresh?: boolean // 是否刷新
-  pullUp?: () => void // 上拉加载逻辑
+  pullUp?: () => void // 底部滚动加载逻辑
   pullDown?: () => void // 下拉加载逻辑
-  onScrollCallback?: () => void // 滑动触发的回调函数
+  onScrollCallback?: (...args: any[]) => any // 滑动触发的回调函数
   pullUpLoading?: boolean // 是否显示上拉 loading 动画
   pullDownLoading?: boolean // 是否显示下拉 loading 动画
   bounceTop?: boolean // 是否支持向上吸顶
@@ -39,7 +39,7 @@ const Scroll = forwardRef((props: PropsWithChildren<IProps>, ref) => {
     bounceBottom = true
   } = props
 
-  const { pullUp = noop, pullDown = noop, onScrollCallback } = props
+  const { pullUp = noop, pullDown = noop, onScrollCallback = noop } = props
 
   const pullUpDebounce = useMemo(() => debounce(pullUp, 500), [pullUp])
 

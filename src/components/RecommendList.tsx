@@ -6,9 +6,9 @@ import defaultRecommendImage from '@/assets/images/default-recommend.png'
 
 export interface IRecommend {
   id: number
-  imageUrl: string
+  picUrl: string
   playCount: number
-  description: string
+  name: string
 }
 
 interface IProps {
@@ -18,10 +18,10 @@ interface IProps {
 const RecommendList: FC<IProps> = ({ recommendList }) => {
   return (
     <div className="mx-auto px-[2%]">
-      <h1 className="pl-2 text-sm font-bold leading-10">推荐歌单</h1>
+      <h3 className="pl-2 text-sm font-bold leading-10">推荐歌单</h3>
       <div className="flex flex-wrap justify-between">
-        {recommendList.map((item, index) => (
-          <div key={index} className="w-[32%] pb-2">
+        {recommendList.map((item) => (
+          <div key={item.id} className="w-[32%] pb-2">
             <div className="relative h-0 pb-[100%]">
               <LazyLoad
                 placeholder={
@@ -32,7 +32,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                   />
                 }
               >
-                <img src={`${item.imageUrl}?param=300x300`} alt="音乐歌单" />
+                <img src={`${item.picUrl}?param=300x300`} alt="音乐歌单" />
               </LazyLoad>
               <div className="absolute right-1 top-0.5 flex items-center text-sm leading-4 text-light_color">
                 <IoHeadsetSharp />
@@ -40,7 +40,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
               </div>
             </div>
             <div className="h-10 overflow-hidden text-sm leading-snug text-desc_color">
-              {item.description}
+              {item.name}
             </div>
           </div>
         ))}
