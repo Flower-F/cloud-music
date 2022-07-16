@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { counterSlice } from '@/slice'
+
+import { counterSlice, recommendSlice } from '@/slices'
 
 const store = configureStore({
   reducer: {
-    counter: counterSlice.reducer
+    counter: counterSlice.reducer,
+    recommend: recommendSlice.reducer
   }
 })
 

@@ -19,7 +19,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
   rules: {
     'prettier/prettier': 'error',
     'linebreak-style': ['error', 'unix'],
@@ -27,7 +27,9 @@ module.exports = {
     semi: ['error', 'never'],
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
-    '@typescript-eslint/ban-ts-comment': ['off']
+    '@typescript-eslint/ban-ts-comment': ['off'],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
   },
   settings: {
     react: {

@@ -1,5 +1,0 @@
-export { default as HomePage } from './Home'
-export { default as RankPage } from './Rank'
-export { default as RecommendPage } from './Recommend'
-export { default as SingersPage } from './Singers'
-export { default as NotFoundPage } from './NotFound'

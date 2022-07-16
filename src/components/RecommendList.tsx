@@ -1,7 +1,10 @@
 import { FC, memo } from 'react'
 import { IoHeadsetSharp } from 'react-icons/io5'
+import LazyLoad from 'react-lazyload'
 
-interface IRecommend {
+import defaultRecommendImage from '@/assets/images/default-recommend.png'
+
+export interface IRecommend {
   id: number
   imageUrl: string
   playCount: number
@@ -20,15 +23,18 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
         {recommendList.map((item, index) => (
           <div key={index} className="w-[32%] pb-2">
             <div className="relative h-0 pb-[100%]">
-              <img
-                src={`${item.imageUrl}?param=300x300`}
-                alt="音乐歌单"
-                className="absolute h-full w-full rounded"
-              />
-              <div
-                className="absolute right-1 top-0.5 flex items-center
-                text-sm leading-4 text-light_color"
+              <LazyLoad
+                placeholder={
+                  <img
+                    src={defaultRecommendImage}
+                    alt="音乐歌单"
+                    className="absolute h-full w-full rounded"
+                  />
+                }
               >
+                <img src={`${item.imageUrl}?param=300x300`} alt="音乐歌单" />
+              </LazyLoad>
+              <div className="absolute right-1 top-0.5 flex items-center text-sm leading-4 text-light_color">
                 <IoHeadsetSharp />
                 <span className="ml-0.5">1005</span>
               </div>

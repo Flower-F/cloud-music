@@ -1,17 +1,16 @@
+import BetterScroll from 'better-scroll'
+import { debounce, noop } from 'lodash-es'
 import {
-  FC,
   forwardRef,
   memo,
-  ReactNode,
+  PropsWithChildren,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
-  useEffect,
-  PropsWithChildren
+  useState
 } from 'react'
-import { noop, debounce } from 'lodash-es'
-import BetterScroll from 'better-scroll'
+
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
 
 interface IProps {
@@ -58,7 +57,8 @@ const Scroll = forwardRef((props: PropsWithChildren<IProps>, ref) => {
       bounce: {
         top: bounceTop,
         bottom: bounceBottom
-      }
+      },
+      mouseWheel: true
     })
     setBetterScroll(scroll)
     return () => {

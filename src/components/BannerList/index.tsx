@@ -1,11 +1,12 @@
-import { FC, memo } from 'react'
-import { Pagination, Autoplay } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './style.css'
 
-interface IBanner {
+import { FC, memo } from 'react'
+import { Autoplay, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+export interface IBanner {
   imageUrl: string
 }
 
