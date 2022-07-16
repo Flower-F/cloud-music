@@ -9,21 +9,16 @@ export interface ISingerConfig {
 
 interface IProps {
   list: ISingerConfig[]
-  initialValue?: string
   title?: string
 }
 
-const HorizontalItem: FC<IProps> = ({
-  list,
-  initialValue = '',
-  title = ''
-}) => {
-  const [value, setValue] = useState(initialValue)
+const HorizontalItem: FC<IProps> = ({ list, title = '' }) => {
+  const [value, setValue] = useState('')
 
   return (
     <Scroll direction="horizontal" className="whitespace-nowrap">
-      <div className="inline-block py-1">
-        <h3 className="mr-1 inline-block text-base text-gray-500">{title}</h3>
+      <div className="inline-block h-9 py-1">
+        <h3 className="mr-0.5 inline-block text-base text-gray-500">{title}</h3>
         {list.map((item) => (
           <div
             key={item.key}
