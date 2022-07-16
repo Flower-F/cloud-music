@@ -3,20 +3,22 @@ import { forceCheck } from 'react-lazyload'
 
 import BannerList from '@/components/BannerList'
 import RecommendList from '@/components/RecommendList'
-import { getBannerList, getRecommendList } from '@/slices'
+import { getBannerListAndRecommendList } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
+import Loading from '@/ui/Loading'
 import Scroll from '@/ui/Scroll'
 
 const RecommendPage = () => {
-  const { bannerList, recommendList } = useAppSelector(
+  const { bannerList, recommendList, loading } = useAppSelector(
     (store) => store.recommend
   )
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getRecommendList())
-    dispatch(getBannerList())
+    if (!recommendList.length || !bannerList.length) {
+      dispatch(getBannerListAndRecommendList())
+    }
   }, [])
 
   return (
@@ -27,6 +29,7 @@ const RecommendPage = () => {
           <RecommendList recommendList={recommendList} />
         </div>
       </Scroll>
+      {loading ? <Loading /> : null}
     </div>
   )
 }

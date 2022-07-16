@@ -2,17 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { getBannerListApi, getRecommendListApi } from '@/api'
 import { IBanner } from '@/components/BannerList'
+import { IRecommend } from '@/components/RecommendList'
 
-import { IRecommend } from '../components/RecommendList'
-
-export const getBannerList = createAsyncThunk(
-  'recommend/getBannerList',
-  async () => await getBannerListApi()
-)
-
-export const getRecommendList = createAsyncThunk(
-  'recommend/getRecommendList',
-  async () => await getRecommendListApi()
+export const getBannerListAndRecommendList = createAsyncThunk(
+  'recommend/getBannerListAndRecommendList',
+  () => {
+    return Promise.all([getRecommendListApi(), getBannerListApi()])
+  }
 )
 
 const initialState: {
@@ -22,7 +18,7 @@ const initialState: {
 } = {
   bannerList: [],
   recommendList: [],
-  loading: false
+  loading: true
 }
 
 export const recommendSlice = createSlice({
@@ -31,21 +27,9 @@ export const recommendSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getBannerList.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getBannerList.fulfilled, (state, action) => {
-        state.bannerList = action.payload.banners
-        state.loading = false
-      })
-      .addCase(getBannerList.rejected, (state) => {
-        state.loading = false
-      })
-      .addCase(getRecommendList.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getRecommendList.fulfilled, (state, action) => {
-        state.recommendList = action.payload.result.map((item) => ({
+      .addCase(getBannerListAndRecommendList.fulfilled, (state, action) => {
+        state.bannerList = action.payload[1].banners
+        state.recommendList = action.payload[0].result.map((item) => ({
           id: item.id,
           imageUrl: item.picUrl,
           playCount: item.playCount,
@@ -53,7 +37,7 @@ export const recommendSlice = createSlice({
         }))
         state.loading = false
       })
-      .addCase(getRecommendList.rejected, (state) => {
+      .addCase(getBannerListAndRecommendList.rejected, (state) => {
         state.loading = false
       })
   }

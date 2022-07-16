@@ -12,6 +12,7 @@ import {
 } from 'react'
 
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
+import Loading from '@/ui/Loading'
 
 interface IProps {
   direction?: 'vertical' | 'horizontal' // 滚动的方向
@@ -145,6 +146,11 @@ const Scroll = forwardRef((props: PropsWithChildren<IProps>, ref) => {
       className={`h-full w-full overflow-hidden ${props.className || ''}`}
     >
       {props.children}
+      {pullDownLoading && (
+        <div className="absolute left-0 right-0 bottom-1 z-50 m-auto h-16 w-16">
+          <Loading />
+        </div>
+      )}
     </div>
   )
 })
