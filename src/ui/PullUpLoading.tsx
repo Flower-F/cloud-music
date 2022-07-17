@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 const PullUpLoading = () => {
   return (
     <div className="relative overflow-auto rounded-xl py-4">
@@ -20,4 +22,4 @@ const PullUpLoading = () => {
   )
 }
 
-export default PullUpLoading
+export default memo(PullUpLoading)

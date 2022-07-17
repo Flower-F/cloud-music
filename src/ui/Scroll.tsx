@@ -13,6 +13,7 @@ import {
 
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
 
+import PullDownLoading from './PullDownLoading'
 import PullUpLoading from './PullUpLoading'
 
 interface ScrollHandle {
@@ -159,6 +160,7 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
 
     const scrollRef = useRef<HTMLDivElement | null>(null)
 
+    // 利用 Scroll 父组件都是 fixed 的原理，设置 absolute 即可实现定位
     return (
       <div
         ref={scrollRef}
@@ -166,8 +168,13 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
       >
         {props.children}
         {pullUpLoading && (
-          <div className={'fixed left-0 right-0 bottom-1 z-50'}>
+          <div className={'absolute left-0 right-0 bottom-1 z-50'}>
             <PullUpLoading />
+          </div>
+        )}
+        {pullDownLoading && (
+          <div className="absolute left-0 right-0 top-0 z-50 h-9">
+            <PullDownLoading />
           </div>
         )}
       </div>

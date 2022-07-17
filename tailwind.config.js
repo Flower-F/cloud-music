@@ -15,6 +15,20 @@ module.exports = {
         background_color_shadow: 'rgba(0, 0, 0, 0.3)',
         highlight_background_color: '#fff',
         inherit: 'inherit'
+      },
+      keyframes: {
+        wave: {
+          '0%, 40%, 100%': {
+            transform: 'scaleY(0.4)',
+            'transform-origin': 'center 100%'
+          },
+          '20%': {
+            transform: 'scaleY(1)'
+          }
+        }
+      },
+      animation: {
+        wave: 'wave 1s infinite'
       }
     }
   },

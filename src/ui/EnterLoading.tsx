@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 const EnterLoading = () => {
   return (
     <div className="fixed left-0 right-0 bottom-0 top-0 flex h-full w-full items-center justify-center">
@@ -6,4 +8,4 @@ const EnterLoading = () => {
   )
 }
 
-export default EnterLoading
+export default memo(EnterLoading)

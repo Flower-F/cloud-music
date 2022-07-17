@@ -13,3 +13,24 @@
   --background-color-shadow: rgba(0, 0, 0, 0.3);
   --highlight-background-color: #fff;
 }
+
+@layer utilities {
+  .-animation-delay-1 {
+    animation-delay: -0.1s
+  }
+  .-animation-delay-2 {
+    animation-delay: -0.2s
+  }
+  .-animation-delay-3 {
+    animation-delay: -0.3s
+  }
+  .-animation-delay-4 {
+    animation-delay: -0.4s
+  }
+  .-animation-delay-5 {
+    animation-delay: -0.5s
+  }
+  .-animation-delay-6 {
+    animation-delay: -0.5s
+  }
+}
