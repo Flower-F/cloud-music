@@ -15,7 +15,7 @@ interface IProps {
   /** 列表原来的值 */
   oldValue?: string
   /** 点击列表项的回调 */
-  onClick?: (newValue: string) => void
+  onClick?: (...args: any[]) => any
 }
 
 const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {

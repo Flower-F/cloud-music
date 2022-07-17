@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 import { IoHeadsetSharp } from 'react-icons/io5'
 import LazyLoad from 'react-lazyload'
+import { useNavigate } from 'react-router-dom'
 
 import defaultMusicImage from '@/assets/images/default-music.png'
 
@@ -20,12 +21,21 @@ interface IProps {
 }
 
 const RecommendList: FC<IProps> = ({ recommendList }) => {
+  const navigate = useNavigate()
+  const enterDetail = (id: number) => {
+    navigate(`/recommend/${id}`)
+  }
+
   return (
     <div className="mx-auto px-[2%]">
       <h1 className="pl-2 text-sm font-bold leading-10">推荐歌单</h1>
       <ul className="flex flex-wrap justify-between">
-        {recommendList.map((item) => (
-          <li key={item.id} className="w-[32vw] pb-2">
+        {recommendList.map(({ id, name, picUrl }, index) => (
+          <li
+            key={`${id}${index}`}
+            className="w-[32vw] pb-2"
+            onClick={() => enterDetail(id)}
+          >
             <div className="relative h-0 pb-[100%]">
               <LazyLoad
                 placeholder={
@@ -37,7 +47,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                 }
               >
                 <img
-                  src={`${item.picUrl}?param=300x300`}
+                  src={`${picUrl}?param=300x300`}
                   alt="音乐歌单"
                   className="h-full w-full rounded"
                 />
@@ -48,7 +58,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
               </div>
             </div>
             <div className="h-10 overflow-hidden text-sm leading-snug text-desc_color">
-              {item.name}
+              {name}
             </div>
           </li>
         ))}

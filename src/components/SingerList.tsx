@@ -19,9 +19,9 @@ interface IProps {
 const SingerList: FC<IProps> = ({ singerList }) => {
   return (
     <ul className="flex flex-col overflow-hidden">
-      {singerList.map((item, index) => (
+      {singerList.map(({ picId, picUrl, name }, index) => (
         <li
-          key={`${item.picId}${index}`}
+          key={`${picId}${index}`}
           className="mx-1 flex items-center border-b border-solid border-b-border_color py-1"
         >
           <div className="mr-4">
@@ -35,15 +35,13 @@ const SingerList: FC<IProps> = ({ singerList }) => {
               }
             >
               <img
-                src={`${item.picUrl}?param=300x300`}
+                src={`${picUrl}?param=300x300`}
                 className="h-14 w-14 rounded"
                 alt="歌手列表"
               />
             </LazyLoad>
           </div>
-          <span className="text-base font-medium text-desc_color">
-            {item.name}
-          </span>
+          <span className="text-base font-medium text-desc_color">{name}</span>
         </li>
       ))}
     </ul>

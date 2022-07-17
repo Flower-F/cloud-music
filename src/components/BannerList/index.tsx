@@ -32,10 +32,10 @@ const Slider: FC<IProps> = ({ bannerList }) => {
           modules={[Pagination, Autoplay]}
           className="rounded-md"
         >
-          {bannerList.map((item, index) => (
+          {bannerList.map(({ imageUrl }, index) => (
             <SwiperSlide key={index}>
               <img
-                src={item.imageUrl}
+                src={imageUrl}
                 alt={`轮播图 ${index}`}
                 className="h-full w-full"
               />

@@ -1,0 +1,18 @@
+.album-motion.appear {
+  transform: rotateZ(30deg) translate3d(100%, 0, 0);
+}
+
+.album-motion.appear-active,
+.album-motion.appear-done {
+  transition: transform 0.3s;
+  transform: rotateZ(0deg) translate3d(0, 0, 0);
+}
+
+.album-motion.exit {
+  transform: rotateZ(0deg) translate3d(0, 0, 0);
+}
+
+.album-motion.exit-active {
+  transition: transform 0.3s;
+  transform: rotateZ(30deg) translate3d(100%, 0, 0);
+}

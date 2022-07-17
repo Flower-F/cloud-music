@@ -1,8 +1,8 @@
+import './style.css'
+
 import { memo, useCallback, useEffect } from 'react'
 import { FaBars, FaSearch } from 'react-icons/fa'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
-
-import styles from './style.module.css'
 
 const Home = () => {
   const location = useLocation()
@@ -17,7 +17,7 @@ const Home = () => {
 
   const renderLink = useCallback((title: string, link: string) => {
     return (
-      <NavLink to={link} className={styles['render-link']}>
+      <NavLink to={link} className="render-home-link">
         {({ isActive }) => (
           <span
             className={`h-full px-1 text-sm text-border_color ${
