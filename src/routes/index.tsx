@@ -4,14 +4,14 @@ import HomeLayout from '@/layouts/HomeLayout'
 import NotFoundPage from '@/pages/NotFoundPage'
 import RankPage from '@/pages/RankPage'
 import RecommendPage from '@/pages/RecommendPage'
-import SingerPage from '@/pages/SingerPage'
+import SingersPage from '@/pages/SingersPage'
 
 const Router = () => (
   <Routes>
     <Route path="/" element={<HomeLayout />}>
       <Route index element={<RecommendPage />} />
       <Route path="recommend" element={<RecommendPage />} />
-      <Route path="singer" element={<SingerPage />} />
+      <Route path="singer" element={<SingersPage />} />
       <Route path="rank" element={<RankPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>

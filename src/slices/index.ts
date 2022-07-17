@@ -1,2 +1,2 @@
-export * from './counter'
 export * from './recommend'
+export * from './singers'

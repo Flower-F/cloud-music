@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react'
+import { FC, memo } from 'react'
 
 import Scroll from './Scroll'
 
@@ -10,10 +10,16 @@ export interface ISingerConfig {
 interface IProps {
   list: ISingerConfig[]
   title?: string
+  oldValue?: string
+  onClick?: (newValue: string) => void
 }
 
-const HorizontalItem: FC<IProps> = ({ list, title = '' }) => {
-  const [value, setValue] = useState('')
+const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {
+  const handleClick = (item: ISingerConfig) => {
+    if (onClick) {
+      onClick(item.key)
+    }
+  }
 
   return (
     <Scroll direction="horizontal" className="whitespace-nowrap">
@@ -23,10 +29,10 @@ const HorizontalItem: FC<IProps> = ({ list, title = '' }) => {
           <div
             key={item.key}
             className={`mx-0.5 inline-block rounded-md px-2 text-center text-base ${
-              value === item.key &&
+              oldValue === item.key &&
               'border border-solid border-theme_color text-theme_color opacity-80'
             }`}
-            onClick={() => setValue(item.key)}
+            onClick={() => handleClick(item)}
           >
             {item.name}
           </div>
@@ -36,4 +42,4 @@ const HorizontalItem: FC<IProps> = ({ list, title = '' }) => {
   )
 }
 
-export default memo(HorizontalItem)
+export default memo(Horizon)

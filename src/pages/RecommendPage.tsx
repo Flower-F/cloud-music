@@ -9,12 +9,11 @@ import Loading from '@/ui/Loading'
 import Scroll from '@/ui/Scroll'
 
 const RecommendPage = () => {
-  const { bannerList, recommendList, loading } = useAppSelector(
+  const { bannerList, recommendList, enterLoading } = useAppSelector(
     (store) => store.recommend
   )
 
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     if (!recommendList.length || !bannerList.length) {
       dispatch(getBannerListAndRecommendList())
@@ -29,7 +28,7 @@ const RecommendPage = () => {
           <RecommendList recommendList={recommendList} />
         </div>
       </Scroll>
-      {loading ? <Loading /> : null}
+      {enterLoading ? <Loading /> : null}
     </div>
   )
 }

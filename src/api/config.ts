@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { BASE_REQUEST_URL } from '@/constants'
-import { ISingerConfig } from '@/ui/HorizontalItem'
+import { ISingerConfig } from '@/ui/Horizon'
 
 const axiosInstance = axios.create({
   baseURL: BASE_REQUEST_URL

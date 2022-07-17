@@ -6,8 +6,11 @@ import defaultRecommendImage from '@/assets/images/default-recommend.png'
 
 export interface IRecommend {
   id: number
+  /** 图片的链接 */
   picUrl: string
+  /** 播放次数 */
   playCount: number
+  /** 描述 */
   name: string
 }
 

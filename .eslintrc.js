@@ -22,7 +22,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
   rules: {
     'prettier/prettier': 'error',
-    'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'react/react-in-jsx-scope': 'off',

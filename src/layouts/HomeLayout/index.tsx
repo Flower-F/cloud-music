@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { FaBars, FaSearch } from 'react-icons/fa'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
@@ -15,7 +15,7 @@ const Home = () => {
     }
   }, [pathname])
 
-  const renderLink = (title: string, link: string) => {
+  const renderLink = useCallback((title: string, link: string) => {
     return (
       <NavLink to={link} className={styles['render-link']}>
         {({ isActive }) => (
@@ -30,7 +30,7 @@ const Home = () => {
         )}
       </NavLink>
     )
-  }
+  }, [])
 
   return (
     <>
