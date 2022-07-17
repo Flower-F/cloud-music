@@ -1,4 +1,5 @@
 import { IBanner } from '@/components/BannerList'
+import { IRank } from '@/components/RankList'
 import { IRecommend } from '@/components/RecommendList'
 import { ISinger } from '@/components/SingerList'
 
@@ -47,8 +48,11 @@ export const getSingerListApi = (
 }
 
 // RankPage
+export interface IRankListApi {
+  list: IRank[]
+}
 export const getRankListApi = () => {
-  return request({
+  return request<IRankListApi>({
     method: 'GET',
     url: '/toplist/detail'
   })

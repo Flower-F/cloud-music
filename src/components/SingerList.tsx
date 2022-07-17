@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 import LazyLoad from 'react-lazyload'
 
-import defaultRecommendImage from '@/assets/images/default-recommend.png'
+import defaultMusicImage from '@/assets/images/default-music.png'
 
 export interface ISinger {
   /** 图片链接 */
@@ -21,14 +21,14 @@ const SingerList: FC<IProps> = ({ singerList }) => {
     <ul className="flex flex-col overflow-hidden">
       {singerList.map((item, index) => (
         <li
-          key={item.picId + index}
+          key={`${item.picId}${index}`}
           className="mx-1 flex items-center border-b border-solid border-b-border_color py-1"
         >
           <div className="mr-4">
             <LazyLoad
               placeholder={
                 <img
-                  src={defaultRecommendImage}
+                  src={defaultMusicImage}
                   alt="音乐歌单"
                   className="h-14 w-14 rounded"
                 />

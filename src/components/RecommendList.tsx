@@ -2,7 +2,7 @@ import { FC, memo } from 'react'
 import { IoHeadsetSharp } from 'react-icons/io5'
 import LazyLoad from 'react-lazyload'
 
-import defaultRecommendImage from '@/assets/images/default-recommend.png'
+import defaultMusicImage from '@/assets/images/default-music.png'
 
 export interface IRecommend {
   /** 歌单id */
@@ -30,7 +30,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
               <LazyLoad
                 placeholder={
                   <img
-                    src={defaultRecommendImage}
+                    src={defaultMusicImage}
                     alt="音乐歌单"
                     className="h-full w-full rounded"
                   />
