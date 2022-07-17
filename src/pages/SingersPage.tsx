@@ -13,7 +13,6 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store'
 import EnterLoading from '@/ui/EnterLoading'
 import Horizon from '@/ui/Horizon'
-import PullDownLoading from '@/ui/PullDownLoading'
 import Scroll from '@/ui/Scroll'
 
 const SingersPage = () => {

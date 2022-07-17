@@ -18,9 +18,9 @@ interface IProps {
 
 const SingerList: FC<IProps> = ({ singerList }) => {
   return (
-    <div className="flex flex-col overflow-hidden">
+    <ul className="flex flex-col overflow-hidden">
       {singerList.map((item, index) => (
-        <div
+        <li
           key={item.picId + index}
           className="mx-1 flex items-center border-b border-solid border-b-border_color py-1"
         >
@@ -44,9 +44,9 @@ const SingerList: FC<IProps> = ({ singerList }) => {
           <span className="text-base font-medium text-desc_color">
             {item.name}
           </span>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

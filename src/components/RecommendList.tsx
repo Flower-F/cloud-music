@@ -5,9 +5,9 @@ import LazyLoad from 'react-lazyload'
 import defaultRecommendImage from '@/assets/images/default-recommend.png'
 
 export interface IRecommend {
-  /** 推荐项的id */
+  /** 歌单id */
   id: number
-  /** 图片的链接 */
+  /** 图片链接 */
   picUrl: string
   /** 播放次数 */
   playCount: number
@@ -22,10 +22,10 @@ interface IProps {
 const RecommendList: FC<IProps> = ({ recommendList }) => {
   return (
     <div className="mx-auto px-[2%]">
-      <h3 className="pl-2 text-sm font-bold leading-10">推荐歌单</h3>
-      <div className="flex flex-wrap justify-between">
+      <h1 className="pl-2 text-sm font-bold leading-10">推荐歌单</h1>
+      <ul className="flex flex-wrap justify-between">
         {recommendList.map((item) => (
-          <div key={item.id} className="w-[32%] pb-2">
+          <li key={item.id} className="w-[32vw] pb-2">
             <div className="relative h-0 pb-[100%]">
               <LazyLoad
                 placeholder={
@@ -50,9 +50,9 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
             <div className="h-10 overflow-hidden text-sm leading-snug text-desc_color">
               {item.name}
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   )
 }

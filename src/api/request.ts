@@ -45,3 +45,11 @@ export const getSingerListApi = (
     url: `/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`
   })
 }
+
+// RankPage
+export const getRankListApi = () => {
+  return request({
+    method: 'GET',
+    url: '/toplist/detail'
+  })
+}
