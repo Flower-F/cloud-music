@@ -5,7 +5,7 @@ import BannerList from '@/components/BannerList'
 import RecommendList from '@/components/RecommendList'
 import { getBannerListAndRecommendList } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
-import Loading from '@/ui/Loading'
+import EnterLoading from '@/ui/EnterLoading'
 import Scroll from '@/ui/Scroll'
 
 const RecommendPage = () => {
@@ -28,7 +28,7 @@ const RecommendPage = () => {
           <RecommendList recommendList={recommendList} />
         </div>
       </Scroll>
-      {enterLoading ? <Loading /> : null}
+      {enterLoading && <EnterLoading />}
     </div>
   )
 }

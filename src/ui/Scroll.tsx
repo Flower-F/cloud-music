@@ -12,7 +12,8 @@ import {
 } from 'react'
 
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
-import Loading from '@/ui/Loading'
+
+import PullUpLoading from './PullUpLoading'
 
 interface ScrollHandle {
   /** 刷新函数 */
@@ -130,7 +131,7 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
       }
     }, [betterScroll, pullDownDebounce, pullDown])
 
-    //刷新
+    // 刷新
     useEffect(() => {
       if (refresh && betterScroll) {
         betterScroll.refresh()
@@ -164,13 +165,11 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
         className={`h-full w-full overflow-hidden ${props.className || ''}`}
       >
         {props.children}
-        <div
-          className={`absolute left-0 right-0 bottom-1 z-50 m-auto hidden h-16 w-16 ${
-            pullUpLoading && 'block'
-          }`}
-        >
-          <Loading />
-        </div>
+        {pullUpLoading && (
+          <div className={'fixed left-0 right-0 bottom-1 z-50'}>
+            <PullUpLoading />
+          </div>
+        )}
       </div>
     )
   }

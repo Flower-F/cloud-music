@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazyload'
 import defaultRecommendImage from '@/assets/images/default-recommend.png'
 
 export interface IRecommend {
+  /** 推荐项的id */
   id: number
   /** 图片的链接 */
   picUrl: string
@@ -31,11 +32,15 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                   <img
                     src={defaultRecommendImage}
                     alt="音乐歌单"
-                    className="absolute h-full w-full rounded"
+                    className="h-full w-full rounded"
                   />
                 }
               >
-                <img src={`${item.picUrl}?param=300x300`} alt="音乐歌单" />
+                <img
+                  src={`${item.picUrl}?param=300x300`}
+                  alt="音乐歌单"
+                  className="h-full w-full rounded"
+                />
               </LazyLoad>
               <div className="absolute right-1 top-0.5 flex items-center text-sm leading-4 text-light_color">
                 <IoHeadsetSharp />

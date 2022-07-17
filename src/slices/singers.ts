@@ -9,20 +9,16 @@ const namespace = 'singers'
 export const getHotSingerList = createAsyncThunk(
   `${namespace}/getHotSingerList`,
   async (_, { dispatch, getState }) => {
-    const { setSingerList, setPullUpLoading, setEnterLoading } =
-      singersSlice.actions
-
+    const { setSingerList, setEnterLoading } = singersSlice.actions
     const { singers } = getState() as RootState
 
     try {
       dispatch(setEnterLoading(true))
-      dispatch(setPullUpLoading(true))
       const res = await getHotSingerListApi(singers.offset)
-      dispatch(setSingerList(res.artists))
       dispatch(setEnterLoading(false))
-      dispatch(setPullUpLoading(false))
+      dispatch(setSingerList(res.artists))
     } catch (error) {
-      console.log('error', error)
+      console.log('error:', error)
     }
   }
 )
@@ -30,12 +26,11 @@ export const getHotSingerList = createAsyncThunk(
 export const updateSingerList = createAsyncThunk(
   `${namespace}/updateSingerList`,
   async (_, { dispatch, getState }) => {
-    const { setSingerList, setEnterLoading, setPullUpLoading } =
-      singersSlice.actions
+    const { setSingerList, setEnterLoading } = singersSlice.actions
     const { singers } = getState() as RootState
+
     try {
       dispatch(setEnterLoading(true))
-      dispatch(setPullUpLoading(true))
       let res
       if (singers.alpha === '' && singers.area === '' && singers.type === '') {
         res = await getHotSingerListApi(singers.offset)
@@ -47,11 +42,10 @@ export const updateSingerList = createAsyncThunk(
           singers.offset
         )
       }
-      dispatch(setSingerList(res.artists))
       dispatch(setEnterLoading(false))
-      dispatch(setPullUpLoading(false))
+      dispatch(setSingerList(res.artists))
     } catch (error) {
-      console.log('error', error)
+      console.log('error:', error)
     }
   }
 )
@@ -61,6 +55,7 @@ export const pullUpSingerList = createAsyncThunk(
   async (_, { dispatch, getState }) => {
     const { setSingerList, setPullUpLoading, setOffset } = singersSlice.actions
     const { singers } = getState() as RootState
+
     try {
       dispatch(setPullUpLoading(true))
       dispatch(setOffset(singers.offset + 1))
@@ -75,10 +70,10 @@ export const pullUpSingerList = createAsyncThunk(
           singers.offset
         )
       }
-      dispatch(setSingerList([...singers.singerList, ...res.artists]))
       dispatch(setPullUpLoading(false))
+      dispatch(setSingerList([...singers.singerList, ...res.artists]))
     } catch (error) {
-      console.log('error', error)
+      console.log('error:', error)
     }
   }
 )
@@ -89,6 +84,7 @@ export const pullDownSingerList = createAsyncThunk(
     const { setSingerList, setOffset, setPullDownLoading } =
       singersSlice.actions
     const { singers } = getState() as RootState
+
     try {
       dispatch(setPullDownLoading(true))
       dispatch(setOffset(0))
@@ -103,15 +99,15 @@ export const pullDownSingerList = createAsyncThunk(
           singers.offset
         )
       }
-      dispatch(setSingerList([...singers.singerList, ...res.artists]))
       dispatch(setPullDownLoading(false))
+      dispatch(setSingerList(res.artists))
     } catch (error) {
-      console.log('error', error)
+      console.log('error:', error)
     }
   }
 )
 
-interface IInitialState {
+interface ISingersState {
   singerList: ISinger[]
   enterLoading: boolean
   pullUpLoading: boolean
@@ -122,7 +118,7 @@ interface IInitialState {
   area: string
 }
 
-const initialState: IInitialState = {
+const initialState: ISingersState = {
   singerList: [],
   enterLoading: true,
   pullUpLoading: false,
@@ -137,34 +133,34 @@ export const singersSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
-    setSingerList: (state: IInitialState, action: PayloadAction<ISinger[]>) => {
+    setSingerList: (state: ISingersState, action: PayloadAction<ISinger[]>) => {
       state.singerList = action.payload
     },
-    setEnterLoading: (state: IInitialState, action: PayloadAction<boolean>) => {
+    setEnterLoading: (state: ISingersState, action: PayloadAction<boolean>) => {
       state.enterLoading = action.payload
     },
     setPullUpLoading: (
-      state: IInitialState,
+      state: ISingersState,
       action: PayloadAction<boolean>
     ) => {
       state.pullUpLoading = action.payload
     },
     setPullDownLoading: (
-      state: IInitialState,
+      state: ISingersState,
       action: PayloadAction<boolean>
     ) => {
       state.pullDownLoading = action.payload
     },
-    setOffset: (state: IInitialState, action: PayloadAction<number>) => {
+    setOffset: (state: ISingersState, action: PayloadAction<number>) => {
       state.offset = action.payload
     },
-    setAlpha: (state: IInitialState, action: PayloadAction<string>) => {
+    setAlpha: (state: ISingersState, action: PayloadAction<string>) => {
       state.alpha = action.payload
     },
-    setArea: (state: IInitialState, action: PayloadAction<string>) => {
+    setArea: (state: ISingersState, action: PayloadAction<string>) => {
       state.area = action.payload
     },
-    setType: (state: IInitialState, action: PayloadAction<string>) => {
+    setType: (state: ISingersState, action: PayloadAction<string>) => {
       state.type = action.payload
     }
   }

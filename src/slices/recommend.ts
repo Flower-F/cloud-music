@@ -19,7 +19,7 @@ export const getBannerListAndRecommendList = createAsyncThunk(
         dispatch(setBannerList(res[1].banners))
       })
       .catch((error) => {
-        console.log('error', error)
+        console.log('error:', error)
       })
       .finally(() => {
         dispatch(setEnterLoading(false))
@@ -27,13 +27,13 @@ export const getBannerListAndRecommendList = createAsyncThunk(
   }
 )
 
-interface IInitialState {
+interface IRecommendState {
   bannerList: IBanner[]
   recommendList: IRecommend[]
   enterLoading: boolean
 }
 
-const initialState: IInitialState = {
+const initialState: IRecommendState = {
   bannerList: [],
   recommendList: [],
   enterLoading: true
@@ -43,16 +43,22 @@ export const recommendSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
-    setBannerList: (state: IInitialState, action: PayloadAction<IBanner[]>) => {
+    setBannerList: (
+      state: IRecommendState,
+      action: PayloadAction<IBanner[]>
+    ) => {
       state.bannerList = action.payload
     },
     setRecommendList: (
-      state: IInitialState,
+      state: IRecommendState,
       action: PayloadAction<IRecommend[]>
     ) => {
       state.recommendList = action.payload
     },
-    setEnterLoading: (state: IInitialState, action: PayloadAction<boolean>) => {
+    setEnterLoading: (
+      state: IRecommendState,
+      action: PayloadAction<boolean>
+    ) => {
       state.enterLoading = action.payload
     }
   }

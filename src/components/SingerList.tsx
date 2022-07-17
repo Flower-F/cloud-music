@@ -30,7 +30,7 @@ const SingerList: FC<IProps> = ({ singerList }) => {
                 <img
                   src={defaultRecommendImage}
                   alt="音乐歌单"
-                  className="absolute h-full w-full rounded"
+                  className="h-14 w-14 rounded"
                 />
               }
             >

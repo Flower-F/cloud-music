@@ -7,6 +7,7 @@ import { Autoplay, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 export interface IBanner {
+  /** 图片链接 */
   imageUrl: string
 }
 

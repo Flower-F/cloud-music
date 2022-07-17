@@ -8,9 +8,13 @@ export interface ISingerConfig {
 }
 
 interface IProps {
+  /** 滚动列表 */
   list: ISingerConfig[]
+  /** 列表标题 */
   title?: string
+  /** 列表原来的值 */
   oldValue?: string
+  /** 点击列表项的回调 */
   onClick?: (newValue: string) => void
 }
 

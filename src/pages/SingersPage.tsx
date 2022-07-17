@@ -11,8 +11,8 @@ import {
   updateSingerList
 } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
+import EnterLoading from '@/ui/EnterLoading'
 import Horizon from '@/ui/Horizon'
-import Loading from '@/ui/Loading'
 import Scroll from '@/ui/Scroll'
 
 const SingersPage = () => {
@@ -43,11 +43,11 @@ const SingersPage = () => {
 
   type TScrollRef = ElementRef<typeof Scroll>
   const scrollRef = useRef<TScrollRef | null>(null)
+  const { setType, setAlpha, setArea } = singersSlice.actions
 
   const handleUpdateType = useCallback(
     (newVal: string) => {
       if (type === newVal) return
-      const { setType } = singersSlice.actions
       dispatch(setType(newVal))
       dispatch(updateSingerList())
       scrollRef.current?.refresh()
@@ -58,7 +58,6 @@ const SingersPage = () => {
   const handleUpdateArea = useCallback(
     (newVal: string) => {
       if (area === newVal) return
-      const { setArea } = singersSlice.actions
       dispatch(setArea(newVal))
       dispatch(updateSingerList())
       scrollRef.current?.refresh()
@@ -69,7 +68,6 @@ const SingersPage = () => {
   const handleUpdateAlpha = useCallback(
     (newVal: string) => {
       if (alpha === newVal) return
-      const { setAlpha } = singersSlice.actions
       dispatch(setAlpha(newVal))
       dispatch(updateSingerList())
       scrollRef.current?.refresh()
@@ -111,7 +109,7 @@ const SingersPage = () => {
           <SingerList singerList={singerList} />
         </Scroll>
       </div>
-      {enterLoading && <Loading />}
+      {enterLoading && <EnterLoading />}
     </>
   )
 }
