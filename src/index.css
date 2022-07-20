@@ -39,4 +39,15 @@
   .bg-decorate {
     background: linear-gradient(hsla(0, 0%, 100%, 0), hsl(0, 0%, 43%, .4));
   }
+
+  /* 滤镜 */
+  .bg-filter {
+    background: rgba(7, 17, 27, 0.2);
+  }
+
+  .text-nowrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

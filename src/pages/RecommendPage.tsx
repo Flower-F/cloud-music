@@ -1,6 +1,5 @@
 import { memo, useEffect } from 'react'
 import { forceCheck } from 'react-lazyload'
-import { Outlet } from 'react-router-dom'
 
 import BannerList from '@/components/BannerList'
 import RecommendList from '@/components/RecommendList'
@@ -30,7 +29,6 @@ const RecommendPage = () => {
         </div>
       </Scroll>
       {enterLoading && <EnterLoading />}
-      <Outlet />
     </div>
   )
 }
