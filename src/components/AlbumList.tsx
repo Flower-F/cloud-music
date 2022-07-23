@@ -34,9 +34,9 @@ const AlbumList: FC<IProps> = ({ album }) => {
             <span className="h-14 w-14 basis-14 text-center leading-[3.5rem]">
               {index + 1}
             </span>
-            <div className="text-overflow flex h-full flex-1 flex-col justify-around border-b border-solid border-border_color py-1">
-              <span className="text-overflow text-desc_color">{item.name}</span>
-              <span className="text-overflow text-sm text-[#bba8a8]">
+            <div className="text-nowrap flex h-full flex-1 flex-col justify-around border-b border-solid border-border_color py-1">
+              <span className="text-nowrap text-desc_color">{item.name}</span>
+              <span className="text-nowrap text-sm text-[#bba8a8]">
                 {getName(item.ar)} - {item.al.name}
               </span>
             </div>

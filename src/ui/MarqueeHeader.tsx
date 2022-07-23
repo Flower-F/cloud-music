@@ -13,7 +13,7 @@ interface IProps {
 const MarqueeHeader: FC<IProps> = ({ onClick, isMarquee = true, title }) => {
   return (
     <div className="bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white">
-      <div className="bg-filter-dark absolute z-50 flex h-9 w-10 items-center justify-center text-2xl">
+      <div className="bg-filter-dark absolute z-50 flex h-9 w-9 items-center justify-center rounded-full text-2xl">
         <IoArrowBackOutline onClick={onClick} />
       </div>
       {isMarquee ? (

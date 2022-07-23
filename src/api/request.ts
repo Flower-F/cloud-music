@@ -1,3 +1,4 @@
+import { IAlbum } from '@/components/AlbumHeader'
 import { IBanner } from '@/components/BannerList'
 import { IRank } from '@/components/RankList'
 import { IRecommend } from '@/components/RecommendList'
@@ -55,5 +56,16 @@ export const getRankListApi = () => {
   return request<IRankListApi>({
     method: 'GET',
     url: '/toplist/detail'
+  })
+}
+
+// AlbumPage
+export interface IAlbumApi {
+  playlist: IAlbum
+}
+export const getAlbumApi = (id: number) => {
+  return request<IAlbumApi>({
+    method: 'GET',
+    url: `/playlist/detail?id=${id}`
   })
 }

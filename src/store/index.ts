@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { rankSlice, recommendSlice, singersSlice } from '@/slices'
+import { albumSlice, rankSlice, recommendSlice, singersSlice } from '@/slices'
 
 const store = configureStore({
   reducer: {
     recommend: recommendSlice.reducer,
     singers: singersSlice.reducer,
-    rank: rankSlice.reducer
+    rank: rankSlice.reducer,
+    album: albumSlice.reducer
   }
 })
 
