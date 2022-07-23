@@ -1,5 +1,3 @@
-import './style.css'
-
 import { useCallback, useState } from 'react'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +6,7 @@ import { CSSTransition } from 'react-transition-group'
 import AlbumHeader from '@/components/AlbumHeader'
 import AlbumList from '@/components/AlbumList'
 import AlbumMenu from '@/components/AlbumMenu'
-import Header from '@/components/Header'
+import MarqueeHeader from '@/ui/MarqueeHeader'
 import Scroll from '@/ui/Scroll'
 
 const AlbumPage = () => {
@@ -96,13 +94,12 @@ const AlbumPage = () => {
     ]
   }
 
-  const [showStatus, setShowStatus] = useState(true)
-
   const navigate = useNavigate()
   const goBack = () => {
     navigate('/recommend')
   }
 
+  const [showStatus, setShowStatus] = useState(true)
   const handleClick = useCallback(() => {
     setShowStatus(false)
   }, [])
@@ -111,13 +108,13 @@ const AlbumPage = () => {
     <CSSTransition
       in={showStatus}
       timeout={300}
-      className="album-motion"
+      classNames="album-motion"
       appear={true}
       unmountOnExit
       onExited={goBack}
     >
-      <div className="fixed top-0 bottom-0 left-0 right-0 z-[150] origin-bottom-right bg-background_color">
-        <Header onClick={handleClick} />
+      <div className="fixed top-[5.75rem] bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
+        <MarqueeHeader title={album.name} onClick={handleClick} />
         <Scroll bounceTop={false}>
           <div>
             <AlbumHeader album={album} />

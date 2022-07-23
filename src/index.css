@@ -45,9 +45,60 @@
     background: rgba(7, 17, 27, 0.2);
   }
 
+  .bg-filter-dark {
+    background: rgba(7, 17, 27, 0.7);
+  }
+
+  /* 单行文字省略 */
   .text-nowrap {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* 跑马灯背景 */
+  .bg-marquee {
+    background: linear-gradient(90deg, #200122 0%, #6f0000 100%);
+  }
+}
+
+body {
+  font-family: -apple-system, Helvetica, sans-serif;
+}
+
+/* 轮播图 */
+.swiper-pagination-bullet {
+  background-color: var(--theme-color) !important;
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: var(--theme-color) !important;
+}
+
+/* Album 页面切换 */
+.album-motion-appear {
+  transform: rotateZ(30deg) translate3d(100%, 0, 0) !important;
+}
+
+.album-motion-appear-active,
+.album-motion-appear-done {
+  transition: transform 0.3s !important;
+  transform: rotateZ(0deg) translate3d(0, 0, 0) !important;
+}
+
+.album-motion-exit {
+  transform: rotateZ(0deg) translate3d(0, 0, 0) !important;
+}
+
+.album-motion-exit-active {
+  transition: transform 0.3s;
+  transform: rotateZ(30deg) translate3d(100%, 0, 0) !important;
+}
+
+/* 扩大 Tab 点击范围 */
+.render-home-link {
+  display: block;
+  height: 100%;
+  padding: 0 0.5rem;
+  line-height: 2.75rem;
 }

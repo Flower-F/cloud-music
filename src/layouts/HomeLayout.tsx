@@ -1,10 +1,8 @@
-import './style.css'
-
 import { memo, useCallback, useEffect } from 'react'
 import { FaBars, FaSearch } from 'react-icons/fa'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-const Home = () => {
+const HomeLayout = () => {
   const location = useLocation()
   const { pathname } = location
   const navigate = useNavigate()
@@ -53,4 +51,4 @@ const Home = () => {
   )
 }
 
-export default memo(Home)
+export default memo(HomeLayout)

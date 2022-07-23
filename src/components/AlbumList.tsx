@@ -1,6 +1,6 @@
 import { FC, memo } from 'react'
 import { BsPlayCircle } from 'react-icons/bs'
-import { FiStar } from 'react-icons/fi'
+import { FaStar } from 'react-icons/fa'
 
 import { getName } from '@/utils'
 
@@ -12,18 +12,19 @@ interface IProps {
 
 const AlbumList: FC<IProps> = ({ album }) => {
   return (
-    <div className="rounded-lg bg-highlight_background_color opacity-95">
-      <div className="relative ml-3 flex justify-between border-b border-solid border-border_color py-3">
+    <div className="h-full rounded-lg bg-highlight_background_color opacity-95">
+      <div className="relative ml-3 flex h-11 justify-between border-b border-solid border-border_color py-2">
         <div className="flex items-center leading-4 text-desc_color">
           <BsPlayCircle className="mr-2 text-2xl" />
           <div>
+            <span className="mr-1 text-lg text-black">播放全部</span>
             <span className="text-sm text-desc_color_v2">
-              播放全部共 {album.tracks.length} 首
+              共{album.tracks.length}首
             </span>
           </div>
         </div>
-        <div className="absolute top-0 bottom-0 right-0 flex w-32 items-center rounded bg-theme_color px-2 leading-9 text-light_color">
-          <FiStar className="mr-2" />
+        <div className="absolute top-0 right-0 flex h-full items-center justify-center rounded bg-theme_color px-3 text-light_color">
+          <FaStar className="mr-1.5 text-lg" />
           <span>收藏 {Math.floor(album.subscribedCount / 1000) / 10}万</span>
         </div>
       </div>

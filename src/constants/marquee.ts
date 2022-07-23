@@ -1,0 +1,1 @@
+export const MARQUEE_HEADER_HEIGHT = 45

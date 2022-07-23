@@ -1,6 +1,5 @@
 import 'swiper/css'
 import 'swiper/css/pagination'
-import './style.css'
 
 import { FC, memo } from 'react'
 import { Autoplay, Pagination } from 'swiper'
