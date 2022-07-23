@@ -33,7 +33,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
         {recommendList.map(({ id, name, picUrl, playCount }, index) => (
           <li
             key={`${id}${index}`}
-            className="w-[32vw] pb-2"
+            className="w-[32%] pb-2"
             onClick={() => enterDetail(id)}
           >
             <div className="relative h-0 pb-[100%]">
@@ -52,7 +52,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                   className="h-full w-full rounded"
                 />
               </LazyLoad>
-              <div className="absolute right-1 top-0.5 flex items-center text-sm leading-4 text-light_color">
+              <div className="bg-decorate absolute right-0 top-0.5 flex items-center rounded p-0.5 text-sm leading-4 text-light_color">
                 <IoHeadsetSharp />
                 <span className="ml-0.5">
                   {Math.floor(playCount / 1000) / 10}万

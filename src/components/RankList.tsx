@@ -1,9 +1,12 @@
 import { FC, memo } from 'react'
 import LazyLoad from 'react-lazyload'
+import { useNavigate } from 'react-router-dom'
 
 import defaultMusicImage from '@/assets/images/default-music.png'
 
 export interface IRank {
+  /** 榜单id */
+  id: number
   /** 封面id */
   coverImgId: number
   /** 封面链接 */
@@ -26,13 +29,18 @@ interface IProps {
 }
 
 const RankList: FC<IProps> = ({ rankList }) => {
+  const navigate = useNavigate()
+  const enterDetail = (id: number) => {
+    navigate(`/rank/${id}`)
+  }
+
   return (
     <>
       {rankList.length ? (
         <ul className="mt-3 flex flex-wrap justify-between bg-background_color px-1">
           {rankList.map(
             (
-              { coverImgId, coverImgUrl, name, tracks, updateFrequency },
+              { coverImgId, coverImgUrl, name, tracks, updateFrequency, id },
               index
             ) => (
               <li
@@ -40,6 +48,7 @@ const RankList: FC<IProps> = ({ rankList }) => {
                 className={`border-b border-solid border-b-border_color py-1 ${
                   tracks.length > 0 && 'flex'
                 }`}
+                onClick={() => enterDetail(id)}
               >
                 <div
                   className={`relative h-[32vw] w-[32vw] rounded ${
@@ -81,7 +90,6 @@ const RankList: FC<IProps> = ({ rankList }) => {
               </li>
             )
           )}
-          <li className="h-[32vw] w-[32vw]"></li>
         </ul>
       ) : (
         <div />

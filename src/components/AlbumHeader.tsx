@@ -45,14 +45,13 @@ const AlbumHeader: FC<IProps> = ({ album }) => {
         <div className="bg-filter absolute top-0 left-0 z-10 h-full w-full"></div>
       </div>
       <div className="relative h-28 w-28 shrink-0">
-        <div className="bg-decorate absolute top-0 h-9 w-full rounded"></div>
         <img
           src={album.coverImgUrl}
           alt="封面"
           className="h-full w-full rounded"
         />
-        <div className="absolute right-0.5 top-0.5 flex items-center text-sm leading-4 text-light_color">
-          <IoHeadsetSharp className="mr-1" />
+        <div className="bg-decorate absolute right-0 top-0.5 flex items-center rounded p-0.5 text-sm leading-4 text-light_color">
+          <IoHeadsetSharp className="mr-0.5" />
           <div>{Math.floor(album.subscribedCount / 1000) / 10}万</div>
         </div>
       </div>
@@ -68,7 +67,7 @@ const AlbumHeader: FC<IProps> = ({ album }) => {
               className="h-full w-full rounded-full"
             />
           </div>
-          <div className="text-nowrap w-[11rem] text-base leading-5 text-desc_color_v2">
+          <div className="text-nowrap w-[11rem] text-base leading-5 text-[#eee]">
             {album.creator.nickname}
           </div>
         </div>

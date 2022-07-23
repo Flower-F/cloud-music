@@ -22,12 +22,14 @@ const RecommendPage = () => {
 
   return (
     <div className="fixed top-[5.75rem] bottom-0 w-full">
-      <Scroll onScrollCallback={forceCheck}>
-        <div>
-          <BannerList bannerList={bannerList} />
-          <RecommendList recommendList={recommendList} />
-        </div>
-      </Scroll>
+      {!enterLoading && (
+        <Scroll onScrollCallback={forceCheck}>
+          <div>
+            <BannerList bannerList={bannerList} />
+            <RecommendList recommendList={recommendList} />
+          </div>
+        </Scroll>
+      )}
       {enterLoading && <EnterLoading />}
     </div>
   )

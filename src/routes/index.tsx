@@ -12,9 +12,13 @@ const Router = () => (
     <Route path="/" element={<HomeLayout />}>
       <Route index element={<RecommendPage />} />
       <Route path="recommend" element={<RecommendPage />} />
-      <Route path="recommend/:id" element={<AlbumPage />} />
+      <Route
+        path="recommend/:id"
+        element={<AlbumPage backLink="/recommend" />}
+      />
       <Route path="singer" element={<SingersPage />} />
       <Route path="rank" element={<RankPage />} />
+      <Route path="rank/:id" element={<AlbumPage backLink="/rank" />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>
   </Routes>

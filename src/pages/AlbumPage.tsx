@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
-import { memo } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
@@ -12,23 +11,24 @@ import EnterLoading from '@/ui/EnterLoading'
 import MarqueeHeader from '@/ui/MarqueeHeader'
 import Scroll from '@/ui/Scroll'
 
-const AlbumPage = () => {
+interface IProps {
+  /** 返回的链接 */
+  backLink: string
+}
+
+const AlbumPage: FC<IProps> = ({ backLink }) => {
   const { enterLoading, album } = useAppSelector((store) => store.album)
   const params = useParams()
 
-  console.log('params', params)
-
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (!album) {
-      dispatch(getAlbum(Number(params.id)))
-    }
+    dispatch(getAlbum(Number(params.id)))
   }, [])
 
   const navigate = useNavigate()
-  const goBack = () => {
-    navigate('/recommend')
-  }
+  const goBack = useCallback(() => {
+    navigate(backLink)
+  }, [])
 
   const [showStatus, setShowStatus] = useState(true)
   const handleClick = useCallback(() => {
@@ -45,7 +45,7 @@ const AlbumPage = () => {
       onExited={goBack}
     >
       <div className="fixed top-[5.75rem] bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
-        {album && (
+        {album && !enterLoading && (
           <>
             <MarqueeHeader title={album.name} onClick={handleClick} />
             <Scroll bounceTop={false}>
