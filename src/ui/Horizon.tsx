@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 
 import Scroll from './Scroll'
 
@@ -19,11 +19,11 @@ interface IProps {
 }
 
 const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {
-  const handleClick = (item: ISingerConfig) => {
+  const handleClick = useCallback((item: ISingerConfig) => {
     if (onClick) {
       onClick(item.key)
     }
-  }
+  }, [])
 
   return (
     <Scroll direction="horizontal" className="whitespace-nowrap">

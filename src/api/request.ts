@@ -1,8 +1,8 @@
-import { IAlbum } from '@/components/AlbumHeader'
 import { IBanner } from '@/components/BannerList'
 import { IRank } from '@/components/RankList'
 import { IRecommend } from '@/components/RecommendList'
 import { ISinger } from '@/components/SingerList'
+import { IAlbum } from '@/components/SongList'
 
 import { request } from './config'
 

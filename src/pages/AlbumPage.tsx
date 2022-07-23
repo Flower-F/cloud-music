@@ -2,9 +2,8 @@ import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
-import AlbumHeader from '@/components/AlbumHeader'
-import AlbumList from '@/components/AlbumList'
-import AlbumMenu from '@/components/AlbumMenu'
+import AlbumCard from '@/components/AlbumCard'
+import AlbumList from '@/components/SongList'
 import { getAlbum } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import EnterLoading from '@/ui/EnterLoading'
@@ -39,7 +38,7 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
     <CSSTransition
       in={showStatus}
       timeout={300}
-      classNames="album-motion"
+      classNames="page-change"
       appear={true}
       unmountOnExit
       onExited={goBack}
@@ -50,9 +49,8 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
             <MarqueeHeader title={album.name} onClick={handleClick} />
             <Scroll bounceTop={false}>
               <div>
-                <AlbumHeader album={album} />
-                <AlbumMenu />
-                <AlbumList album={album} />
+                <AlbumCard album={album} />
+                <AlbumList song={album} />
               </div>
             </Scroll>
           </>

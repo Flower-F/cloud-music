@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { getAlbumApi } from '@/api'
-import { IAlbum } from '@/components/AlbumHeader'
+import { IAlbum } from '@/components/SongList'
 
 const namespace = 'album'
 

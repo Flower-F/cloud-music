@@ -48,19 +48,23 @@ interface IProps {
 }
 
 const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
-  (props, ref) => {
-    const {
+  (
+    {
       direction = 'vertical',
       click = true,
       refresh = true,
       pullUpLoading = false,
       pullDownLoading = false,
       bounceTop = true,
-      bounceBottom = true
-    } = props
-
-    const { pullUp = noop, pullDown = noop, onScrollCallback = noop } = props
-
+      bounceBottom = true,
+      pullUp = noop,
+      pullDown = noop,
+      onScrollCallback = noop,
+      children,
+      className
+    },
+    ref
+  ) => {
     const pullUpDebounce = useMemo(() => debounce(pullUp, 500), [pullUp])
 
     const pullDownDebounce = useMemo(() => debounce(pullDown, 500), [pullDown])
@@ -164,9 +168,9 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
     return (
       <div
         ref={scrollRef}
-        className={`h-full w-full overflow-hidden ${props.className || ''}`}
+        className={`h-full w-full overflow-hidden ${className || ''}`}
       >
-        {props.children}
+        {children}
         {pullUpLoading && (
           <div className={'absolute left-0 right-0 bottom-1 z-50'}>
             <PullUpLoading />

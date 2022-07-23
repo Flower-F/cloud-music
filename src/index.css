@@ -75,24 +75,24 @@ body {
   color: var(--theme-color) !important;
 }
 
-/* Album 页面切换 */
-.album-motion-appear {
-  transform: rotateZ(30deg) translate3d(100%, 0, 0) !important;
+/* 页面切换动画 */
+.page-change-appear {
+  transform: rotateZ(30deg) translate3d(100%, 0, 0);
 }
 
-.album-motion-appear-active,
-.album-motion-appear-done {
-  transition: transform 0.3s !important;
-  transform: rotateZ(0deg) translate3d(0, 0, 0) !important;
-}
-
-.album-motion-exit {
-  transform: rotateZ(0deg) translate3d(0, 0, 0) !important;
-}
-
-.album-motion-exit-active {
+.page-change-appear-active,
+.page-change-appear-done {
   transition: transform 0.3s;
-  transform: rotateZ(30deg) translate3d(100%, 0, 0) !important;
+  transform: rotateZ(0deg) translate3d(0, 0, 0);
+}
+
+.page-change-exit {
+  transform: rotateZ(0deg) translate3d(0, 0, 0);
+}
+
+.page-change-exit-active {
+  transition: transform 0.3s;
+  transform: rotateZ(30deg) translate3d(100%, 0, 0);
 }
 
 /* 扩大 Tab 点击范围 */

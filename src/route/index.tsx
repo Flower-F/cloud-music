@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import HomeLayout from '@/layouts/HomeLayout'
 import AlbumPage from '@/pages/AlbumPage'
+import ArtistPage from '@/pages/ArtistPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import RankPage from '@/pages/RankPage'
 import RecommendPage from '@/pages/RecommendPage'
@@ -17,6 +18,7 @@ const Router = () => (
         element={<AlbumPage backLink="/recommend" />}
       />
       <Route path="singer" element={<SingersPage />} />
+      <Route path="singer/:id" element={<ArtistPage />} />
       <Route path="rank" element={<RankPage />} />
       <Route path="rank/:id" element={<AlbumPage backLink="/rank" />} />
       <Route path="*" element={<NotFoundPage />} />
