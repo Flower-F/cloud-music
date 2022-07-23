@@ -28,16 +28,16 @@ module.exports = {
         },
         marquee: {
           from: {
-            transform: 'translateX(100%)'
+            left: '100%'
           },
           to: {
-            transform: 'translateX(-100%)'
+            left: '-100%'
           }
         }
       },
       animation: {
         wave: 'wave 1s infinite',
-        marquee: 'marquee 16s linear infinite'
+        marquee: 'marquee 14s linear infinite'
       }
     }
   },

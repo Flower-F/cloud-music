@@ -17,7 +17,7 @@ const MarqueeHeader: FC<IProps> = ({ onClick, isMarquee = true, title }) => {
         <IoArrowBackOutline onClick={onClick} />
       </div>
       {isMarquee ? (
-        <h1 className="animate-marquee overflow-hidden whitespace-nowrap tracking-wider">
+        <h1 className="absolute animate-marquee overflow-hidden whitespace-nowrap tracking-wider">
           {title || '暂无标题'}
         </h1>
       ) : (
