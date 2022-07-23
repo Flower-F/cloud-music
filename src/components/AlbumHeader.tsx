@@ -1,6 +1,8 @@
 import { FC, memo, useMemo } from 'react'
 import { IoHeadsetSharp } from 'react-icons/io5'
 
+import { getCount } from '@/utils'
+
 export interface IAlbum {
   creator: {
     /** 作者头像 */
@@ -52,7 +54,7 @@ const AlbumHeader: FC<IProps> = ({ album }) => {
         />
         <div className="bg-decorate absolute right-0 top-0.5 flex items-center rounded p-0.5 text-sm leading-4 text-light_color">
           <IoHeadsetSharp className="mr-0.5" />
-          <div>{Math.floor(album.subscribedCount / 1000) / 10}万</div>
+          <div>{getCount(album.subscribedCount)}</div>
         </div>
       </div>
       <div className="flex h-28 flex-1 flex-col justify-around pl-4 pr-1">

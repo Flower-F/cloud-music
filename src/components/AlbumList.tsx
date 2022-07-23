@@ -2,7 +2,7 @@ import { FC, memo } from 'react'
 import { BsPlayCircle } from 'react-icons/bs'
 import { FaStar } from 'react-icons/fa'
 
-import { getName } from '@/utils'
+import { getCount, getName } from '@/utils'
 
 import { IAlbum } from './AlbumHeader'
 
@@ -25,7 +25,7 @@ const AlbumList: FC<IProps> = ({ album }) => {
         </div>
         <div className="absolute top-0 right-0 flex h-full items-center justify-center rounded bg-theme_color px-3 text-light_color">
           <FaStar className="mr-1.5 text-lg" />
-          <span>收藏 {Math.floor(album.subscribedCount / 1000) / 10}万</span>
+          <span>收藏 {getCount(album.subscribedCount)}</span>
         </div>
       </div>
       <ul>

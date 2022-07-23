@@ -4,6 +4,7 @@ import LazyLoad from 'react-lazyload'
 import { useNavigate } from 'react-router-dom'
 
 import defaultMusicImage from '@/assets/images/default-music.png'
+import { getCount } from '@/utils'
 
 export interface IRecommend {
   /** 歌单id */
@@ -54,9 +55,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
               </LazyLoad>
               <div className="bg-decorate absolute right-0 top-0.5 flex items-center rounded p-0.5 text-sm leading-4 text-light_color">
                 <IoHeadsetSharp />
-                <span className="ml-0.5">
-                  {Math.floor(playCount / 1000) / 10}万
-                </span>
+                <span className="ml-0.5">{getCount(playCount)}</span>
               </div>
             </div>
             <div className="h-10 overflow-hidden text-sm leading-snug -tracking-tighter text-desc_color">
