@@ -17,8 +17,8 @@ interface IProps {
 
 const AlbumPage: FC<IProps> = ({ backLink }) => {
   const { enterLoading, album } = useAppSelector((store) => store.album)
-  const params = useParams()
 
+  const params = useParams()
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getAlbum(Number(params.id)))

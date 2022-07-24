@@ -2,7 +2,7 @@ import { IBanner } from '@/components/BannerList'
 import { IRank } from '@/components/RankList'
 import { IRecommend } from '@/components/RecommendList'
 import { ISinger } from '@/components/SingerList'
-import { IAlbum } from '@/components/SongList'
+import { IAlbum, ISong } from '@/components/SongList'
 
 import { request } from './config'
 
@@ -67,5 +67,20 @@ export const getAlbumApi = (id: number) => {
   return request<IAlbumApi>({
     method: 'GET',
     url: `/playlist/detail?id=${id}`
+  })
+}
+
+// ArtistPage
+export interface IArtistApi {
+  artist: {
+    picUrl: string
+    name: string
+  }
+  hotSongs: ISong[]
+}
+export const getArtistApi = (id: number) => {
+  return request<IArtistApi>({
+    method: 'GET',
+    url: `/artists?id=${id}`
   })
 }

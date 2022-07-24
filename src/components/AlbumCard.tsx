@@ -17,7 +17,7 @@ const AlbumCard: FC<IProps> = ({ album }) => {
     return {
       backgroundImage: `url(${album.coverImgUrl})`
     }
-  }, [album.coverImgUrl])
+  }, [album])
 
   return (
     <>

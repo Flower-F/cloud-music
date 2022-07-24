@@ -8,10 +8,13 @@ import {
   useState
 } from 'react'
 import { FaStar } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
 import SongList from '@/components/SongList'
+import { getArtist } from '@/slices'
+import { useAppDispatch, useAppSelector } from '@/store'
+import EnterLoading from '@/ui/EnterLoading'
 import MarqueeHeader from '@/ui/MarqueeHeader'
 import Scroll from '@/ui/Scroll'
 
@@ -26,125 +29,13 @@ const ArtistPage = () => {
     navigate('/singer')
   }, [])
 
-  const artist = {
-    picUrl:
-      'https://p2.music.126.net/W__FCWFiyq0JdPtuLJoZVQ==/109951163765026271.jpg',
-    name: '薛之谦',
-    hotSongs: [
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑'
-        }
-      }
-    ]
-  }
+  const { enterLoading, artist } = useAppSelector((store) => store.artist)
+
+  const params = useParams()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getArtist(Number(params.id)))
+  }, [])
 
   type TScrollRef = ElementRef<typeof Scroll>
   type TMarqueeHeaderRef = ElementRef<typeof MarqueeHeader>
@@ -206,10 +97,13 @@ const ArtistPage = () => {
   }, [])
 
   const backgroundStyle = useMemo(() => {
+    if (!artist) {
+      return {}
+    }
     return {
       backgroundImage: `url(${artist.picUrl})`
     }
-  }, [artist.picUrl])
+  }, [artist])
 
   return (
     <CSSTransition
@@ -221,37 +115,42 @@ const ArtistPage = () => {
       onExited={goBack}
     >
       <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
-        <MarqueeHeader
-          isMarquee={false}
-          title={artist.name}
-          onClick={handleClick}
-          ref={marqueeHeaderRef}
-        />
-        <div
-          className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
-          style={backgroundStyle}
-          ref={imageWrapperRef}
-        >
-          {/* 滤镜 */}
-          <div className="bg-filter absolute top-0 left-0 h-full w-full"></div>
-        </div>
-        <div
-          className="absolute left-0 right-0 z-50 mx-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
-          ref={collectButtonRef}
-        >
-          <FaStar className="mr-1.5 text-lg" />
-          <span className="text-base tracking-[0.3rem]">收藏</span>
-        </div>
-        <div
-          className="absolute top-0 bottom-0 z-50 w-full"
-          ref={scrollWrapperRef}
-        >
-          <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
-            <div className="absolute w-full overflow-visible">
-              <SongList song={artist} />
+        {artist && !enterLoading && (
+          <>
+            <MarqueeHeader
+              isMarquee={false}
+              title={artist.name}
+              onClick={handleClick}
+              ref={marqueeHeaderRef}
+            />
+            <div
+              className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
+              style={backgroundStyle}
+              ref={imageWrapperRef}
+            >
+              {/* 滤镜 */}
+              <div className="bg-filter absolute top-0 left-0 h-full w-full"></div>
             </div>
-          </Scroll>
-        </div>
+            <div
+              className="absolute left-0 right-0 z-50 mx-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
+              ref={collectButtonRef}
+            >
+              <FaStar className="mr-1.5 text-lg" />
+              <span className="text-base tracking-[0.3rem]">收藏</span>
+            </div>
+            <div
+              className="absolute top-0 bottom-0 z-50 w-full"
+              ref={scrollWrapperRef}
+            >
+              <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
+                <div className="absolute w-full overflow-visible">
+                  <SongList song={artist} />
+                </div>
+              </Scroll>
+            </div>
+          </>
+        )}
+        {enterLoading && <EnterLoading />}
       </div>
     </CSSTransition>
   )

@@ -4,6 +4,15 @@ import { FaStar } from 'react-icons/fa'
 
 import { getCount, getName } from '@/utils'
 
+export interface ISong {
+  /** 歌名 */
+  name: string
+  /** 歌手列表 */
+  ar: { name: string }[]
+  /** 歌曲 */
+  al: { name: string }
+}
+
 export interface IAlbum {
   creator: {
     /** 作者头像 */
@@ -14,14 +23,7 @@ export interface IAlbum {
   /** 封面链接 */
   coverImgUrl: string
   /** 具体歌曲 */
-  tracks: {
-    /** 歌名 */
-    name: string
-    /** 歌手列表 */
-    ar: { name: string }[]
-    /** 歌曲 */
-    al: { name: string }
-  }[]
+  tracks: ISong[]
   /** 歌单名称 */
   name: string
   /** 订阅数 */
@@ -32,14 +34,7 @@ export interface IArtist {
   /** 封面链接 */
   picUrl: string
   /** 具体歌曲 */
-  hotSongs: {
-    /** 歌名 */
-    name: string
-    /** 歌手列表 */
-    ar: { name: string }[]
-    /** 歌曲 */
-    al: { name: string }
-  }[]
+  hotSongs: ISong[]
   /** 歌手名称 */
   name: string
 }
