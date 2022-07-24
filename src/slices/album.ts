@@ -11,6 +11,7 @@ export const getAlbum = createAsyncThunk(
     const { setAlbum, setEnterLoading } = albumSlice.actions
 
     try {
+      dispatch(setAlbum(null))
       dispatch(setEnterLoading(true))
       const res = await getAlbumApi(id)
       dispatch(setEnterLoading(false))
@@ -35,7 +36,7 @@ export const albumSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
-    setAlbum: (state: IAlbumState, action: PayloadAction<IAlbum>) => {
+    setAlbum: (state: IAlbumState, action: PayloadAction<IAlbum | null>) => {
       state.album = action.payload
     },
     setEnterLoading: (state: IAlbumState, action: PayloadAction<boolean>) => {

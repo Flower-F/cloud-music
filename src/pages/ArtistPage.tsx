@@ -33,9 +33,6 @@ const ArtistPage = () => {
 
   const params = useParams()
   const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(getArtist(Number(params.id)))
-  }, [])
 
   type TScrollRef = ElementRef<typeof Scroll>
   type TMarqueeHeaderRef = ElementRef<typeof MarqueeHeader>
@@ -51,6 +48,8 @@ const ArtistPage = () => {
   const OFFSET = 5
 
   useEffect(() => {
+    dispatch(getArtist(Number(params.id)))
+
     if (
       !imageWrapperRef.current ||
       !scrollWrapperRef.current ||
@@ -115,41 +114,37 @@ const ArtistPage = () => {
       onExited={goBack}
     >
       <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
-        {artist && !enterLoading && (
-          <>
-            <MarqueeHeader
-              isMarquee={false}
-              title={artist.name}
-              onClick={handleClick}
-              ref={marqueeHeaderRef}
-            />
-            <div
-              className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
-              style={backgroundStyle}
-              ref={imageWrapperRef}
-            >
-              {/* 滤镜 */}
-              <div className="bg-filter absolute top-0 left-0 h-full w-full"></div>
+        <MarqueeHeader
+          isMarquee={false}
+          title={artist?.name || '歌手'}
+          onClick={handleClick}
+          ref={marqueeHeaderRef}
+        />
+        <div
+          className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
+          style={backgroundStyle}
+          ref={imageWrapperRef}
+        >
+          {/* 滤镜 */}
+          <div className="bg-filter absolute top-0 left-0 h-full w-full"></div>
+        </div>
+        <div
+          className="absolute left-0 right-0 z-50 mx-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
+          ref={collectButtonRef}
+        >
+          <FaStar className="mr-1.5 text-lg" />
+          <span className="text-base tracking-[0.3rem]">收藏</span>
+        </div>
+        <div
+          className="absolute top-0 bottom-0 z-50 w-full"
+          ref={scrollWrapperRef}
+        >
+          <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
+            <div className="absolute w-full overflow-visible">
+              {artist && !enterLoading && <SongList song={artist} />}
             </div>
-            <div
-              className="absolute left-0 right-0 z-50 mx-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
-              ref={collectButtonRef}
-            >
-              <FaStar className="mr-1.5 text-lg" />
-              <span className="text-base tracking-[0.3rem]">收藏</span>
-            </div>
-            <div
-              className="absolute top-0 bottom-0 z-50 w-full"
-              ref={scrollWrapperRef}
-            >
-              <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
-                <div className="absolute w-full overflow-visible">
-                  <SongList song={artist} />
-                </div>
-              </Scroll>
-            </div>
-          </>
-        )}
+          </Scroll>
+        </div>
         {enterLoading && <EnterLoading />}
       </div>
     </CSSTransition>

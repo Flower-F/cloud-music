@@ -11,6 +11,7 @@ export const getArtist = createAsyncThunk(
     const { setArtist, setEnterLoading } = artistSlice.actions
 
     try {
+      dispatch(setArtist(null))
       dispatch(setEnterLoading(true))
       const res = await getArtistApi(id)
       dispatch(setEnterLoading(false))
@@ -41,7 +42,7 @@ export const artistSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
-    setArtist: (state: IArtistState, action: PayloadAction<IArtist>) => {
+    setArtist: (state: IArtistState, action: PayloadAction<IArtist | null>) => {
       state.artist = action.payload
     },
     setEnterLoading: (state: IArtistState, action: PayloadAction<boolean>) => {

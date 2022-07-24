@@ -44,17 +44,17 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
       onExited={goBack}
     >
       <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
-        {album && !enterLoading && (
-          <>
-            <MarqueeHeader title={album.name} onClick={handleClick} />
-            <Scroll bounceTop={false}>
-              <div>
+        <MarqueeHeader title={album?.name || '歌单'} onClick={handleClick} />
+        <Scroll bounceTop={false}>
+          <div>
+            {album && (
+              <>
                 <AlbumCard album={album} />
                 <AlbumList song={album} />
-              </div>
-            </Scroll>
-          </>
-        )}
+              </>
+            )}
+          </div>
+        </Scroll>
         {enterLoading && <EnterLoading />}
       </div>
     </CSSTransition>
