@@ -152,29 +152,57 @@ const ArtistPage = () => {
   const collectButtonRef = useRef<HTMLDivElement | null>(null)
   const imageWrapperRef = useRef<HTMLDivElement | null>(null)
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null)
-  const backgroundLayerRef = useRef<HTMLDivElement | null>(null)
   const scrollRef = useRef<TScrollRef | null>(null)
   const marqueeHeaderRef = useRef<TMarqueeHeaderRef | null>(null)
-  const initialImageHeight = useRef(0)
+  const imageHeightRef = useRef(0)
 
-  /** 偏移量为 5px */
+  /** 偏移量为 5px，使得列表顶部压住图片底部 */
   const OFFSET = 5
 
   useEffect(() => {
     if (
       !imageWrapperRef.current ||
       !scrollWrapperRef.current ||
-      !backgroundLayerRef.current ||
       !scrollRef.current
     ) {
       return
     }
+
     const imageHeight = imageWrapperRef.current.offsetHeight
     scrollWrapperRef.current.style.top = `${imageHeight - OFFSET}px`
-    initialImageHeight.current = imageHeight
-    // 把遮罩先放在下面，以裹住歌曲列表
-    backgroundLayerRef.current.style.top = `${imageHeight - OFFSET}px`
+    imageHeightRef.current = imageHeight
     scrollRef.current.refresh()
+  }, [])
+
+  const handleScroll = useCallback((pos: { x: number; y: number }) => {
+    if (
+      !imageWrapperRef.current ||
+      !scrollWrapperRef.current ||
+      !scrollRef.current ||
+      !marqueeHeaderRef.current ||
+      !collectButtonRef.current
+    ) {
+      return
+    }
+
+    const newY = pos.y
+    const minScrollY =
+      -(imageHeightRef.current - OFFSET) + marqueeHeaderRef.current.offsetHeight
+    // 计算滑动距离占图片高度的百分比
+    const percent = Math.abs(newY / imageHeightRef.current)
+    if (newY > 0) {
+      // 从初始位置向下滑动
+      imageWrapperRef.current.style.transform = `scale(${1 + percent})`
+      collectButtonRef.current.style.transform = `translate3d(0, ${newY}px, 0)`
+    } else if (newY >= minScrollY) {
+      // 从初始位置向上滑动
+      imageWrapperRef.current.style.paddingTop = '75%'
+      collectButtonRef.current.style.transform = `translate3d(0, ${newY}px, 0)`
+      collectButtonRef.current.style.opacity = `${1 - percent * 1.5}`
+    } else {
+      // 列表向上滚动至完全覆盖图片
+      imageWrapperRef.current.style.paddingTop = '0'
+    }
   }, [])
 
   const backgroundStyle = useMemo(() => {
@@ -192,7 +220,7 @@ const ArtistPage = () => {
       unmountOnExit
       onExited={goBack}
     >
-      <div className="fixed top-[5.75rem] bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
+      <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
         <MarqueeHeader
           isMarquee={false}
           title={artist.name}
@@ -204,25 +232,24 @@ const ArtistPage = () => {
           style={backgroundStyle}
           ref={imageWrapperRef}
         >
-          <div className="bg-filter absolute top-0 left-0 z-10 h-full w-full"></div>
+          {/* 滤镜 */}
+          <div className="bg-filter absolute top-0 left-0 h-full w-full"></div>
         </div>
         <div
-          className="absolute left-0 right-0 z-50 m-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
+          className="absolute left-0 right-0 z-50 mx-auto -mt-14 flex h-10 w-32 items-center justify-center rounded-full bg-theme_color text-light_color"
           ref={collectButtonRef}
         >
           <FaStar className="mr-1.5 text-lg" />
           <span className="text-base tracking-[0.3rem]">收藏</span>
         </div>
         <div
-          className="absolute top-0 bottom-0 z-50 w-full rounded-lg bg-white"
-          ref={backgroundLayerRef}
-        ></div>
-        <div
-          className="absolute top-0 bottom-0 right-0 left-0 z-50"
+          className="absolute top-0 bottom-0 z-50 w-full"
           ref={scrollWrapperRef}
         >
-          <Scroll ref={scrollRef}>
-            <SongList song={artist} />
+          <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
+            <div className="absolute w-full overflow-visible">
+              <SongList song={artist} />
+            </div>
           </Scroll>
         </div>
       </div>

@@ -43,7 +43,7 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
       unmountOnExit
       onExited={goBack}
     >
-      <div className="fixed top-[5.75rem] bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
+      <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
         {album && !enterLoading && (
           <>
             <MarqueeHeader title={album.name} onClick={handleClick} />

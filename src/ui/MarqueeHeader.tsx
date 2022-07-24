@@ -10,7 +10,7 @@ interface IProps {
   title?: string
 }
 
-const MarqueeHeader = forwardRef<never, IProps>(
+const MarqueeHeader = forwardRef<HTMLDivElement | null, IProps>(
   ({ onClick, isMarquee = true, title }, ref) => {
     return (
       <div
