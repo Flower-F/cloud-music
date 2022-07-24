@@ -2,7 +2,7 @@ import { FC, memo, useCallback } from 'react'
 import LazyLoad from 'react-lazyload'
 import { useNavigate } from 'react-router-dom'
 
-import defaultMusicImage from '@/assets/images/default-music.png'
+import defaultSingerImage from '@/assets/images/default-singer.png'
 
 export interface ISinger {
   /** 歌手id */
@@ -35,11 +35,11 @@ const SingerList: FC<IProps> = ({ singerList }) => {
           onClick={() => enterDetail(id)}
         >
           <div className="mr-4">
-            <LazyLoad placeholder={<img src={defaultMusicImage} alt="音乐歌单" className="h-14 w-14 rounded" />}>
-              <img src={`${picUrl}?param=300x300`} className="h-14 w-14 rounded" alt="歌手列表" />
+            <LazyLoad placeholder={<img src={defaultSingerImage} alt="音乐歌单" className="h-12 w-14 rounded" />}>
+              <img src={`${picUrl}?param=300x300`} className="h-12 w-14 rounded" alt="歌手列表" />
             </LazyLoad>
           </div>
-          <span className="text-base font-medium text-desc_color">{name}</span>
+          <div className="text-base font-medium text-desc_color">{name}</div>
         </li>
       ))}
     </ul>

@@ -21,7 +21,7 @@ const AlbumCard: FC<IProps> = ({ album }) => {
 
   return (
     <>
-      <div className="relative flex h-64 w-full items-center justify-around bg-[length:100%] px-5 pb-4">
+      <div className="relative flex h-64 w-full items-center justify-around px-5 pb-4">
         <div className="absolute -z-10 h-full w-full bg-cover bg-no-repeat blur-lg" style={backgroundStyle}>
           <div className="bg-filter absolute top-0 left-0 z-10 h-full w-full"></div>
         </div>
@@ -38,7 +38,7 @@ const AlbumCard: FC<IProps> = ({ album }) => {
             <div className="mr-1 h-5 w-5 shrink-0">
               <img src={album.creator.avatarUrl} alt="头像" className="h-full w-full rounded-full" />
             </div>
-            <div className="text-nowrap w-[11rem] text-base leading-5 text-[#eee]">{album.creator.nickname}</div>
+            <div className="text-nowrap w-[10rem] text-base leading-5 text-[#eee]">{album.creator.nickname}</div>
           </div>
         </div>
       </div>

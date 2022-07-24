@@ -70,7 +70,7 @@ const SingersPage = () => {
         <Horizon list={singerAreas} title="地域" oldValue={area} onClick={handleUpdateArea} />
         <Horizon list={singerAlphas} title="首字母" oldValue={alpha} onClick={handleUpdateAlpha} />
       </div>
-      <div className="fixed top-52 left-0 bottom-0 w-full overflow-hidden">
+      <div className="fixed top-52 bottom-0 w-full overflow-hidden">
         <Scroll
           ref={scrollRef}
           pullUp={handlePullUp}

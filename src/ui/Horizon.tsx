@@ -32,9 +32,8 @@ const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {
         {list.map((item) => (
           <div
             key={item.key}
-            className={`mx-0.5 inline-block rounded-md px-2 text-center text-base ${
-              oldValue === item.key &&
-              'border border-solid border-theme_color text-theme_color opacity-80'
+            className={`ml-1 inline-block rounded px-1 text-center text-base ${
+              oldValue === item.key && 'border border-solid border-theme_color text-theme_color opacity-80'
             }`}
             onClick={() => handleClick(item)}
           >

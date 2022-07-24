@@ -32,13 +32,9 @@ const HomeLayout = () => {
   return (
     <>
       <div className="flex h-12 items-center justify-between bg-theme_color px-3">
-        <span className="text-xl leading-10 text-light_color">
-          <FaBars className="text-xl" />
-        </span>
-        <span className="text-xl leading-10 text-light_color">Cloud Music</span>
-        <span className="text-xl leading-10 text-light_color">
-          <FaSearch className="text-xl" />
-        </span>
+        <FaBars className="text-xl text-light_color" />
+        <div className="text-xl text-light_color">Cloud Music</div>
+        <FaSearch className="text-xl text-light_color" />
       </div>
       <div className="flex h-11 items-center justify-around bg-theme_color">
         {renderLink('推荐', '/recommend')}

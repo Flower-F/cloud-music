@@ -1,15 +1,6 @@
 import BetterScroll from 'better-scroll'
 import { debounce, noop } from 'lodash-es'
-import {
-  forwardRef,
-  memo,
-  PropsWithChildren,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState
-} from 'react'
+import { forwardRef, memo, PropsWithChildren, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
 import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
 
@@ -166,10 +157,7 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
 
     // 利用 Scroll 父组件都是 fixed 的原理，设置 absolute 即可实现定位
     return (
-      <div
-        ref={scrollRef}
-        className={`h-full w-full overflow-hidden ${className || ''}`}
-      >
+      <div ref={scrollRef} className={`h-full w-full overflow-hidden ${className || ''}`}>
         {children}
         {pullUpLoading && (
           <div className={'absolute left-0 right-0 bottom-1 z-50'}>

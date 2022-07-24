@@ -51,15 +51,12 @@ const RankList: FC<IProps> = ({ rankList }) => {
                   <img src={coverImgUrl} alt={name} className="h-full w-full rounded" />
                 </LazyLoad>
                 <div className="bg-decorate absolute bottom-0 h-9 w-full rounded"></div>
-                <div className="absolute left-2 bottom-2 text-sm text-light_color">{updateFrequency}</div>
+                <div className="absolute right-2 bottom-1 text-sm text-light_color">{updateFrequency}</div>
               </div>
               {tracks.length > 0 && (
                 <ul className="flex flex-1 flex-col justify-around p-3">
                   {tracks.map((item, index) => (
-                    <li
-                      key={index}
-                      className="w-[60vw] overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-700"
-                    >
+                    <li key={index} className="text-nowrap w-[60vw] text-sm text-gray-700">
                       {index + 1}. {item.first} - {item.second}
                     </li>
                   ))}

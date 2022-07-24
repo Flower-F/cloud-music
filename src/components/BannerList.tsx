@@ -33,7 +33,7 @@ const Slider: FC<IProps> = ({ bannerList }) => {
         >
           {bannerList.map(({ imageUrl }, index) => (
             <SwiperSlide key={index}>
-              <img src={imageUrl} alt={`轮播图 ${index}`} className="h-full w-full" />
+              <img src={imageUrl} alt={`轮播图${index}`} className="h-full w-full" />
             </SwiperSlide>
           ))}
         </Swiper>

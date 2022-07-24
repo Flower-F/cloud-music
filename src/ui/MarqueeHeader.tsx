@@ -10,29 +10,22 @@ interface IProps {
   title?: string
 }
 
-const MarqueeHeader = forwardRef<HTMLDivElement | null, IProps>(
-  ({ onClick, isMarquee = true, title }, ref) => {
-    return (
-      <div
-        className="bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white"
-        ref={ref}
-      >
-        <div className="bg-filter-dark absolute z-50 flex h-9 w-9 items-center justify-center rounded-full text-2xl">
-          <IoArrowBackOutline onClick={onClick} />
-        </div>
-        {isMarquee ? (
-          <h1 className="absolute animate-marquee overflow-hidden whitespace-nowrap tracking-wider">
-            {title || '暂无标题'}
-          </h1>
-        ) : (
-          <h1 className="text-nowrap absolute left-14 tracking-wider">
-            {title || '暂无标题'}
-          </h1>
-        )}
+const MarqueeHeader = forwardRef<HTMLDivElement | null, IProps>(({ onClick, isMarquee = true, title }, ref) => {
+  return (
+    <div className="bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white" ref={ref}>
+      <div className="bg-filter-dark absolute z-50 flex h-9 w-9 items-center justify-center rounded-full text-2xl">
+        <IoArrowBackOutline onClick={onClick} />
       </div>
-    )
-  }
-)
+      {isMarquee ? (
+        <h1 className="absolute animate-marquee overflow-hidden whitespace-nowrap tracking-wider">
+          {title || '暂无标题'}
+        </h1>
+      ) : (
+        <h1 className="text-nowrap absolute left-14 tracking-wider">{title || '暂无标题'}</h1>
+      )}
+    </div>
+  )
+})
 
 MarqueeHeader.displayName = 'MarqueeHeader'
 

@@ -29,10 +29,10 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
 
   return (
     <div className="mx-auto px-[2%]">
-      <h1 className="pl-2 text-sm font-bold leading-10">推荐歌单</h1>
+      <h1 className="flex h-10 items-center pl-2 text-sm font-bold">推荐歌单</h1>
       <ul className="flex flex-wrap justify-between">
         {recommendList.map(({ id, name, picUrl, playCount }, index) => (
-          <li key={`${id}${index}`} className="w-[32%] pb-2" onClick={() => enterDetail(id)}>
+          <li key={`${id}${index}`} className="w-[32%] pb-1" onClick={() => enterDetail(id)}>
             <div className="relative h-0 pb-[100%]">
               <LazyLoad placeholder={<img src={defaultMusicImage} alt="音乐歌单" className="h-full w-full rounded" />}>
                 <img src={`${picUrl}?param=300x300`} alt="音乐歌单" className="h-full w-full rounded" />
@@ -42,7 +42,7 @@ const RecommendList: FC<IProps> = ({ recommendList }) => {
                 <span className="ml-0.5">{getCount(playCount)}</span>
               </div>
             </div>
-            <div className="h-10 overflow-hidden text-sm leading-snug -tracking-tighter text-desc_color">{name}</div>
+            <div className="mt-0.5 h-10 overflow-hidden text-sm text-desc_color">{name}</div>
           </li>
         ))}
       </ul>

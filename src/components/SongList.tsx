@@ -79,8 +79,8 @@ const SongList: FC<IProps> = ({ song }) => {
       </div>
       <ul>
         {tracks.map((item, index) => (
-          <li key={index} className="flex h-16 items-center">
-            <span className="h-14 w-14 basis-14 text-center leading-[3.5rem]">{index + 1}</span>
+          <li key={index} className="flex h-14 items-center">
+            <div className="flex h-14 w-14 items-center justify-center">{index + 1}</div>
             <div className="text-nowrap flex h-full flex-1 flex-col justify-around border-b border-solid border-border_color py-1">
               <span className="text-nowrap text-desc_color">{item.name}</span>
               <span className="text-nowrap text-sm text-[#bba8a8]">
