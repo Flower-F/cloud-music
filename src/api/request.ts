@@ -30,16 +30,16 @@ export const getRecommendListApi = () => {
 export interface ISingerListApi {
   artists: ISinger[]
 }
-export const getHotSingerListApi = (count: number) => {
+export const getHotSingerListApi = (offset: number) => {
   return request<ISingerListApi>({
     method: 'GET',
-    url: `/top/artists?offset=${count}`
+    url: `/top/artists?offset=${offset * 30}&limit=30`
   })
 }
 export const getSingerListApi = (type: string, area: string, alpha: string, offset: number) => {
   return request<ISingerListApi>({
     method: 'GET',
-    url: `/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`
+    url: `/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset * 30}&limit=30`
   })
 }
 
