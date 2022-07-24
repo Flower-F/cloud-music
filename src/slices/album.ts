@@ -5,22 +5,19 @@ import { IAlbum } from '@/components/SongList'
 
 const namespace = 'album'
 
-export const getAlbum = createAsyncThunk(
-  `${namespace}/getAlbum`,
-  async (id: number, { dispatch }) => {
-    const { setAlbum, setEnterLoading } = albumSlice.actions
+export const getAlbum = createAsyncThunk(`${namespace}/getAlbum`, async (id: number, { dispatch }) => {
+  const { setAlbum, setEnterLoading } = albumSlice.actions
 
-    try {
-      dispatch(setAlbum(null))
-      dispatch(setEnterLoading(true))
-      const res = await getAlbumApi(id)
-      dispatch(setEnterLoading(false))
-      dispatch(setAlbum(res.playlist))
-    } catch (error) {
-      console.log('error:', error)
-    }
+  try {
+    dispatch(setAlbum(null))
+    dispatch(setEnterLoading(true))
+    const res = await getAlbumApi(id)
+    dispatch(setEnterLoading(false))
+    dispatch(setAlbum(res.playlist))
+  } catch (error) {
+    console.log('error:', error)
   }
-)
+})
 
 interface IAlbumState {
   album: IAlbum | null

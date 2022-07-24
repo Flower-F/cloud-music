@@ -36,12 +36,7 @@ export const getHotSingerListApi = (count: number) => {
     url: `/top/artists?offset=${count}`
   })
 }
-export const getSingerListApi = (
-  type: string,
-  area: string,
-  alpha: string,
-  offset: number
-) => {
+export const getSingerListApi = (type: string, area: string, alpha: string, offset: number) => {
   return request<ISingerListApi>({
     method: 'GET',
     url: `/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`

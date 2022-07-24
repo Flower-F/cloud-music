@@ -9,8 +9,7 @@ const namespace = 'recommend'
 export const getBannerListAndRecommendList = createAsyncThunk(
   `${namespace}/getBannerListAndRecommendList`,
   (_, { dispatch }) => {
-    const { setBannerList, setRecommendList, setEnterLoading } =
-      recommendSlice.actions
+    const { setBannerList, setRecommendList, setEnterLoading } = recommendSlice.actions
 
     setEnterLoading(false)
     Promise.all([getRecommendListApi(), getBannerListApi()])
@@ -43,22 +42,13 @@ export const recommendSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
-    setBannerList: (
-      state: IRecommendState,
-      action: PayloadAction<IBanner[]>
-    ) => {
+    setBannerList: (state: IRecommendState, action: PayloadAction<IBanner[]>) => {
       state.bannerList = action.payload
     },
-    setRecommendList: (
-      state: IRecommendState,
-      action: PayloadAction<IRecommend[]>
-    ) => {
+    setRecommendList: (state: IRecommendState, action: PayloadAction<IRecommend[]>) => {
       state.recommendList = action.payload
     },
-    setEnterLoading: (
-      state: IRecommendState,
-      action: PayloadAction<boolean>
-    ) => {
+    setEnterLoading: (state: IRecommendState, action: PayloadAction<boolean>) => {
       state.enterLoading = action.payload
     }
   }

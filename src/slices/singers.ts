@@ -6,83 +6,63 @@ import { RootState } from '@/store'
 
 const namespace = 'singers'
 
-export const getHotSingerList = createAsyncThunk(
-  `${namespace}/getHotSingerList`,
-  async (_, { dispatch, getState }) => {
-    const { setSingerList, setEnterLoading } = singersSlice.actions
-    const { singers } = getState() as RootState
+export const getHotSingerList = createAsyncThunk(`${namespace}/getHotSingerList`, async (_, { dispatch, getState }) => {
+  const { setSingerList, setEnterLoading } = singersSlice.actions
+  const { singers } = getState() as RootState
 
-    try {
-      dispatch(setEnterLoading(true))
-      const res = await getHotSingerListApi(singers.offset)
-      dispatch(setEnterLoading(false))
-      dispatch(setSingerList(res.artists))
-    } catch (error) {
-      console.log('error:', error)
-    }
+  try {
+    dispatch(setEnterLoading(true))
+    const res = await getHotSingerListApi(singers.offset)
+    dispatch(setEnterLoading(false))
+    dispatch(setSingerList(res.artists))
+  } catch (error) {
+    console.log('error:', error)
   }
-)
+})
 
-export const updateSingerList = createAsyncThunk(
-  `${namespace}/updateSingerList`,
-  async (_, { dispatch, getState }) => {
-    const { setSingerList, setEnterLoading } = singersSlice.actions
-    const { singers } = getState() as RootState
+export const updateSingerList = createAsyncThunk(`${namespace}/updateSingerList`, async (_, { dispatch, getState }) => {
+  const { setSingerList, setEnterLoading } = singersSlice.actions
+  const { singers } = getState() as RootState
 
-    try {
-      dispatch(setEnterLoading(true))
-      let res
-      if (singers.alpha === '' && singers.area === '' && singers.type === '') {
-        res = await getHotSingerListApi(singers.offset)
-      } else {
-        res = await getSingerListApi(
-          singers.type,
-          singers.area,
-          singers.alpha,
-          singers.offset
-        )
-      }
-      dispatch(setEnterLoading(false))
-      dispatch(setSingerList(res.artists))
-    } catch (error) {
-      console.log('error:', error)
+  try {
+    dispatch(setEnterLoading(true))
+    let res
+    if (singers.alpha === '' && singers.area === '' && singers.type === '') {
+      res = await getHotSingerListApi(singers.offset)
+    } else {
+      res = await getSingerListApi(singers.type, singers.area, singers.alpha, singers.offset)
     }
+    dispatch(setEnterLoading(false))
+    dispatch(setSingerList(res.artists))
+  } catch (error) {
+    console.log('error:', error)
   }
-)
+})
 
-export const pullUpSingerList = createAsyncThunk(
-  `${namespace}/pullUpSingerList`,
-  async (_, { dispatch, getState }) => {
-    const { setSingerList, setPullUpLoading, setOffset } = singersSlice.actions
-    const { singers } = getState() as RootState
+export const pullUpSingerList = createAsyncThunk(`${namespace}/pullUpSingerList`, async (_, { dispatch, getState }) => {
+  const { setSingerList, setPullUpLoading, setOffset } = singersSlice.actions
+  const { singers } = getState() as RootState
 
-    try {
-      dispatch(setPullUpLoading(true))
-      dispatch(setOffset(singers.offset + 1))
-      let res
-      if (singers.alpha === '' && singers.area === '' && singers.type === '') {
-        res = await getHotSingerListApi(singers.offset)
-      } else {
-        res = await getSingerListApi(
-          singers.type,
-          singers.area,
-          singers.alpha,
-          singers.offset
-        )
-      }
-      dispatch(setPullUpLoading(false))
-      dispatch(setSingerList([...singers.singerList, ...res.artists]))
-    } catch (error) {
-      console.log('error:', error)
+  try {
+    dispatch(setPullUpLoading(true))
+    dispatch(setOffset(singers.offset + 1))
+    let res
+    if (singers.alpha === '' && singers.area === '' && singers.type === '') {
+      res = await getHotSingerListApi(singers.offset)
+    } else {
+      res = await getSingerListApi(singers.type, singers.area, singers.alpha, singers.offset)
     }
+    dispatch(setPullUpLoading(false))
+    dispatch(setSingerList([...singers.singerList, ...res.artists]))
+  } catch (error) {
+    console.log('error:', error)
   }
-)
+})
 
 export const pullDownSingerList = createAsyncThunk(
   `${namespace}/pullDownSingerList`,
   async (_, { dispatch, getState }) => {
-    const { setSingerList, setOffset, setPullDownLoading } =
-      singersSlice.actions
+    const { setSingerList, setOffset, setPullDownLoading } = singersSlice.actions
     const { singers } = getState() as RootState
 
     try {
@@ -92,12 +72,7 @@ export const pullDownSingerList = createAsyncThunk(
       if (singers.alpha === '' && singers.area === '' && singers.type === '') {
         res = await getHotSingerListApi(singers.offset)
       } else {
-        res = await getSingerListApi(
-          singers.type,
-          singers.area,
-          singers.alpha,
-          singers.offset
-        )
+        res = await getSingerListApi(singers.type, singers.area, singers.alpha, singers.offset)
       }
       dispatch(setPullDownLoading(false))
       dispatch(setSingerList(res.artists))
@@ -139,16 +114,10 @@ export const singersSlice = createSlice({
     setEnterLoading: (state: ISingersState, action: PayloadAction<boolean>) => {
       state.enterLoading = action.payload
     },
-    setPullUpLoading: (
-      state: ISingersState,
-      action: PayloadAction<boolean>
-    ) => {
+    setPullUpLoading: (state: ISingersState, action: PayloadAction<boolean>) => {
       state.pullUpLoading = action.payload
     },
-    setPullDownLoading: (
-      state: ISingersState,
-      action: PayloadAction<boolean>
-    ) => {
+    setPullDownLoading: (state: ISingersState, action: PayloadAction<boolean>) => {
       state.pullDownLoading = action.payload
     },
     setOffset: (state: ISingersState, action: PayloadAction<number>) => {

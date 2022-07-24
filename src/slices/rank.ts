@@ -5,21 +5,18 @@ import { IRank } from '@/components/RankList'
 
 const namespace = 'rank'
 
-export const getRankList = createAsyncThunk(
-  `${namespace}/getRankList`,
-  async (_, { dispatch }) => {
-    const { setRankList, setEnterLoading } = rankSlice.actions
+export const getRankList = createAsyncThunk(`${namespace}/getRankList`, async (_, { dispatch }) => {
+  const { setRankList, setEnterLoading } = rankSlice.actions
 
-    try {
-      dispatch(setEnterLoading(true))
-      const res = await getRankListApi()
-      dispatch(setEnterLoading(false))
-      dispatch(setRankList(res.list))
-    } catch (error) {
-      console.log('error:', error)
-    }
+  try {
+    dispatch(setEnterLoading(true))
+    const res = await getRankListApi()
+    dispatch(setEnterLoading(false))
+    dispatch(setRankList(res.list))
+  } catch (error) {
+    console.log('error:', error)
   }
-)
+})
 
 interface IRankState {
   rankList: IRank[]

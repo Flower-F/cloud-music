@@ -1,12 +1,4 @@
-import {
-  ElementRef,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react'
+import { ElementRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -50,11 +42,7 @@ const ArtistPage = () => {
   useEffect(() => {
     dispatch(getArtist(Number(params.id)))
 
-    if (
-      !imageWrapperRef.current ||
-      !scrollWrapperRef.current ||
-      !scrollRef.current
-    ) {
+    if (!imageWrapperRef.current || !scrollWrapperRef.current || !scrollRef.current) {
       return
     }
 
@@ -76,8 +64,7 @@ const ArtistPage = () => {
     }
 
     const newY = pos.y
-    const minScrollY =
-      -(imageHeightRef.current - OFFSET) + marqueeHeaderRef.current.offsetHeight
+    const minScrollY = -(imageHeightRef.current - OFFSET) + marqueeHeaderRef.current.offsetHeight
     // 计算滑动距离占图片高度的百分比
     const percent = Math.abs(newY / imageHeightRef.current)
     if (newY > 0) {
@@ -105,21 +92,9 @@ const ArtistPage = () => {
   }, [artist])
 
   return (
-    <CSSTransition
-      in={showStatus}
-      timeout={300}
-      classNames="page-change"
-      appear={true}
-      unmountOnExit
-      onExited={goBack}
-    >
+    <CSSTransition in={showStatus} timeout={300} classNames="page-change" appear={true} unmountOnExit onExited={goBack}>
       <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
-        <MarqueeHeader
-          isMarquee={false}
-          title={artist?.name || '歌手'}
-          onClick={handleClick}
-          ref={marqueeHeaderRef}
-        />
+        <MarqueeHeader isMarquee={false} title={artist?.name || '歌手'} onClick={handleClick} ref={marqueeHeaderRef} />
         <div
           className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
           style={backgroundStyle}
@@ -135,10 +110,7 @@ const ArtistPage = () => {
           <FaStar className="mr-1.5 text-lg" />
           <span className="text-base tracking-[0.3rem]">收藏</span>
         </div>
-        <div
-          className="absolute top-0 bottom-0 z-50 w-full"
-          ref={scrollWrapperRef}
-        >
+        <div className="absolute top-0 bottom-0 z-50 w-full" ref={scrollWrapperRef}>
           <Scroll ref={scrollRef} onScrollCallback={handleScroll}>
             <div className="absolute w-full overflow-visible">
               {artist && !enterLoading && <SongList song={artist} />}

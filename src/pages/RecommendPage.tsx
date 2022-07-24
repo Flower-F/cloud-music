@@ -9,9 +9,7 @@ import EnterLoading from '@/ui/EnterLoading'
 import Scroll from '@/ui/Scroll'
 
 const RecommendPage = () => {
-  const { bannerList, recommendList, enterLoading } = useAppSelector(
-    (store) => store.recommend
-  )
+  const { bannerList, recommendList, enterLoading } = useAppSelector((store) => store.recommend)
 
   const dispatch = useAppDispatch()
   useEffect(() => {

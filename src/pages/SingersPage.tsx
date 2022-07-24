@@ -3,28 +3,16 @@ import { forceCheck } from 'react-lazyload'
 
 import { singerAlphas, singerAreas, singerTypes } from '@/api'
 import SingerList from '@/components/SingerList'
-import {
-  getHotSingerList,
-  pullDownSingerList,
-  pullUpSingerList,
-  singersSlice,
-  updateSingerList
-} from '@/slices'
+import { getHotSingerList, pullDownSingerList, pullUpSingerList, singersSlice, updateSingerList } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import EnterLoading from '@/ui/EnterLoading'
 import Horizon from '@/ui/Horizon'
 import Scroll from '@/ui/Scroll'
 
 const SingersPage = () => {
-  const {
-    singerList,
-    enterLoading,
-    pullDownLoading,
-    pullUpLoading,
-    type,
-    area,
-    alpha
-  } = useAppSelector((store) => store.singers)
+  const { singerList, enterLoading, pullDownLoading, pullUpLoading, type, area, alpha } = useAppSelector(
+    (store) => store.singers
+  )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -78,24 +66,9 @@ const SingersPage = () => {
   return (
     <>
       <div className="fixed top-24 w-full overflow-hidden px-2">
-        <Horizon
-          list={singerTypes}
-          title="类型"
-          oldValue={type}
-          onClick={handleUpdateType}
-        />
-        <Horizon
-          list={singerAreas}
-          title="地域"
-          oldValue={area}
-          onClick={handleUpdateArea}
-        />
-        <Horizon
-          list={singerAlphas}
-          title="首字母"
-          oldValue={alpha}
-          onClick={handleUpdateAlpha}
-        />
+        <Horizon list={singerTypes} title="类型" oldValue={type} onClick={handleUpdateType} />
+        <Horizon list={singerAreas} title="地域" oldValue={area} onClick={handleUpdateArea} />
+        <Horizon list={singerAlphas} title="首字母" oldValue={alpha} onClick={handleUpdateAlpha} />
       </div>
       <div className="fixed top-52 left-0 bottom-0 w-full overflow-hidden">
         <Scroll

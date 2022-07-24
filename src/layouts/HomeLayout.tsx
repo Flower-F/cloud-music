@@ -19,8 +19,7 @@ const HomeLayout = () => {
         {({ isActive }) => (
           <span
             className={`h-full px-1 text-sm text-border_color ${
-              isActive &&
-              'border-b-2 border-solid border-b-light_color font-bold text-light_color'
+              isActive && 'border-b-2 border-solid border-b-light_color font-bold text-light_color'
             }`}
           >
             {title}

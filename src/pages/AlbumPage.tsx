@@ -35,14 +35,7 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
   }, [])
 
   return (
-    <CSSTransition
-      in={showStatus}
-      timeout={300}
-      classNames="page-change"
-      appear={true}
-      unmountOnExit
-      onExited={goBack}
-    >
+    <CSSTransition in={showStatus} timeout={300} classNames="page-change" appear={true} unmountOnExit onExited={goBack}>
       <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
         <MarqueeHeader title={album?.name || '歌单'} onClick={handleClick} />
         <Scroll bounceTop={false}>

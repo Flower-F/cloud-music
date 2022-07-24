@@ -38,58 +38,35 @@ const RankList: FC<IProps> = ({ rankList }) => {
     <>
       {rankList.length ? (
         <ul className="mt-3 flex flex-wrap justify-between bg-background_color px-1">
-          {rankList.map(
-            (
-              { coverImgId, coverImgUrl, name, tracks, updateFrequency, id },
-              index
-            ) => (
-              <li
-                key={`${coverImgId}${index}`}
-                className={`border-b border-solid border-b-border_color py-1 ${
-                  tracks.length > 0 && 'flex'
-                }`}
-                onClick={() => enterDetail(id)}
-              >
-                <div
-                  className={`relative h-[32vw] w-[32vw] rounded ${
-                    tracks.length && 'h-[27vw] w-[27vw]'
-                  }`}
+          {rankList.map(({ coverImgId, coverImgUrl, name, tracks, updateFrequency, id }, index) => (
+            <li
+              key={`${coverImgId}${index}`}
+              className={`border-b border-solid border-b-border_color py-1 ${tracks.length > 0 && 'flex'}`}
+              onClick={() => enterDetail(id)}
+            >
+              <div className={`relative h-[32vw] w-[32vw] rounded ${tracks.length && 'h-[27vw] w-[27vw]'}`}>
+                <LazyLoad
+                  placeholder={<img src={defaultMusicImage} alt="音乐歌单" className="h-full w-full rounded" />}
                 >
-                  <LazyLoad
-                    placeholder={
-                      <img
-                        src={defaultMusicImage}
-                        alt="音乐歌单"
-                        className="h-full w-full rounded"
-                      />
-                    }
-                  >
-                    <img
-                      src={coverImgUrl}
-                      alt={name}
-                      className="h-full w-full rounded"
-                    />
-                  </LazyLoad>
-                  <div className="bg-decorate absolute bottom-0 h-9 w-full rounded"></div>
-                  <div className="absolute left-2 bottom-2 text-sm text-light_color">
-                    {updateFrequency}
-                  </div>
-                </div>
-                {tracks.length > 0 && (
-                  <ul className="flex flex-1 flex-col justify-around p-3">
-                    {tracks.map((item, index) => (
-                      <li
-                        key={index}
-                        className="w-[60vw] overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-700"
-                      >
-                        {index + 1}. {item.first} - {item.second}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            )
-          )}
+                  <img src={coverImgUrl} alt={name} className="h-full w-full rounded" />
+                </LazyLoad>
+                <div className="bg-decorate absolute bottom-0 h-9 w-full rounded"></div>
+                <div className="absolute left-2 bottom-2 text-sm text-light_color">{updateFrequency}</div>
+              </div>
+              {tracks.length > 0 && (
+                <ul className="flex flex-1 flex-col justify-around p-3">
+                  {tracks.map((item, index) => (
+                    <li
+                      key={index}
+                      className="w-[60vw] overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-700"
+                    >
+                      {index + 1}. {item.first} - {item.second}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
       ) : (
         <div />

@@ -35,20 +35,8 @@ const SingerList: FC<IProps> = ({ singerList }) => {
           onClick={() => enterDetail(id)}
         >
           <div className="mr-4">
-            <LazyLoad
-              placeholder={
-                <img
-                  src={defaultMusicImage}
-                  alt="音乐歌单"
-                  className="h-14 w-14 rounded"
-                />
-              }
-            >
-              <img
-                src={`${picUrl}?param=300x300`}
-                className="h-14 w-14 rounded"
-                alt="歌手列表"
-              />
+            <LazyLoad placeholder={<img src={defaultMusicImage} alt="音乐歌单" className="h-14 w-14 rounded" />}>
+              <img src={`${picUrl}?param=300x300`} className="h-14 w-14 rounded" alt="歌手列表" />
             </LazyLoad>
           </div>
           <span className="text-base font-medium text-desc_color">{name}</span>
