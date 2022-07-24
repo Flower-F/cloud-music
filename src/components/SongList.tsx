@@ -5,7 +5,7 @@ import { FaStar } from 'react-icons/fa'
 import { getCount, getName } from '@/utils'
 
 export interface ISong {
-  /** 歌名 */
+  /** 名称 */
   name: string
   /** 歌手列表 */
   ar: { name: string }[]

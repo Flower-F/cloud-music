@@ -60,6 +60,11 @@
   .bg-marquee {
     background: linear-gradient(90deg, #200122 0%, #6f0000 100%);
   }
+
+  /* 暂停动画 */
+  .rotating-pause {
+    animation-play-state: paused
+  }
 }
 
 body {
@@ -102,3 +107,4 @@ body {
   padding: 0 0.5rem;
   line-height: 2.75rem;
 }
+

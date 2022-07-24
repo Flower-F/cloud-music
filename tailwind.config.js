@@ -33,11 +33,20 @@ module.exports = {
           to: {
             left: '-100%'
           }
+        },
+        rotating: {
+          from: {
+            transform: 'rotate(0)'
+          },
+          to: {
+            transform: 'rotate(360deg)'
+          }
         }
       },
       animation: {
         wave: 'wave 1s infinite',
-        marquee: 'marquee 14s linear infinite'
+        marquee: 'marquee 14s linear infinite',
+        rotating: 'rotating 10s infinite'
       }
     }
   },

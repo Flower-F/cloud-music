@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { albumSlice, artistSlice, rankSlice, recommendSlice, singersSlice } from '@/slices'
+import { albumSlice, artistSlice, playerSlice, rankSlice, recommendSlice, singersSlice } from '@/slices'
 
 const store = configureStore({
   reducer: {
@@ -9,7 +9,8 @@ const store = configureStore({
     singers: singersSlice.reducer,
     rank: rankSlice.reducer,
     album: albumSlice.reducer,
-    artist: artistSlice.reducer
+    artist: artistSlice.reducer,
+    player: playerSlice.reducer
   }
 })
 

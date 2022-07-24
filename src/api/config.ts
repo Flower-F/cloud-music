@@ -170,3 +170,12 @@ export const singerAlphas: ISingerConfig[] = [
     name: 'Z'
   }
 ]
+
+export enum playingMode {
+  /** 顺序播放 */
+  SEQUENCE_MODE,
+  /** 循环播放 */
+  LOOP_MODE,
+  /** 随机播放 */
+  RANDOM_MODE
+}
