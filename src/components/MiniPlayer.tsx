@@ -21,7 +21,11 @@ const MiniPlayer: FC<IProps> = ({ song }) => {
   return (
     <div className="fixed left-0 bottom-0 z-[1000] flex h-16 w-full items-center bg-highlight_background_color">
       <div className="mr-2.5 ml-5 h-10 w-10">
-        <img src={song.al.picUrl} alt={`${song.name}播放中`} className="h-full w-full rounded-full" />
+        <img
+          src={song.al.picUrl}
+          alt={`${song.name}播放中`}
+          className="h-full w-full animate-mini-rotating rounded-full"
+        />
       </div>
       <div className="flex flex-1 flex-col justify-center overflow-hidden leading-5">
         <h3 className="text-nowrap mb-0.5 text-base text-desc_color">{song.name}</h3>

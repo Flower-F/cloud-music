@@ -34,7 +34,15 @@ module.exports = {
             left: '-100%'
           }
         },
-        rotating: {
+        'mini-rotating': {
+          from: {
+            transform: 'rotate(0)'
+          },
+          to: {
+            transform: 'rotate(360deg)'
+          }
+        },
+        'normal-rotating': {
           from: {
             transform: 'rotate(0)'
           },
@@ -46,7 +54,8 @@ module.exports = {
       animation: {
         wave: 'wave 1s infinite',
         marquee: 'marquee 14s linear infinite',
-        rotating: 'rotating 10s infinite'
+        'mini-rotating': 'mini-rotating 10s linear infinite',
+        'normal-rotating': 'normal-rotating 20s linear infinite'
       }
     }
   },

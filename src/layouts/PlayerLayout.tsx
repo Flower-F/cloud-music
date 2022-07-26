@@ -1,4 +1,5 @@
 import MiniPlayer from '@/components/MiniPlayer'
+import NormalPlayer from '@/components/NormalPlayer'
 
 const PlayerLayout = () => {
   const currentSong = {
@@ -9,7 +10,8 @@ const PlayerLayout = () => {
 
   return (
     <div>
-      <MiniPlayer song={currentSong} />
+      {/* <MiniPlayer song={currentSong} /> */}
+      <NormalPlayer song={currentSong} />
     </div>
   )
 }
