@@ -43,7 +43,7 @@ const MiniPlayer: FC<IProps> = ({ song, setFullScreen, dispatch }) => {
       </div>
 
       <div className="mr-4 flex">
-        <ProgressCircle radius={38} percent={0.2}>
+        <ProgressCircle radius={38} percent={0.2} className="relative">
           <AiOutlinePauseCircle className="absolute -top-[1px] -left-[1px] h-[40px] w-[40px] text-theme_color_shadow" />
         </ProgressCircle>
         <RiPlayListFill className="ml-2.5 h-9 w-9 text-theme_color" />

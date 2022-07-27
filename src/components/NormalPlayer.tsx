@@ -7,6 +7,7 @@ import { RiArrowDropDownLine, RiPlayListFill } from 'react-icons/ri'
 import { CSSTransition } from 'react-transition-group'
 
 import { useAppDispatch } from '@/store'
+import ProgressBar from '@/ui/ProgressBar'
 import { getName } from '@/utils'
 
 import { IPlayer } from './MiniPlayer'
@@ -76,12 +77,15 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
             ref={cdRef}
           />
         </div>
-        <div className="absolute bottom-12 flex h-24 w-full items-center justify-between px-10">
-          <ImLoop2 className="text-3xl" />
-          <MdSkipPrevious className="text-4xl" />
-          <CgPlayPauseO className="text-6xl" />
-          <MdSkipNext className="text-4xl" />
-          <RiPlayListFill className="text-4xl" />
+        <div className="absolute bottom-12 flex w-full flex-col">
+          <ProgressBar />
+          <div className="flex h-24 w-full items-center justify-between px-10">
+            <ImLoop2 className="text-3xl" />
+            <MdSkipPrevious className="text-4xl" />
+            <CgPlayPauseO className="text-6xl" />
+            <MdSkipNext className="text-4xl" />
+            <RiPlayListFill className="text-4xl" />
+          </div>
         </div>
       </div>
     </CSSTransition>

@@ -5,14 +5,15 @@ interface IProps {
   radius: number
   /** 进度 */
   percent: number
+  className?: string
 }
 
-const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, children }) => {
+const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, children, className }) => {
   const dashArray = Math.PI * 100
   const dashOffset = (1 - percent) * dashArray
 
   return (
-    <div className="relative">
+    <div className={className || ''}>
       <svg width={radius} height={radius} viewBox="0 0 100 100" version="1.1" xmlns="https://www.w3.org/2000/svg">
         <circle
           className="origin-center scale-90 stroke-theme_color_shadow"

@@ -16,9 +16,10 @@ interface IProps {
   oldValue?: string
   /** 点击列表项的回调 */
   onClick?: (...args: any[]) => any
+  className?: string
 }
 
-const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {
+const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick, className }) => {
   const handleClick = useCallback((item: ISingerConfig) => {
     if (onClick) {
       onClick(item.key)
@@ -26,7 +27,7 @@ const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick }) => {
   }, [])
 
   return (
-    <Scroll direction="horizontal" className="whitespace-nowrap">
+    <Scroll direction="horizontal" className={`whitespace-nowrap ${className || ''}`}>
       <div className="inline-block h-9 py-1">
         <h3 className="mr-0.5 inline-block text-base text-gray-500">{title}</h3>
         {list.map((item) => (
