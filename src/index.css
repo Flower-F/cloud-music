@@ -108,3 +108,26 @@ body {
   line-height: 2.75rem;
 }
 
+.mini-player-enter {
+  transform: translate3d(0, 100%, 0);
+}
+
+.mini-player-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: all 0.4s;
+}
+
+.mini-player-exit-active {
+  transform: translate3d(0, 100%, 0);
+  transition: all 0.4s;
+}
+
+.normal-player-enter {
+  transform: scale(2);
+  transition: all 0.2s;
+}
+
+.normal-player-enter-active {
+  transform: scale(1);
+  transition: all 0.2s;
+}

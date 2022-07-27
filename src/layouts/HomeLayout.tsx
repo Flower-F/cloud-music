@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect } from 'react'
 import { FaBars, FaSearch } from 'react-icons/fa'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-import PlayerLayout from './PlayerLayout'
+import PlayerPage from '@/pages/PlayerPage'
 
 const HomeLayout = () => {
   const location = useLocation()
@@ -44,7 +44,7 @@ const HomeLayout = () => {
         {renderLink('排行榜', '/rank')}
       </div>
       <Outlet />
-      <PlayerLayout />
+      <PlayerPage />
     </>
   )
 }
