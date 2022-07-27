@@ -37,9 +37,6 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
   }, [])
 
   const toggleToMiniPlayer = useCallback(() => {
-    if (!normalPlayerRef.current) {
-      return
-    }
     dispatch(setFullScreen(false))
   }, [])
 
