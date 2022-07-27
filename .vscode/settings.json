@@ -27,4 +27,10 @@
   "cSpell.words": [
     "toplist"
   ],
+  "stylelint.validate": [
+    "css"
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  }
 }

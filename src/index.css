@@ -1,52 +1,59 @@
+/* stylelint-disable at-rule-no-unknown */
+/* stylelint-disable selector-class-pattern */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --theme-color: #d44439;
-  --theme-color-shadow: rgba(212, 68, 57, .5);
-  ---light-color: #f1f1f1;
-  --desc-color: #2E3030;
-  --desc-color--v2: '#bba8a8';
+  --theme-color-shadow: rgb(212 68 57 / 50%);
+  --light-color: #f1f1f1;
+  --desc-color: #2e3030;
+  --desc-color-v2: #bba8a8;
   --border-color: #e4e4e4;
   --background-color: #f2f3f4;
-  --background-color-shadow: rgba(0, 0, 0, 0.3);
+  --background-color-shadow: rgb(0 0 0 / 30%);
   --highlight-background-color: #fff;
 }
 
 @layer utilities {
   /* 动画延迟，用于下拉加载动画 */
   .-animation-delay-1 {
-    animation-delay: -0.1s
+    animation-delay: -0.1s;
   }
+
   .-animation-delay-2 {
-    animation-delay: -0.2s
+    animation-delay: -0.2s;
   }
+
   .-animation-delay-3 {
-    animation-delay: -0.3s
+    animation-delay: -0.3s;
   }
+
   .-animation-delay-4 {
-    animation-delay: -0.4s
+    animation-delay: -0.4s;
   }
+
   .-animation-delay-5 {
-    animation-delay: -0.5s
+    animation-delay: -0.5s;
   }
+
   .-animation-delay-6 {
-    animation-delay: -0.5s
+    animation-delay: -0.5s;
   }
 
   /* 防止白色图片导致文字无法显示的背景 */
   .bg-decorate {
-    background: linear-gradient(hsla(0, 0%, 100%, 0), hsl(0, 0%, 43%, .4));
+    background: linear-gradient(hsl(0deg 0% 100% / 0%), hsl(0deg 0% 43% / 40%));
   }
 
   /* 滤镜 */
   .bg-filter {
-    background: rgba(7, 17, 27, 0.2);
+    background: rgb(7 17 27 / 20%);
   }
 
   .bg-filter-dark {
-    background: rgba(7, 17, 27, 0.7);
+    background: rgb(7 17 27 / 70%);
   }
 
   /* 单行文字省略 */
@@ -63,7 +70,7 @@
 
   /* 暂停动画 */
   .rotating-pause {
-    animation-play-state: paused
+    animation-play-state: paused;
   }
 }
 
@@ -76,7 +83,8 @@ body {
   background-color: var(--theme-color) !important;
 }
 
-.swiper-button-prev, .swiper-button-next {
+.swiper-button-prev,
+.swiper-button-next {
   color: var(--theme-color) !important;
 }
 
@@ -108,26 +116,21 @@ body {
   line-height: 2.75rem;
 }
 
-.mini-player-enter {
-  transform: translate3d(0, 100%, 0);
-}
-
-.mini-player-enter-active {
-  transform: translate3d(0, 0, 0);
-  transition: all 0.4s;
-}
-
-.mini-player-exit-active {
-  transform: translate3d(0, 100%, 0);
-  transition: all 0.4s;
-}
-
 .normal-player-enter {
-  transform: scale(2);
   transition: all 0.2s;
+  transform: scale(1.6);
 }
 
 .normal-player-enter-active {
+  transition: all 0.1s;
   transform: scale(1);
-  transition: all 0.2s;
+}
+
+.normal-player-exit {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.normal-player-exit-active {
+  transition: all 0.4s;
+  transform: translate3d(0, 100%, 0) scale(0.6);
 }

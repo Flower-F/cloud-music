@@ -4,6 +4,7 @@ export const getName = (
     name: string
   }[]
 ) => {
+  // TODO: 使用 reduce 简化编写
   let str = ''
   list.map((item, index) => {
     str += index === 0 ? item.name : '/' + item.name
