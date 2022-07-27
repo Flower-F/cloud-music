@@ -19,7 +19,7 @@ const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, childr
           r={50}
           cx={50}
           cy={50}
-          strokeWidth={8}
+          strokeWidth={10}
           fill="transparent"
         ></circle>
         <circle
@@ -27,7 +27,7 @@ const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, childr
           r={50}
           cx={50}
           cy={50}
-          strokeWidth={8}
+          strokeWidth={10}
           strokeDasharray={dashArray}
           strokeDashoffset={dashOffset}
           fill="transparent"
