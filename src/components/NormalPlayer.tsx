@@ -21,7 +21,6 @@ interface IProps {
 
 const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
-  const cdRef = useRef<HTMLImageElement | null>(null)
 
   const handleEnter = useCallback(() => {
     if (!normalPlayerRef.current) {
@@ -74,7 +73,6 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
             src={`${song.al.picUrl}?param=400x400`}
             alt="歌曲封面"
             className="border-[rgba(255, 255, 255, 0.1)] absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid"
-            ref={cdRef}
           />
         </div>
         <div className="absolute bottom-12 flex w-full flex-col">

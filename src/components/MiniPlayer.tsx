@@ -29,7 +29,7 @@ const MiniPlayer: FC<IProps> = ({ song, setFullScreen, dispatch }) => {
   }, [])
 
   return (
-    <div className="fixed left-0 bottom-0 z-[1000] flex h-[64px] w-full items-center bg-highlight_background_color">
+    <div className="fixed left-0 -bottom-1 z-[1000] flex h-[64px] w-full items-center bg-highlight_background_color">
       <div className="mr-2.5 ml-4 flex h-[64px] w-[48px] items-center" onClick={toggleToNormalPlayer}>
         <img
           src={song.al.picUrl}
@@ -39,7 +39,7 @@ const MiniPlayer: FC<IProps> = ({ song, setFullScreen, dispatch }) => {
       </div>
       <div className="flex flex-1 flex-col justify-center overflow-hidden leading-5">
         <h3 className="text-nowrap mb-0.5 text-base text-desc_color">{song.name}</h3>
-        <p className="text-nowrap text-sm text-desc_color_v2">{getName(song.ar)}</p>
+        <p className="text-nowrap text-sm text-[#555]">{getName(song.ar)}</p>
       </div>
 
       <div className="mr-4 flex">

@@ -119,7 +119,7 @@ body {
 /* 播放器动画切换 */
 .normal-player-enter {
   transition: all 0.2s;
-  transform: scale(1.6);
+  transform: scale(1.2);
 }
 
 .normal-player-enter-active {
