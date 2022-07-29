@@ -35,7 +35,7 @@ const HomeLayout = () => {
     <>
       <div className="flex h-12 items-center justify-between bg-theme_color px-3">
         <FaBars className="text-xl text-light_color" />
-        <div className="text-xl text-light_color">Cloud Music</div>
+        <div className="text-xl text-light_color">Flower Music</div>
         <FaSearch className="text-xl text-light_color" />
       </div>
       <div className="flex h-11 items-center justify-around bg-theme_color">
