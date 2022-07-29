@@ -1,9 +1,10 @@
-import { memo } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import MiniPlayer from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
+import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
   const currentSong = {
@@ -12,16 +13,145 @@ const PlayerPage = () => {
     ar: [{ name: '薛之谦' }]
   }
 
-  const { fullscreen } = useAppSelector((store) => store.player)
+  const playList = [
+    {
+      ftype: 0,
+      djId: 0,
+      a: null,
+      cd: '01',
+      crbt: null,
+      no: 1,
+      st: 0,
+      rt: '',
+      cf: '',
+      alia: ['手游《梦幻花园》苏州园林版推广曲'],
+      rtUrls: [],
+      fee: 0,
+      s_id: 0,
+      copyright: 0,
+      h: {
+        br: 320000,
+        fid: 0,
+        size: 9400365,
+        vd: -45814
+      },
+      mv: 0,
+      al: {
+        id: 84991301,
+        name: '拾梦纪',
+        picUrl: 'http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg',
+        tns: [],
+        pic_str: '109951164627180052',
+        pic: 109951164627180050
+      },
+      name: '拾梦纪',
+      l: {
+        br: 128000,
+        fid: 0,
+        size: 3760173,
+        vd: -41672
+      },
+      rtype: 0,
+      m: {
+        br: 192000,
+        fid: 0,
+        size: 5640237,
+        vd: -43277
+      },
+      cp: 1416668,
+      mark: 0,
+      rtUrl: null,
+      mst: 9,
+      dt: 234947,
+      ar: [
+        {
+          id: 12084589,
+          name: '妖扬',
+          tns: [],
+          alias: []
+        },
+        {
+          id: 12578371,
+          name: '金天',
+          tns: [],
+          alias: []
+        }
+      ],
+      pop: 5,
+      pst: 0,
+      t: 0,
+      v: 3,
+      id: 1416767593,
+      publishTime: 0,
+      rurl: null
+    }
+  ]
 
-  const { setFullscreen } = playerSlice.actions
+  const { fullscreen, isPlaying } = useAppSelector((store) => store.player)
+  const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong } = playerSlice.actions
 
   const dispatch = useAppDispatch()
 
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
+
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!currentSong || !audioRef.current) {
+      return
+    }
+    dispatch(setCurrentIndex(0))
+    const newSong = playList[0]
+    dispatch(setCurrentSong(newSong))
+    audioRef.current.src = getSongUrl(newSong.id)
+    dispatch(setIsPlaying(false))
+    setCurrentTime(0)
+    setDuration((newSong.dt / 1000) | 0)
+  }, [])
+
+  const play = useCallback(() => {
+    if (!audioRef.current) {
+      return
+    }
+    audioRef.current.play()
+  }, [])
+
+  const pause = useCallback(() => {
+    if (!audioRef.current) {
+      return
+    }
+    audioRef.current.pause()
+  }, [])
+
   return (
     <div>
-      <MiniPlayer song={currentSong} fullscreen={fullscreen} dispatch={dispatch} setFullScreen={setFullscreen} />
-      <NormalPlayer song={currentSong} dispatch={dispatch} fullscreen={fullscreen} setFullScreen={setFullscreen} />
+      {currentSong ? (
+        <MiniPlayer
+          song={currentSong}
+          dispatch={dispatch}
+          setFullScreen={setFullscreen}
+          percent={percent}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          play={play}
+          pause={pause}
+        />
+      ) : null}
+      {currentSong ? (
+        <NormalPlayer
+          song={currentSong}
+          dispatch={dispatch}
+          fullscreen={fullscreen}
+          setFullScreen={setFullscreen}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          play={play}
+          pause={pause}
+        />
+      ) : null}
+      <audio ref={audioRef}></audio>
     </div>
   )
 }

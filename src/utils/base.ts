@@ -24,3 +24,8 @@ export const getCount = (count: number) => {
     return Math.floor(count / 10000000) / 10 + '亿'
   }
 }
+
+/** 获取歌曲链接 */
+export const getSongUrl = (id: number) => {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+}

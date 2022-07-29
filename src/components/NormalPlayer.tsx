@@ -17,6 +17,10 @@ interface IProps {
   fullscreen: boolean
   setFullScreen: ActionCreatorWithPayload<boolean, string>
   dispatch: ReturnType<typeof useAppDispatch>
+  isPlaying: boolean
+  setIsPlaying: ActionCreatorWithPayload<boolean, string>
+  play: () => void
+  pause: () => void
 }
 
 const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch }) => {

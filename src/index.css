@@ -69,7 +69,7 @@
   }
 
   /* 暂停动画 */
-  .rotating-pause {
+  .animate-pause {
     animation-play-state: paused;
   }
 }
