@@ -1,4 +1,4 @@
-import { FC, memo, MouseEvent, TouchEvent, useCallback, useRef, useState } from 'react'
+import { FC, memo, MouseEvent, TouchEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 interface ITouch {
   startX: number
@@ -7,11 +7,14 @@ interface ITouch {
 }
 
 interface IProps {
+  /** 进度 */
+  percent: number
+  /** 进度改变触发的回调 */
+  percentChangeCallback?: (currentPercent: number, ...args: any[]) => void
   className?: string
-  percentChangeCallback?: (currentPercent: number) => void
 }
 
-const ProgressBar: FC<IProps> = ({ className, percentChangeCallback }) => {
+const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) => {
   const progressBarRef = useRef<HTMLDivElement | null>(null)
   const progressButtonRef = useRef<HTMLDivElement | null>(null)
   const progressRef = useRef<HTMLDivElement | null>(null)
@@ -77,12 +80,28 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback }) => {
     const totalWidth = progressBarRef.current.clientWidth - progressButtonRef.current.clientWidth
     const currentWidth = progressRef.current.clientWidth
     const percent = currentWidth / totalWidth
+    // console.log('newPercent', percent)
     percentChangeCallback(percent)
   }, [])
 
+  useEffect(() => {
+    if (
+      percent >= 0 &&
+      percent <= 1 &&
+      touch &&
+      !touch.initialized &&
+      progressBarRef.current &&
+      progressButtonRef.current
+    ) {
+      const progressBarWidth = progressBarRef.current.clientWidth - progressButtonRef.current.clientWidth
+      const offsetWidth = percent * progressBarWidth
+      updateProgress(offsetWidth)
+    }
+  }, [percent])
+
   return (
     <div
-      className={`relative mx-4 h-1 w-full rounded-md bg-black/30 ${className || ''}`}
+      className={`relative mx-3 mb-0.5 h-1 w-full rounded-md bg-black/30 ${className || ''}`}
       onClick={handleClick}
       ref={progressBarRef}
     >

@@ -29,3 +29,11 @@ export const getCount = (count: number) => {
 export const getSongUrl = (id: number) => {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 }
+
+/** 格式化播放时间 */
+export const formatPlayingTime = (time: number) => {
+  time = time | 0 // 向下取整
+  const minute = (time / 60) | 0
+  const second = (time % 60).toString().padStart(2, '0')
+  return `${minute}:${second}`
+}

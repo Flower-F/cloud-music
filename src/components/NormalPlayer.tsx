@@ -6,22 +6,29 @@ import { RiArrowDropDownLine, RiPlayListFill } from 'react-icons/ri'
 import { CSSTransition } from 'react-transition-group'
 
 import ProgressBar from '@/ui/ProgressBar'
-import { getName } from '@/utils'
+import { formatPlayingTime, getName } from '@/utils'
 
 import { ICommonPlayerProps } from './MiniPlayer'
 
-interface INormalPlayerProps {
+interface IProps {
   fullscreen: boolean
+  duration: number
+  currentTime: number
+  percentChangeCallback: (currentPercent: number, ...args: any[]) => void
 }
 
-const NormalPlayer: FC<ICommonPlayerProps & INormalPlayerProps> = ({
+const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   song,
   fullscreen,
   setFullscreen,
   dispatch,
   pause,
   play,
-  isPlaying
+  isPlaying,
+  currentTime,
+  duration,
+  percent,
+  percentChangeCallback
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
 
@@ -75,14 +82,14 @@ const NormalPlayer: FC<ICommonPlayerProps & INormalPlayerProps> = ({
           <img
             src={`${song.al.picUrl}?param=400x400`}
             alt="歌曲封面"
-            className="absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-black/10"
+            className="absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50"
           />
         </div>
         <div className="absolute bottom-12 flex w-full flex-col">
           <div className="mx-auto flex w-[80%] items-center text-sm">
-            <div>0:00</div>
-            <ProgressBar />
-            <div>4:17</div>
+            <div>{formatPlayingTime(currentTime)}</div>
+            <ProgressBar percent={percent} percentChangeCallback={percentChangeCallback} />
+            <div>{formatPlayingTime(duration)}</div>
           </div>
           <div className="mx-auto flex h-24 w-[84vw] items-center justify-between">
             <ImLoop2 className="text-3xl" />

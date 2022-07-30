@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
@@ -115,33 +115,63 @@ const PlayerPage = () => {
     if (!audioRef.current) {
       return
     }
-    audioRef.current.pause()
-    dispatch(setIsPlaying(false))
-  }, [])
+    if (isPlaying) {
+      audioRef.current.pause()
+      dispatch(setIsPlaying(false))
+    }
+  }, [isPlaying])
 
   const toggleToPlay = useCallback(() => {
     if (!audioRef.current) {
       return
     }
-    audioRef.current.play()
-    dispatch(setIsPlaying(true))
+    if (!isPlaying) {
+      audioRef.current.play()
+      dispatch(setIsPlaying(true))
+    }
+  }, [isPlaying])
+
+  const handleTimeUpdate = useCallback((e: ChangeEvent<HTMLAudioElement>) => {
+    setCurrentTime(e.target.currentTime)
   }, [])
 
-  const commonProps: ICommonPlayerProps = {
-    song: currentSong,
-    percent,
-    isPlaying,
-    setFullscreen,
-    dispatch,
-    play: toggleToPlay,
-    pause: toggleToPause
-  }
+  const percentChangeCallback = useCallback(
+    (currentPercent: number) => {
+      if (!audioRef.current) {
+        return
+      }
+      const newTime = currentPercent * duration
+      setCurrentTime(newTime)
+      audioRef.current.currentTime = newTime
+    },
+    [duration]
+  )
+
+  const commonProps: ICommonPlayerProps = useMemo(() => {
+    return {
+      song: currentSong,
+      percent,
+      isPlaying,
+      setFullscreen,
+      dispatch,
+      play: toggleToPlay,
+      pause: toggleToPause
+    }
+  }, [currentSong, percent, isPlaying])
 
   return (
     <div>
       {currentSong && <MiniPlayer {...commonProps} />}
-      {currentSong && <NormalPlayer {...commonProps} fullscreen={fullscreen} />}
-      <audio ref={audioRef}></audio>
+      {currentSong && (
+        <NormalPlayer
+          {...commonProps}
+          fullscreen={fullscreen}
+          duration={duration}
+          currentTime={currentTime}
+          percentChangeCallback={percentChangeCallback}
+        />
+      )}
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}></audio>
     </div>
   )
 }
