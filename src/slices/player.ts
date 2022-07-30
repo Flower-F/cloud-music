@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { playingMode } from '@/api'
+import { EPlayingMode } from '@/api'
 import { IPlayer } from '@/components/MiniPlayer'
 
 const namespace = 'player'
@@ -21,7 +21,7 @@ interface IPlayerState {
   /** 当前歌曲 */
   currentSong: IPlayer | null
   /** 播放模式 */
-  playingMode: playingMode
+  playingMode: EPlayingMode
 }
 
 const initialState: IPlayerState = {
@@ -32,7 +32,7 @@ const initialState: IPlayerState = {
   currentIndex: -1,
   showPlayingList: false,
   currentSong: null,
-  playingMode: playingMode.SEQUENCE_MODE
+  playingMode: EPlayingMode.SEQUENCE_MODE
 }
 
 export const playerSlice = createSlice({
@@ -60,7 +60,7 @@ export const playerSlice = createSlice({
     setCurrentSong: (state: IPlayerState, action: PayloadAction<IPlayer>) => {
       state.currentSong = action.payload
     },
-    setPlayingMode: (state: IPlayerState, action: PayloadAction<playingMode>) => {
+    setPlayingMode: (state: IPlayerState, action: PayloadAction<EPlayingMode>) => {
       state.playingMode = action.payload
     }
   }

@@ -1,10 +1,12 @@
-import { FC, memo, useCallback, useRef } from 'react'
+import { FC, memo, useCallback, useMemo, useRef } from 'react'
 import { CgPlayButtonO, CgPlayPauseO } from 'react-icons/cg'
-import { ImLoop2 } from 'react-icons/im'
-import { MdSkipNext, MdSkipPrevious } from 'react-icons/md'
+import { FaRandom } from 'react-icons/fa'
+import { ImNext, ImPrevious } from 'react-icons/im'
 import { RiArrowDropDownLine, RiPlayListFill } from 'react-icons/ri'
+import { TbRepeat, TbRepeatOnce } from 'react-icons/tb'
 import { CSSTransition } from 'react-transition-group'
 
+import { EPlayingMode } from '@/api'
 import ProgressBar from '@/ui/ProgressBar'
 import { formatPlayingTime, getName } from '@/utils'
 
@@ -14,9 +16,11 @@ interface IProps {
   fullscreen: boolean
   duration: number
   currentTime: number
+  playingMode: EPlayingMode
   percentChangeCallback: (currentPercent: number, ...args: any[]) => void
   handlePrev: () => void
   handleNext: () => void
+  changeMode: () => void
 }
 
 const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
@@ -30,9 +34,11 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   currentTime,
   duration,
   percent,
+  playingMode,
   percentChangeCallback,
   handleNext,
-  handlePrev
+  handlePrev,
+  changeMode
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
 
@@ -53,6 +59,16 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   const toggleToMiniPlayer = useCallback(() => {
     dispatch(setFullscreen(false))
   }, [])
+
+  const playingModeIcon = useMemo(() => {
+    if (playingMode === EPlayingMode.RANDOM_MODE) {
+      return <FaRandom className="text-3xl" onClick={changeMode} />
+    } else if (playingMode === EPlayingMode.LOOP_MODE) {
+      return <TbRepeatOnce className="text-4xl" onClick={changeMode} />
+    } else {
+      return <TbRepeat className="text-4xl" onClick={changeMode} />
+    }
+  }, [playingMode])
 
   return (
     <CSSTransition
@@ -96,14 +112,14 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
             <div>{formatPlayingTime(duration)}</div>
           </div>
           <div className="mx-auto flex h-24 w-[84vw] items-center justify-between">
-            <ImLoop2 className="text-3xl" />
-            <MdSkipPrevious className="text-4xl" onClick={handlePrev} />
+            <div className="flex h-8 w-10 items-end justify-center">{playingModeIcon}</div>
+            <ImPrevious className="h-9 w-9" onClick={handlePrev} />
             {isPlaying ? (
-              <CgPlayPauseO className="text-6xl" onClick={pause} />
+              <CgPlayPauseO className="h-14 w-14" onClick={pause} />
             ) : (
-              <CgPlayButtonO className="text-6xl" onClick={play} />
+              <CgPlayButtonO className="h-14 w-14" onClick={play} />
             )}
-            <MdSkipNext className="text-4xl" onClick={handleNext} />
+            <ImNext className="h-9 w-9" onClick={handleNext} />
             <RiPlayListFill className="text-4xl" />
           </div>
         </div>

@@ -1,5 +1,7 @@
+import { shuffle } from 'lodash-es'
 import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { EPlayingMode } from '@/api'
 import MiniPlayer, { ICommonPlayerProps, IPlayer } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
 import { playerSlice } from '@/slices'
@@ -7,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const currentSong = {
+  const currentSong: IPlayer = {
     id: 1,
     al: { picUrl: 'https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg' },
     name: '木偶人',
@@ -88,8 +90,9 @@ const PlayerPage = () => {
     }
   ]
 
-  const { fullscreen, isPlaying, currentIndex } = useAppSelector((store) => store.player)
-  const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong } = playerSlice.actions
+  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList } = useAppSelector((store) => store.player)
+  const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong, setPlayingList, setPlayingMode } =
+    playerSlice.actions
 
   const dispatch = useAppDispatch()
 
@@ -196,6 +199,25 @@ const PlayerPage = () => {
     setCurrentIndex(index)
   }, [])
 
+  const changeMode = useCallback(() => {
+    const newMode: EPlayingMode = (playingMode + 1) % 3
+    console.log('newMode', newMode)
+    if (newMode === EPlayingMode.SEQUENCE_MODE) {
+      setPlayingList(sequencePlayList)
+      const index = sequencePlayList.findIndex((item) => item.id === currentSong.id)
+      setCurrentIndex(index)
+    } else if (newMode === EPlayingMode.LOOP_MODE) {
+      setPlayingList(sequencePlayList)
+    } else if (newMode === EPlayingMode.RANDOM_MODE) {
+      const newList = shuffle(sequencePlayList)
+      setPlayingList(newList)
+      const index = newList.findIndex((item) => item.id === currentSong.id)
+      setCurrentIndex(index)
+    }
+
+    dispatch(setPlayingMode(newMode))
+  }, [playingMode, sequencePlayList, currentSong])
+
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
       song: currentSong,
@@ -220,6 +242,8 @@ const PlayerPage = () => {
           percentChangeCallback={percentChangeCallback}
           handlePrev={handlePrev}
           handleNext={handleNext}
+          changeMode={changeMode}
+          playingMode={playingMode}
         />
       )}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}></audio>
