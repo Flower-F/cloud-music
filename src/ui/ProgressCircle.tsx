@@ -13,10 +13,17 @@ const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, childr
   const dashOffset = (1 - percent) * dashArray
 
   return (
-    <div className={className || ''}>
-      <svg width={radius} height={radius} viewBox="0 0 100 100" version="1.1" xmlns="https://www.w3.org/2000/svg">
+    <div className={`${className || ''}`}>
+      <svg
+        width={radius}
+        height={radius}
+        viewBox="0 0 100 100"
+        version="1.1"
+        xmlns="https://www.w3.org/2000/svg"
+        className="rounded-full border-2 border-solid border-red-600"
+      >
         <circle
-          className="origin-center scale-90 stroke-theme_color_shadow"
+          className="origin-center scale-90 stroke-theme_color_shadow/60"
           r={50}
           cx={50}
           cy={50}
