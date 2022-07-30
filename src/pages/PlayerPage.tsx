@@ -6,6 +6,7 @@ import MiniPlayer, { ICommonPlayerProps, IPlayer } from '@/components/MiniPlayer
 import NormalPlayer from '@/components/NormalPlayer'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
+import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
@@ -206,13 +207,16 @@ const PlayerPage = () => {
       setPlayingList(sequencePlayList)
       const index = sequencePlayList.findIndex((item) => item.id === currentSong.id)
       setCurrentIndex(index)
+      Toast.show('顺序播放')
     } else if (newMode === EPlayingMode.LOOP_MODE) {
       setPlayingList(sequencePlayList)
+      Toast.show('循环播放')
     } else if (newMode === EPlayingMode.RANDOM_MODE) {
       const newList = shuffle(sequencePlayList)
       setPlayingList(newList)
       const index = newList.findIndex((item) => item.id === currentSong.id)
       setCurrentIndex(index)
+      Toast.show('随机播放')
     }
 
     dispatch(setPlayingMode(newMode))
