@@ -27,7 +27,7 @@ const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick, classNa
   }, [])
 
   return (
-    <Scroll direction="horizontal" className={`whitespace-nowrap ${className || ''}`}>
+    <Scroll direction="horizontal" className={`whitespace-nowrap ${className}`}>
       <div className="inline-block h-9 py-1">
         <h3 className="mr-0.5 inline-block text-base text-gray-500">{title}</h3>
         {list.map((item) => (

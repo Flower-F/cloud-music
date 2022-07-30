@@ -157,7 +157,7 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
 
     // 利用 Scroll 父组件都是 fixed 的原理，设置 absolute 即可实现定位
     return (
-      <div ref={scrollRef} className={`h-full w-full overflow-hidden ${className || ''}`}>
+      <div ref={scrollRef} className={`h-full w-full overflow-hidden ${className}`}>
         {children}
         {pullUpLoading && (
           <div className={'absolute left-0 right-0 bottom-1 z-50'}>

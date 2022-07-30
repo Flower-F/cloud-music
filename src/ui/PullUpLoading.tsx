@@ -6,7 +6,7 @@ interface IProps {
 
 const PullUpLoading: FC<IProps> = ({ className }) => {
   return (
-    <div className={`relative overflow-auto rounded-xl py-4 ${className || ''}`}>
+    <div className={`relative overflow-auto rounded-xl py-4 ${className}`}>
       <div className="flex justify-center">
         <div className="flex h-10 w-10 animate-bounce items-center justify-center rounded-full bg-white p-2 shadow-lg ring-1 ring-slate-900/5 dark:bg-slate-800 dark:ring-slate-200/20">
           <svg

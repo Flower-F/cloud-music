@@ -101,7 +101,7 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
 
   return (
     <div
-      className={`relative mx-3 mb-0.5 h-1 w-full rounded-md bg-black/30 ${className || ''}`}
+      className={`relative mx-3 mb-0.5 h-1 w-full rounded-md bg-black/30 ${className}`}
       onClick={handleClick}
       ref={progressBarRef}
     >

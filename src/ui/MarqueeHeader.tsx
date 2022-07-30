@@ -14,10 +14,7 @@ interface IProps {
 const MarqueeHeader = forwardRef<HTMLDivElement | null, IProps>(
   ({ onClick, isMarquee = true, title, className }, ref) => {
     return (
-      <div
-        className={`bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white ${className || ''}`}
-        ref={ref}
-      >
+      <div className={`bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white ${className}`} ref={ref}>
         <div className="bg-filter-dark absolute z-50 flex h-9 w-9 items-center justify-center rounded-full text-2xl">
           <IoArrowBackOutline onClick={onClick} />
         </div>
