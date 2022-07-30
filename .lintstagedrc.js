@@ -1,3 +1,4 @@
 module.exports = {
-  '**/*.{js,jsx,tsx,ts}': ['pnpm lint', 'git add .']
+  '**/*.{js,jsx,tsx,ts}': ['pnpm eslint', 'git add .'],
+  '**/*.css': ['pnpm stylelint', 'git add .']
 }

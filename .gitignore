@@ -23,6 +23,7 @@ dist-ssr
 
 # Cache
 .eslintcache
+.stylelintcache
 
 # History
 .history
