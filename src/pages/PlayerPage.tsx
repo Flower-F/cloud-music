@@ -1,6 +1,6 @@
 import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
+import MiniPlayer, { ICommonPlayerProps, IPlayer } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -8,6 +8,7 @@ import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
   const currentSong = {
+    id: 1,
     al: { picUrl: 'https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg' },
     name: '木偶人',
     ar: [{ name: '薛之谦' }]
@@ -87,29 +88,40 @@ const PlayerPage = () => {
     }
   ]
 
-  const { fullscreen, isPlaying } = useAppSelector((store) => store.player)
+  const { fullscreen, isPlaying, currentIndex } = useAppSelector((store) => store.player)
   const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong } = playerSlice.actions
 
   const dispatch = useAppDispatch()
 
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [prevSong, setPrevSong] = useState<IPlayer | null>()
+
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    if (!currentSong || !audioRef.current) {
+    setCurrentIndex(0)
+  }, [])
+
+  useEffect(() => {
+    if (
+      !audioRef.current ||
+      playList.length === 0 ||
+      !playList[currentIndex] ||
+      (prevSong && playList[currentIndex].id === prevSong.id)
+    ) {
       return
     }
-    dispatch(setCurrentIndex(0))
-    const newSong = playList[0]
+    const newSong = playList[currentIndex]
     dispatch(setCurrentSong(newSong))
+    setPrevSong(newSong)
     audioRef.current.src = getSongUrl(newSong.id)
     dispatch(setIsPlaying(false))
     setCurrentTime(0)
-    setDuration((newSong.dt / 1000) | 0)
-  }, [])
+    setDuration(newSong.dt / 1000)
+  }, [playList, currentIndex])
 
   const toggleToPause = useCallback(() => {
     if (!audioRef.current) {
@@ -147,6 +159,43 @@ const PlayerPage = () => {
     [duration]
   )
 
+  const handleLoop = useCallback(() => {
+    if (!audioRef.current) {
+      return
+    }
+    audioRef.current.currentTime = 0
+  }, [])
+
+  const handlePrev = useCallback(() => {
+    if (playList.length === 1) {
+      handleLoop()
+      return
+    }
+    let index = currentIndex - 1
+    if (index < 0) {
+      index = playList.length - 1
+    }
+    if (!isPlaying) {
+      setIsPlaying(true)
+    }
+    setCurrentIndex(index)
+  }, [])
+
+  const handleNext = useCallback(() => {
+    if (playList.length === 1) {
+      handleLoop()
+      return
+    }
+    let index = currentIndex + 1
+    if (index >= playList.length) {
+      index = 0
+    }
+    if (!isPlaying) {
+      setIsPlaying(true)
+    }
+    setCurrentIndex(index)
+  }, [])
+
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
       song: currentSong,
@@ -169,6 +218,8 @@ const PlayerPage = () => {
           duration={duration}
           currentTime={currentTime}
           percentChangeCallback={percentChangeCallback}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
         />
       )}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}></audio>

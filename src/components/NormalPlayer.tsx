@@ -15,6 +15,8 @@ interface IProps {
   duration: number
   currentTime: number
   percentChangeCallback: (currentPercent: number, ...args: any[]) => void
+  handlePrev: () => void
+  handleNext: () => void
 }
 
 const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
@@ -28,7 +30,9 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   currentTime,
   duration,
   percent,
-  percentChangeCallback
+  percentChangeCallback,
+  handleNext,
+  handlePrev
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
 
@@ -93,13 +97,13 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
           </div>
           <div className="mx-auto flex h-24 w-[84vw] items-center justify-between">
             <ImLoop2 className="text-3xl" />
-            <MdSkipPrevious className="text-4xl" />
+            <MdSkipPrevious className="text-4xl" onClick={handlePrev} />
             {isPlaying ? (
               <CgPlayPauseO className="text-6xl" onClick={pause} />
             ) : (
               <CgPlayButtonO className="text-6xl" onClick={play} />
             )}
-            <MdSkipNext className="text-4xl" />
+            <MdSkipNext className="text-4xl" onClick={handleNext} />
             <RiPlayListFill className="text-4xl" />
           </div>
         </div>

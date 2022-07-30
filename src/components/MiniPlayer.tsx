@@ -8,6 +8,8 @@ import ProgressCircle from '@/ui/ProgressCircle'
 import { getName } from '@/utils'
 
 export interface IPlayer {
+  /** 歌曲id */
+  id: number
   /** 名称 */
   name: string
   /** 歌曲列表 */

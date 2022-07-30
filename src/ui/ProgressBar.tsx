@@ -107,7 +107,7 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
     >
       <div className="absolute left-0 h-1 bg-black/60" ref={progressRef}></div>
       <div
-        className="absolute -top-1.5 -left-1.5 h-4 w-4 rounded-full border-[3px] border-solid border-white bg-theme_color"
+        className="absolute -top-1.5 -left-1.5 h-4 w-4 rounded-full border-[3px] border-solid border-gray-200 bg-theme_color"
         ref={progressButtonRef}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
