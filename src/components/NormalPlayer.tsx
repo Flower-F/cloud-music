@@ -1,29 +1,28 @@
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { FC, memo, useCallback, useRef } from 'react'
-import { CgPlayPauseO } from 'react-icons/cg'
+import { CgPlayButtonO, CgPlayPauseO } from 'react-icons/cg'
 import { ImLoop2 } from 'react-icons/im'
 import { MdSkipNext, MdSkipPrevious } from 'react-icons/md'
 import { RiArrowDropDownLine, RiPlayListFill } from 'react-icons/ri'
 import { CSSTransition } from 'react-transition-group'
 
-import { useAppDispatch } from '@/store'
 import ProgressBar from '@/ui/ProgressBar'
 import { getName } from '@/utils'
 
-import { IPlayer } from './MiniPlayer'
+import { ICommonPlayerProps } from './MiniPlayer'
 
-interface IProps {
-  song: IPlayer
+interface INormalPlayerProps {
   fullscreen: boolean
-  setFullScreen: ActionCreatorWithPayload<boolean, string>
-  dispatch: ReturnType<typeof useAppDispatch>
-  isPlaying: boolean
-  setIsPlaying: ActionCreatorWithPayload<boolean, string>
-  play: () => void
-  pause: () => void
 }
 
-const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch }) => {
+const NormalPlayer: FC<ICommonPlayerProps & INormalPlayerProps> = ({
+  song,
+  fullscreen,
+  setFullscreen,
+  dispatch,
+  pause,
+  play,
+  isPlaying
+}) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
 
   const handleEnter = useCallback(() => {
@@ -41,7 +40,7 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
   }, [])
 
   const toggleToMiniPlayer = useCallback(() => {
-    dispatch(setFullScreen(false))
+    dispatch(setFullscreen(false))
   }, [])
 
   return (
@@ -56,9 +55,9 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
       <div className="fixed left-0 right-0 bottom-0 top-0 z-[1500] bg-background_color" ref={normalPlayerRef}>
         <div className="absolute top-1/2 left-1/2 -z-[1] h-[85vw] w-[85vw] -translate-x-1/2 -translate-y-1/2 opacity-60 blur-lg">
           <img
-            src={song.al.picUrl}
+            src={`${song.al.picUrl}?param=400x400`}
             alt={`${song.name}背景图`}
-            className="animate-rotating h-full w-full rounded-full"
+            className={`animate-rotating h-full w-full rounded-full ${!isPlaying && 'animate-pause'}`}
           />
         </div>
         {/* 滤镜 */}
@@ -88,7 +87,11 @@ const NormalPlayer: FC<IProps> = ({ song, fullscreen, setFullScreen, dispatch })
           <div className="mx-auto flex h-24 w-[84vw] items-center justify-between">
             <ImLoop2 className="text-3xl" />
             <MdSkipPrevious className="text-4xl" />
-            <CgPlayPauseO className="text-6xl" />
+            {isPlaying ? (
+              <CgPlayPauseO className="text-6xl" onClick={pause} />
+            ) : (
+              <CgPlayButtonO className="text-6xl" onClick={play} />
+            )}
             <MdSkipNext className="text-4xl" />
             <RiPlayListFill className="text-4xl" />
           </div>

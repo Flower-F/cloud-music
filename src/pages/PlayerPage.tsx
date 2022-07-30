@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import MiniPlayer from '@/components/MiniPlayer'
+import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -111,46 +111,36 @@ const PlayerPage = () => {
     setDuration((newSong.dt / 1000) | 0)
   }, [])
 
-  const play = useCallback(() => {
-    if (!audioRef.current) {
-      return
-    }
-    audioRef.current.play()
-  }, [])
-
-  const pause = useCallback(() => {
+  const toggleToPause = useCallback(() => {
     if (!audioRef.current) {
       return
     }
     audioRef.current.pause()
+    dispatch(setIsPlaying(false))
   }, [])
+
+  const toggleToPlay = useCallback(() => {
+    if (!audioRef.current) {
+      return
+    }
+    audioRef.current.play()
+    dispatch(setIsPlaying(true))
+  }, [])
+
+  const commonProps: ICommonPlayerProps = {
+    song: currentSong,
+    percent,
+    isPlaying,
+    setFullscreen,
+    dispatch,
+    play: toggleToPlay,
+    pause: toggleToPause
+  }
 
   return (
     <div>
-      {currentSong ? (
-        <MiniPlayer
-          song={currentSong}
-          dispatch={dispatch}
-          setFullScreen={setFullscreen}
-          percent={percent}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          play={play}
-          pause={pause}
-        />
-      ) : null}
-      {currentSong ? (
-        <NormalPlayer
-          song={currentSong}
-          dispatch={dispatch}
-          fullscreen={fullscreen}
-          setFullScreen={setFullscreen}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          play={play}
-          pause={pause}
-        />
-      ) : null}
+      {currentSong && <MiniPlayer {...commonProps} />}
+      {currentSong && <NormalPlayer {...commonProps} fullscreen={fullscreen} />}
       <audio ref={audioRef}></audio>
     </div>
   )

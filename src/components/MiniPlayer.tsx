@@ -16,30 +16,19 @@ export interface IPlayer {
   al: { picUrl: string }
 }
 
-interface IProps {
+export interface ICommonPlayerProps {
   song: IPlayer
-  setFullScreen: ActionCreatorWithPayload<boolean, string>
-  dispatch: ReturnType<typeof useAppDispatch>
   percent: number
   isPlaying: boolean
-  setIsPlaying: ActionCreatorWithPayload<boolean, string>
   play: () => void
   pause: () => void
+  setFullscreen: ActionCreatorWithPayload<boolean, string>
+  dispatch: ReturnType<typeof useAppDispatch>
 }
 
-const MiniPlayer: FC<IProps> = ({ song, setFullScreen, dispatch, percent, isPlaying, setIsPlaying, play, pause }) => {
+const MiniPlayer: FC<ICommonPlayerProps> = ({ song, setFullscreen, dispatch, percent, isPlaying, play, pause }) => {
   const toggleToNormalPlayer = useCallback(() => {
-    dispatch(setFullScreen(true))
-  }, [])
-
-  const toggleToPause = useCallback(() => {
-    dispatch(setIsPlaying(false))
-    pause()
-  }, [])
-
-  const toggleToPlay = useCallback(() => {
-    dispatch(setIsPlaying(true))
-    play()
+    dispatch(setFullscreen(true))
   }, [])
 
   return (
@@ -63,12 +52,12 @@ const MiniPlayer: FC<IProps> = ({ song, setFullScreen, dispatch, percent, isPlay
           {isPlaying ? (
             <AiOutlinePauseCircle
               className="absolute -top-[1px] -left-[1px] h-[40px] w-[40px] text-theme_color_shadow"
-              onClick={toggleToPause}
+              onClick={pause}
             />
           ) : (
             <AiOutlinePlayCircle
               className="absolute -top-[1px] -left-[1px] h-[40px] w-[40px] text-theme_color_shadow"
-              onClick={toggleToPlay}
+              onClick={play}
             />
           )}
         </ProgressCircle>
