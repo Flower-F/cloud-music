@@ -86,16 +86,16 @@ const SongList: FC<IProps> = ({ song }) => {
       dispatch(setCurrentSong(newSong))
       dispatch(setIsPlaying(true))
     },
-    [song]
+    [hasCollect(song)]
   )
 
   return (
     <div className="h-full rounded-lg bg-highlight_background_color opacity-95">
       <div className="relative ml-3 flex h-11 justify-between border-b border-solid border-border_color py-2">
         <div className="flex items-center leading-4 text-desc_color">
-          <BsPlayCircle className="mr-2 text-2xl" />
+          <BsPlayCircle className="mr-1 text-2xl" />
           <div>
-            <span className="mr-1 text-lg text-black">播放全部</span>
+            <span className="mr-1.5 text-lg text-black">播放全部</span>
             <span className="text-sm text-desc_color_v2">
               共{hasCollect(song) ? song.tracks.length : song.hotSongs.length}首
             </span>

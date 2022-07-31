@@ -35,30 +35,36 @@ const SingersPage = () => {
 
   const handleUpdateType = useCallback(
     (newVal: string) => {
-      if (type === newVal) return
+      if (type === newVal || !scrollRef.current) {
+        return
+      }
       dispatch(setType(newVal))
       dispatch(updateSingerList())
-      scrollRef.current?.refresh()
+      scrollRef.current.refresh()
     },
     [type]
   )
 
   const handleUpdateArea = useCallback(
     (newVal: string) => {
-      if (area === newVal) return
+      if (area === newVal || !scrollRef.current) {
+        return
+      }
       dispatch(setArea(newVal))
       dispatch(updateSingerList())
-      scrollRef.current?.refresh()
+      scrollRef.current.refresh()
     },
     [area]
   )
 
   const handleUpdateAlpha = useCallback(
     (newVal: string) => {
-      if (alpha === newVal) return
+      if (alpha === newVal || !scrollRef.current) {
+        return
+      }
       dispatch(setAlpha(newVal))
       dispatch(updateSingerList())
-      scrollRef.current?.refresh()
+      scrollRef.current.refresh()
     },
     [alpha]
   )

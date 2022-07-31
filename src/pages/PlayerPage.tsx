@@ -104,7 +104,7 @@ const PlayerPage = () => {
       dispatch(setIsPlaying(true))
     }
     dispatch(setCurrentIndex(index))
-  }, [])
+  }, [playingList.length, currentIndex])
 
   const handleNext = useCallback(() => {
     if (playingList.length === 1) {
@@ -119,7 +119,7 @@ const PlayerPage = () => {
       dispatch(setIsPlaying(true))
     }
     dispatch(setCurrentIndex(index))
-  }, [])
+  }, [playingList.length, currentIndex])
 
   const handleEnd = useCallback(() => {
     if (playingMode === EPlayingMode.LOOP_MODE) {
@@ -152,7 +152,7 @@ const PlayerPage = () => {
     }
 
     dispatch(setPlayingMode(newMode))
-  }, [playingMode, sequencePlayList, currentSong])
+  }, [playingMode, currentSong])
 
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
