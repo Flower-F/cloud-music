@@ -81,7 +81,6 @@ const SongList: FC<IProps> = ({ song }) => {
       } else {
         newSong = song.hotSongs[index]
       }
-      console.log('playingList', playingList)
       dispatch(setPlayingList([...playingList, newSong]))
       dispatch(setSequencePlayingList([...playingList, newSong]))
       dispatch(setIsPlaying(true))

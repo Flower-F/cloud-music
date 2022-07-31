@@ -91,9 +91,15 @@ const ArtistPage = () => {
     }
   }, [artist])
 
+  const { playingList } = useAppSelector((store) => store.player)
+
   return (
     <CSSTransition in={showStatus} timeout={300} classNames="page-change" appear={true} unmountOnExit onExited={goBack}>
-      <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4]">
+      <div
+        className={`fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-[#f2f3f4] ${
+          playingList.length > 0 && 'bottom-[60px]'
+        }`}
+      >
         <MarqueeHeader isMarquee={false} title={artist?.name || '歌手'} onClick={handleClick} ref={marqueeHeaderRef} />
         <div
           className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"

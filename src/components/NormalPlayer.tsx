@@ -92,11 +92,11 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
             {/* 滤镜 */}
             <div className="absolute left-0 top-0 -z-[1] h-full w-full bg-desc_color opacity-[0.26]"></div>
             <div className="relative mt-6">
-              <div className="absolute top-0 left-4">
+              <div className="absolute top-0 left-3">
                 <RiArrowDropDownLine className="h-14 w-14 font-normal text-desc_color" onClick={toggleToMiniPlayer} />
               </div>
-              <h3 className="text-nowrap mx-auto w-[80%] text-center text-lg font-bold text-desc_color">{song.name}</h3>
-              <h3 className="text-nowrap mx-auto w-[80%] text-center text-base leading-5 text-[#333]">
+              <h3 className="text-nowrap mx-auto w-[60%] text-center text-lg font-bold text-desc_color">{song.name}</h3>
+              <h3 className="text-nowrap mx-auto w-[60%] text-center text-base leading-5 text-[#333]">
                 {getName(song.ar)}
               </h3>
             </div>

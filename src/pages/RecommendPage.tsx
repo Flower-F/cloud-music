@@ -18,8 +18,10 @@ const RecommendPage = () => {
     }
   }, [])
 
+  const { playingList } = useAppSelector((store) => store.player)
+
   return (
-    <div className="fixed top-[5.75rem] bottom-0 w-full">
+    <div className={`fixed top-[5.75rem] bottom-0 w-full ${playingList.length > 0 && 'bottom-[60px]'}`}>
       {!enterLoading && (
         <Scroll onScrollCallback={forceCheck}>
           <div>

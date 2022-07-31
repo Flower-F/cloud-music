@@ -69,9 +69,11 @@ const SingersPage = () => {
     [alpha]
   )
 
+  const { playingList } = useAppSelector((store) => store.player)
+
   return (
     <>
-      <div className="fixed top-24 w-full overflow-hidden px-2">
+      <div className={`fixed top-24 w-full overflow-hidden px-2 ${playingList.length > 0 && 'bottom-[60px]'}`}>
         <Horizon list={singerTypes} title="类型" oldValue={type} onClick={handleUpdateType} />
         <Horizon list={singerAreas} title="地域" oldValue={area} onClick={handleUpdateArea} />
         <Horizon list={singerAlphas} title="首字母" oldValue={alpha} onClick={handleUpdateAlpha} />

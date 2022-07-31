@@ -1,5 +1,5 @@
 import { shuffle } from 'lodash-es'
-import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef } from 'react'
+import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { EPlayingMode } from '@/api'
 import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
@@ -10,28 +10,15 @@ import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const {
-    fullscreen,
-    isPlaying,
-    currentIndex,
-    playingMode,
-    sequencePlayList,
-    playingList,
-    currentTime,
-    duration,
-    prevSong
-  } = useAppSelector((store) => store.player)
-  const {
-    setFullscreen,
-    setIsPlaying,
-    setCurrentIndex,
-    setPlayingList,
-    setPlayingMode,
-    setPrevSong,
-    setCurrentTime,
-    setDuration
-  } = playerSlice.actions
+  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList, playingList, prevSong } = useAppSelector(
+    (store) => store.player
+  )
 
+  const { setFullscreen, setIsPlaying, setCurrentIndex, setPlayingList, setPlayingMode, setPrevSong } =
+    playerSlice.actions
+
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
 
   const dispatch = useAppDispatch()
@@ -49,24 +36,21 @@ const PlayerPage = () => {
       !playingList[currentIndex] ||
       (prevSong && playingList[currentIndex].id === prevSong.id)
     ) {
-      console.log('playingList', playingList)
-      console.log('currentIndex', currentIndex)
-      console.log('playingList[currentIndex]', playingList[currentIndex])
       return
     }
     audioRef.current.src = getSongUrl(playingList[currentIndex].id)
     dispatch(setPrevSong(playingList[currentIndex]))
     dispatch(setIsPlaying(true))
-    dispatch(setCurrentTime(0))
-    dispatch(setDuration(playingList[currentIndex].dt / 1000))
-  }, [playingList, currentIndex])
+    setCurrentTime(0)
+    setDuration(playingList[currentIndex].dt / 1000)
+  }, [currentIndex])
 
   useEffect(() => {
     if (!audioRef.current || !playingList[currentIndex]) {
       return
     }
     isPlaying ? audioRef.current.play() : audioRef.current.pause()
-  }, [isPlaying, playingList, currentIndex])
+  }, [isPlaying, currentIndex])
 
   const toggleToPause = useCallback(() => {
     if (!audioRef.current) {
@@ -87,7 +71,7 @@ const PlayerPage = () => {
   }, [isPlaying])
 
   const handleTimeUpdate = useCallback((e: ChangeEvent<HTMLAudioElement>) => {
-    dispatch(setCurrentTime(e.target.currentTime))
+    setCurrentTime(e.target.currentTime)
   }, [])
 
   const percentChangeCallback = useCallback(
@@ -96,7 +80,7 @@ const PlayerPage = () => {
         return
       }
       const newTime = currentPercent * duration
-      dispatch(setCurrentTime(newTime))
+      setCurrentTime(newTime)
       audioRef.current.currentTime = newTime
     },
     [duration]
@@ -122,7 +106,7 @@ const PlayerPage = () => {
       dispatch(setIsPlaying(true))
     }
     dispatch(setCurrentIndex(index))
-  }, [playingList.length, currentIndex])
+  }, [currentIndex, isPlaying])
 
   const handleNext = useCallback(() => {
     if (playingList.length === 1) {
@@ -137,7 +121,7 @@ const PlayerPage = () => {
       dispatch(setIsPlaying(true))
     }
     dispatch(setCurrentIndex(index))
-  }, [playingList.length, currentIndex])
+  }, [currentIndex, isPlaying])
 
   const handleEnd = useCallback(() => {
     if (playingMode === EPlayingMode.LOOP_MODE) {
@@ -170,7 +154,7 @@ const PlayerPage = () => {
     }
 
     dispatch(setPlayingMode(newMode))
-  }, [playingMode, playingList, currentIndex])
+  }, [playingMode, currentIndex])
 
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
@@ -182,7 +166,7 @@ const PlayerPage = () => {
       play: toggleToPlay,
       pause: toggleToPause
     }
-  }, [playingList, percent, isPlaying, currentIndex])
+  }, [percent, isPlaying, currentIndex])
 
   return (
     <>

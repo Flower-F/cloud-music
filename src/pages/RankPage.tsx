@@ -17,8 +17,10 @@ const RankPage = () => {
     }
   }, [])
 
+  const { isPlaying } = useAppSelector((store) => store.player)
+
   return (
-    <div className="fixed top-24 bottom-0 w-full">
+    <div className={`fixed top-24 bottom-0 w-full ${isPlaying && 'bottom-[60px]'}`}>
       <Scroll onScrollCallback={forceCheck}>
         <RankList rankList={rankList} />
       </Scroll>

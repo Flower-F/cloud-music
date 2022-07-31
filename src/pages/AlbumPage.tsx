@@ -34,9 +34,15 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
     setShowStatus(false)
   }, [])
 
+  const { playingList } = useAppSelector((store) => store.player)
+
   return (
     <CSSTransition in={showStatus} timeout={300} classNames="page-change" appear={true} unmountOnExit onExited={goBack}>
-      <div className="fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-background_color">
+      <div
+        className={`fixed top-0 bottom-0 z-[150] w-full origin-bottom-right bg-background_color ${
+          playingList.length > 0 && 'bottom-[60px]'
+        }`}
+      >
         <MarqueeHeader title={album?.name || '歌单'} onClick={handleClick} />
         <Scroll bounceTop={false}>
           <div>

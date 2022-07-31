@@ -84,7 +84,6 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
   }, [percent])
 
   useEffect(() => {
-    // console.log('touch', touch)
     if (
       percent >= 0 &&
       percent <= 1 &&
