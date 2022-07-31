@@ -68,25 +68,25 @@ const SongList: FC<IProps> = ({ song }) => {
     return song.hotSongs
   }, [song])
 
-  const { playingList } = useAppSelector((store) => store.player)
-  const { setCurrentIndex, setCurrentSong, setSequencePlayingList, setPlayingList, setIsPlaying } = playerSlice.actions
+  const { playingList, currentIndex } = useAppSelector((store) => store.player)
+  const { setCurrentIndex, setSequencePlayingList, setPlayingList, setIsPlaying } = playerSlice.actions
   const dispatch = useAppDispatch()
 
   const selectItem = useCallback(
     (index: number) => {
-      dispatch(setCurrentIndex(index))
+      dispatch(setCurrentIndex(currentIndex + 1))
       let newSong: ISong | null = null
       if (hasCollect(song)) {
         newSong = song.tracks[index]
       } else {
         newSong = song.hotSongs[index]
       }
+      console.log('playingList', playingList)
       dispatch(setPlayingList([...playingList, newSong]))
       dispatch(setSequencePlayingList([...playingList, newSong]))
-      dispatch(setCurrentSong(newSong))
       dispatch(setIsPlaying(true))
     },
-    [hasCollect(song)]
+    [hasCollect(song), playingList]
   )
 
   return (

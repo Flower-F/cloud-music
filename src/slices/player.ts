@@ -18,8 +18,6 @@ interface IPlayerState {
   currentIndex: number
   /** 是否展示播放列表 */
   showPlayingList: boolean
-  /** 当前歌曲 */
-  currentSong: ISong | null
   /** 播放模式 */
   playingMode: EPlayingMode
   /** 当前时间 */
@@ -37,7 +35,6 @@ const initialState: IPlayerState = {
   sequencePlayList: [],
   currentIndex: -1,
   showPlayingList: false,
-  currentSong: null,
   playingMode: EPlayingMode.SEQUENCE_MODE,
   currentTime: 0,
   duration: 0,
@@ -65,9 +62,6 @@ export const playerSlice = createSlice({
     },
     setShowPlayingList: (state: IPlayerState, action: PayloadAction<boolean>) => {
       state.showPlayingList = action.payload
-    },
-    setCurrentSong: (state: IPlayerState, action: PayloadAction<ISong>) => {
-      state.currentSong = action.payload
     },
     setPlayingMode: (state: IPlayerState, action: PayloadAction<EPlayingMode>) => {
       state.playingMode = action.payload
