@@ -10,7 +10,7 @@ import { getName } from '@/utils'
 import { ISong } from './SongList'
 
 export interface ICommonPlayerProps {
-  song: ISong
+  song: ISong | null
   percent: number
   isPlaying: boolean
   play: () => void
@@ -26,19 +26,23 @@ const MiniPlayer: FC<ICommonPlayerProps> = ({ song, setFullscreen, dispatch, per
 
   return (
     <div className="fixed left-0 -bottom-[1px] z-[1000] flex h-[60px] w-full items-center bg-highlight_background_color">
-      <div className="mr-1.5 ml-4 flex h-[60px] w-[48px] items-center " onClick={toggleToNormalPlayer}>
-        <img
-          src={song.al.picUrl}
-          alt={`${song.name}播放中`}
-          className={`z-50 h-[44px] w-[44px] animate-mini-rotating rounded-full border border-solid border-zinc-900 ${
-            !isPlaying && 'animate-pause'
-          }`}
-        />
-      </div>
-      <div className="flex flex-1 flex-col justify-center overflow-hidden leading-5">
-        <h3 className="text-nowrap mb-0.5 text-base text-desc_color">{song.name}</h3>
-        <p className="text-nowrap text-sm text-[#555]">{getName(song.ar)}</p>
-      </div>
+      {song && (
+        <>
+          <div className="mr-1.5 ml-4 flex h-[60px] w-[48px] items-center " onClick={toggleToNormalPlayer}>
+            <img
+              src={song.al.picUrl}
+              alt={`${song.name}播放中`}
+              className={`z-50 h-[44px] w-[44px] animate-mini-rotating rounded-full border border-solid border-zinc-900 ${
+                !isPlaying && 'animate-pause'
+              }`}
+            />
+          </div>
+          <div className="flex flex-1 flex-col justify-center overflow-hidden leading-5">
+            <h3 className="text-nowrap mb-0.5 text-base text-desc_color">{song.name}</h3>
+            <p className="text-nowrap text-sm text-[#555]">{getName(song.ar)}</p>
+          </div>
+        </>
+      )}
 
       <div className="mr-4 flex">
         <ProgressCircle radius={38} percent={percent} className="relative">

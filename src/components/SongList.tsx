@@ -1,7 +1,8 @@
-import { FC, memo, useMemo } from 'react'
+import { FC, memo, useCallback, useMemo } from 'react'
 import { BsPlayCircle } from 'react-icons/bs'
 import { FaStar } from 'react-icons/fa'
 
+import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { getCount, getName } from '@/utils'
 
@@ -67,8 +68,26 @@ const SongList: FC<IProps> = ({ song }) => {
     return song.hotSongs
   }, [song])
 
-  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList } = useAppSelector((store) => store.player)
+  const { playingList } = useAppSelector((store) => store.player)
+  const { setCurrentIndex, setCurrentSong, setSequencePlayingList, setPlayingList, setIsPlaying } = playerSlice.actions
   const dispatch = useAppDispatch()
+
+  const selectItem = useCallback(
+    (index: number) => {
+      dispatch(setCurrentIndex(index))
+      let newSong: ISong | null = null
+      if (hasCollect(song)) {
+        newSong = song.tracks[index]
+      } else {
+        newSong = song.hotSongs[index]
+      }
+      dispatch(setPlayingList([...playingList, newSong]))
+      dispatch(setSequencePlayingList([...playingList, newSong]))
+      dispatch(setCurrentSong(newSong))
+      dispatch(setIsPlaying(true))
+    },
+    [song]
+  )
 
   return (
     <div className="h-full rounded-lg bg-highlight_background_color opacity-95">
@@ -93,7 +112,7 @@ const SongList: FC<IProps> = ({ song }) => {
       </div>
       <ul>
         {tracks.map((item, index) => (
-          <li key={index} className="flex h-14 items-center">
+          <li key={index} className="flex h-14 items-center" onClick={() => selectItem(index)}>
             <div className="flex h-14 w-14 items-center justify-center">{index + 1}</div>
             <div className="text-nowrap flex h-full flex-1 flex-col justify-around border-b border-solid border-border_color py-1">
               <span className="text-nowrap text-desc_color">{item.name}</span>

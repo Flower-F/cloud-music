@@ -80,31 +80,35 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
       onExited={handleExited}
     >
       <div className="fixed left-0 right-0 bottom-0 top-0 z-[1500] bg-background_color" ref={normalPlayerRef}>
-        <div className="absolute top-1/2 left-1/2 -z-[1] h-[85vw] w-[85vw] -translate-x-1/2 -translate-y-1/2 opacity-60 blur-lg">
-          <img
-            src={`${song.al.picUrl}?param=400x400`}
-            alt={`${song.name}背景图`}
-            className={`animate-rotating h-full w-full rounded-full ${!isPlaying && 'animate-pause'}`}
-          />
-        </div>
-        {/* 滤镜 */}
-        <div className="absolute left-0 top-0 -z-[1] h-full w-full bg-desc_color opacity-[0.26]"></div>
-        <div className="relative mt-6">
-          <div className="absolute top-0 left-4">
-            <RiArrowDropDownLine className="h-14 w-14 font-normal text-desc_color" onClick={toggleToMiniPlayer} />
-          </div>
-          <h3 className="text-nowrap mx-auto w-[80%] text-center text-lg text-desc_color">{song.name}</h3>
-          <h3 className="text-nowrap mx-auto w-[80%] text-center text-base leading-5 text-[#333]">
-            {getName(song.ar)}
-          </h3>
-        </div>
-        <div className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2">
-          <img
-            src={`${song.al.picUrl}?param=400x400`}
-            alt="歌曲封面"
-            className="absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50"
-          />
-        </div>
+        {song && (
+          <>
+            <div className="absolute top-1/2 left-1/2 -z-[1] h-[85vw] w-[85vw] -translate-x-1/2 -translate-y-1/2 opacity-60 blur-lg">
+              <img
+                src={`${song.al.picUrl}?param=400x400`}
+                alt={`${song.name}背景图`}
+                className={`animate-rotating h-full w-full rounded-full ${!isPlaying && 'animate-pause'}`}
+              />
+            </div>
+            {/* 滤镜 */}
+            <div className="absolute left-0 top-0 -z-[1] h-full w-full bg-desc_color opacity-[0.26]"></div>
+            <div className="relative mt-6">
+              <div className="absolute top-0 left-4">
+                <RiArrowDropDownLine className="h-14 w-14 font-normal text-desc_color" onClick={toggleToMiniPlayer} />
+              </div>
+              <h3 className="text-nowrap mx-auto w-[80%] text-center text-lg text-desc_color">{song.name}</h3>
+              <h3 className="text-nowrap mx-auto w-[80%] text-center text-base leading-5 text-[#333]">
+                {getName(song.ar)}
+              </h3>
+            </div>
+            <div className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2">
+              <img
+                src={`${song.al.picUrl}?param=400x400`}
+                alt="歌曲封面"
+                className="absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50"
+              />
+            </div>
+          </>
+        )}
         <div className="absolute bottom-12 flex w-full flex-col">
           <div className="mx-auto flex w-[80%] items-center text-sm">
             <div>{formatPlayingTime(currentTime)}</div>

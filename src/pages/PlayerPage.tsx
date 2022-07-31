@@ -11,35 +11,8 @@ import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const currentSong: ISong = {
-    id: 1,
-    al: { picUrl: 'https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg', name: '木偶人' },
-    name: '木偶人',
-    ar: [{ name: '薛之谦' }],
-    dt: 234947
-  }
-
-  const playList: ISong[] = [
-    {
-      al: {
-        name: '拾梦纪',
-        picUrl: 'http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg'
-      },
-      name: '拾梦纪',
-      dt: 234947,
-      ar: [
-        {
-          name: '妖扬'
-        },
-        {
-          name: '金天'
-        }
-      ],
-      id: 1416767593
-    }
-  ]
-
-  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList } = useAppSelector((store) => store.player)
+  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList, currentSong, playingList } =
+    useAppSelector((store) => store.player)
   const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong, setPlayingList, setPlayingMode } =
     playerSlice.actions
 
@@ -60,20 +33,20 @@ const PlayerPage = () => {
   useEffect(() => {
     if (
       !audioRef.current ||
-      playList.length === 0 ||
-      !playList[currentIndex] ||
-      (prevSong && playList[currentIndex].id === prevSong.id)
+      playingList.length === 0 ||
+      !playingList[currentIndex] ||
+      (prevSong && playingList[currentIndex].id === prevSong.id)
     ) {
       return
     }
-    const newSong = playList[currentIndex]
+    const newSong = playingList[currentIndex]
     dispatch(setCurrentSong(newSong))
     setPrevSong(newSong)
     audioRef.current.src = getSongUrl(newSong.id)
     dispatch(setIsPlaying(false))
     setCurrentTime(0)
     setDuration(newSong.dt / 1000)
-  }, [playList, currentIndex])
+  }, [playingList, currentIndex])
 
   const toggleToPause = useCallback(() => {
     if (!audioRef.current) {
@@ -119,33 +92,33 @@ const PlayerPage = () => {
   }, [])
 
   const handlePrev = useCallback(() => {
-    if (playList.length === 1) {
+    if (playingList.length === 1) {
       handleLoop()
       return
     }
     let index = currentIndex - 1
     if (index < 0) {
-      index = playList.length - 1
+      index = playingList.length - 1
     }
     if (!isPlaying) {
-      setIsPlaying(true)
+      dispatch(setIsPlaying(true))
     }
-    setCurrentIndex(index)
+    dispatch(setCurrentIndex(index))
   }, [])
 
   const handleNext = useCallback(() => {
-    if (playList.length === 1) {
+    if (playingList.length === 1) {
       handleLoop()
       return
     }
     let index = currentIndex + 1
-    if (index >= playList.length) {
+    if (index >= playingList.length) {
       index = 0
     }
     if (!isPlaying) {
-      setIsPlaying(true)
+      dispatch(setIsPlaying(true))
     }
-    setCurrentIndex(index)
+    dispatch(setCurrentIndex(index))
   }, [])
 
   const handleEnd = useCallback(() => {
@@ -157,21 +130,24 @@ const PlayerPage = () => {
   }, [playingMode])
 
   const changeMode = useCallback(() => {
+    if (!currentSong) {
+      return
+    }
+
     const newMode: EPlayingMode = (playingMode + 1) % 3
-    console.log('newMode', newMode)
     if (newMode === EPlayingMode.SEQUENCE_MODE) {
-      setPlayingList(sequencePlayList)
+      dispatch(setPlayingList(sequencePlayList))
       const index = sequencePlayList.findIndex((item) => item.id === currentSong.id)
-      setCurrentIndex(index)
+      dispatch(setCurrentIndex(index))
       Toast.show('顺序播放')
     } else if (newMode === EPlayingMode.LOOP_MODE) {
-      setPlayingList(sequencePlayList)
+      dispatch(setPlayingList(sequencePlayList))
       Toast.show('循环播放')
     } else if (newMode === EPlayingMode.RANDOM_MODE) {
       const newList = shuffle(sequencePlayList)
-      setPlayingList(newList)
+      dispatch(setPlayingList(newList))
       const index = newList.findIndex((item) => item.id === currentSong.id)
-      setCurrentIndex(index)
+      dispatch(setCurrentIndex(index))
       Toast.show('随机播放')
     }
 
