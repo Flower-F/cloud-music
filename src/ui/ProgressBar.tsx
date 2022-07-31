@@ -80,16 +80,15 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
     const totalWidth = progressBarRef.current.clientWidth - progressButtonRef.current.clientWidth
     const currentWidth = progressRef.current.clientWidth
     const percent = currentWidth / totalWidth
-    // console.log('newPercent', percent)
     percentChangeCallback(percent)
-  }, [])
+  }, [percent])
 
   useEffect(() => {
+    // console.log('touch', touch)
     if (
       percent >= 0 &&
       percent <= 1 &&
-      touch &&
-      !touch.initialized &&
+      (!touch || !touch.initialized) &&
       progressBarRef.current &&
       progressButtonRef.current
     ) {
@@ -97,7 +96,7 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
       const offsetWidth = percent * progressBarWidth
       updateProgress(offsetWidth)
     }
-  }, [percent])
+  }, [percent, touch])
 
   return (
     <div

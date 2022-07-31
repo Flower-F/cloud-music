@@ -95,7 +95,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <div className="absolute top-0 left-4">
                 <RiArrowDropDownLine className="h-14 w-14 font-normal text-desc_color" onClick={toggleToMiniPlayer} />
               </div>
-              <h3 className="text-nowrap mx-auto w-[80%] text-center text-lg text-desc_color">{song.name}</h3>
+              <h3 className="text-nowrap mx-auto w-[80%] text-center text-lg font-bold text-desc_color">{song.name}</h3>
               <h3 className="text-nowrap mx-auto w-[80%] text-center text-base leading-5 text-[#333]">
                 {getName(song.ar)}
               </h3>
@@ -116,7 +116,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
             <div>{formatPlayingTime(duration)}</div>
           </div>
           <div className="mx-auto flex h-24 w-[84vw] items-center justify-between">
-            <div className="flex h-8 w-10 items-end justify-center">{playingModeIcon}</div>
+            <div className="flex h-9 w-9 items-end justify-center">{playingModeIcon}</div>
             <ImPrevious className="h-9 w-9" onClick={handlePrev} />
             {isPlaying ? (
               <CgPlayPauseO className="h-14 w-14" onClick={pause} />

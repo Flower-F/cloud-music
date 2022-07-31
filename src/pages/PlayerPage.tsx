@@ -1,59 +1,72 @@
 import { shuffle } from 'lodash-es'
-import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { EPlayingMode } from '@/api'
 import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
-import { ISong } from '@/components/SongList'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList, currentSong, playingList } =
-    useAppSelector((store) => store.player)
-  const { setFullscreen, setIsPlaying, setCurrentIndex, setCurrentSong, setPlayingList, setPlayingMode } =
-    playerSlice.actions
-
-  const dispatch = useAppDispatch()
-
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const [prevSong, setPrevSong] = useState<ISong | null>()
+  const {
+    fullscreen,
+    isPlaying,
+    currentIndex,
+    playingMode,
+    sequencePlayList,
+    currentSong,
+    playingList,
+    currentTime,
+    duration,
+    prevSong
+  } = useAppSelector((store) => store.player)
+  const {
+    setFullscreen,
+    setIsPlaying,
+    setCurrentIndex,
+    setPlayingList,
+    setPlayingMode,
+    setPrevSong,
+    setCurrentTime,
+    setDuration
+  } = playerSlice.actions
 
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
+
+  const dispatch = useAppDispatch()
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    setCurrentIndex(0)
+    dispatch(setCurrentIndex(0))
   }, [])
 
   useEffect(() => {
-    if (
-      !audioRef.current ||
-      playingList.length === 0 ||
-      !playingList[currentIndex] ||
-      (prevSong && playingList[currentIndex].id === prevSong.id)
-    ) {
+    console.log('render')
+    if (!audioRef.current || playingList.length === 0 || !currentSong || (prevSong && currentSong.id === prevSong.id)) {
       return
     }
-    const newSong = playingList[currentIndex]
-    dispatch(setCurrentSong(newSong))
-    setPrevSong(newSong)
-    audioRef.current.src = getSongUrl(newSong.id)
-    dispatch(setIsPlaying(false))
-    setCurrentTime(0)
-    setDuration(newSong.dt / 1000)
-  }, [playingList, currentIndex])
+    audioRef.current.src = getSongUrl(currentSong.id)
+    dispatch(setPrevSong(currentSong))
+    dispatch(setIsPlaying(true))
+    dispatch(setCurrentTime(0))
+    dispatch(setDuration(currentSong.dt / 1000))
+  }, [playingList, currentSong])
+
+  useEffect(() => {
+    if (!audioRef.current || !currentSong) {
+      return
+    }
+    isPlaying ? audioRef.current.play() : audioRef.current.pause()
+  }, [isPlaying, currentSong])
 
   const toggleToPause = useCallback(() => {
     if (!audioRef.current) {
       return
     }
     if (isPlaying) {
-      audioRef.current.pause()
       dispatch(setIsPlaying(false))
     }
   }, [isPlaying])
@@ -63,13 +76,12 @@ const PlayerPage = () => {
       return
     }
     if (!isPlaying) {
-      audioRef.current.play()
       dispatch(setIsPlaying(true))
     }
   }, [isPlaying])
 
   const handleTimeUpdate = useCallback((e: ChangeEvent<HTMLAudioElement>) => {
-    setCurrentTime(e.target.currentTime)
+    dispatch(setCurrentTime(e.target.currentTime))
   }, [])
 
   const percentChangeCallback = useCallback(
@@ -78,7 +90,7 @@ const PlayerPage = () => {
         return
       }
       const newTime = currentPercent * duration
-      setCurrentTime(newTime)
+      dispatch(setCurrentTime(newTime))
       audioRef.current.currentTime = newTime
     },
     [duration]
@@ -167,7 +179,7 @@ const PlayerPage = () => {
   }, [currentSong, percent, isPlaying])
 
   return (
-    <div>
+    <>
       {currentSong && <MiniPlayer {...commonProps} />}
       {currentSong && (
         <NormalPlayer
@@ -183,7 +195,7 @@ const PlayerPage = () => {
         />
       )}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd}></audio>
-    </div>
+    </>
   )
 }
 

@@ -25,7 +25,7 @@ const MiniPlayer: FC<ICommonPlayerProps> = ({ song, setFullscreen, dispatch, per
   }, [])
 
   return (
-    <div className="fixed left-0 -bottom-[1px] z-[1000] flex h-[60px] w-full items-center bg-highlight_background_color">
+    <div className="fixed left-0 -bottom-[1px] z-[1000] flex h-[60px] w-full items-center border-y bg-highlight_background_color shadow">
       {song && (
         <>
           <div className="mr-1.5 ml-4 flex h-[60px] w-[48px] items-center " onClick={toggleToNormalPlayer}>
