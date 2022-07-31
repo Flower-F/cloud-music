@@ -73,12 +73,12 @@ const SingersPage = () => {
 
   return (
     <>
-      <div className={`fixed top-24 w-full overflow-hidden px-2 ${playingList.length > 0 && 'bottom-[60px]'}`}>
+      <div className="fixed top-24 w-full overflow-hidden px-2">
         <Horizon list={singerTypes} title="类型" oldValue={type} onClick={handleUpdateType} />
         <Horizon list={singerAreas} title="地域" oldValue={area} onClick={handleUpdateArea} />
         <Horizon list={singerAlphas} title="首字母" oldValue={alpha} onClick={handleUpdateAlpha} />
       </div>
-      <div className="fixed top-52 bottom-0 w-full overflow-hidden">
+      <div className={`fixed top-52 bottom-0 w-full overflow-hidden ${playingList.length > 0 && 'bottom-[60px]'}`}>
         <Scroll
           ref={scrollRef}
           pullUp={handlePullUp}
