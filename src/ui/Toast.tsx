@@ -8,7 +8,7 @@ interface IProps {
 const Toast = ({ text, className }: IProps) => {
   return (
     <div
-      className={`fixed bottom-2.5 left-0 right-0 z-[99999] mx-auto max-w-[50vw] rounded-sm bg-[#111] py-1 text-center text-white ${className}`}
+      className={`fixed bottom-2.5 left-0 right-0 z-[99999] mx-auto max-w-[40vw] rounded-sm bg-[#111] py-1 text-center text-white ${className}`}
     >
       {text}
     </div>

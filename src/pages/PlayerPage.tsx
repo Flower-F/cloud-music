@@ -2,92 +2,40 @@ import { shuffle } from 'lodash-es'
 import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { EPlayingMode } from '@/api'
-import MiniPlayer, { ICommonPlayerProps, IPlayer } from '@/components/MiniPlayer'
+import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
+import { ISong } from '@/components/SongList'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const currentSong: IPlayer = {
+  const currentSong: ISong = {
     id: 1,
-    al: { picUrl: 'https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg' },
+    al: { picUrl: 'https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg', name: '木偶人' },
     name: '木偶人',
-    ar: [{ name: '薛之谦' }]
+    ar: [{ name: '薛之谦' }],
+    dt: 234947
   }
 
-  const playList = [
+  const playList: ISong[] = [
     {
-      ftype: 0,
-      djId: 0,
-      a: null,
-      cd: '01',
-      crbt: null,
-      no: 1,
-      st: 0,
-      rt: '',
-      cf: '',
-      alia: ['手游《梦幻花园》苏州园林版推广曲'],
-      rtUrls: [],
-      fee: 0,
-      s_id: 0,
-      copyright: 0,
-      h: {
-        br: 320000,
-        fid: 0,
-        size: 9400365,
-        vd: -45814
-      },
-      mv: 0,
       al: {
-        id: 84991301,
         name: '拾梦纪',
-        picUrl: 'http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg',
-        tns: [],
-        pic_str: '109951164627180052',
-        pic: 109951164627180050
+        picUrl: 'http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg'
       },
       name: '拾梦纪',
-      l: {
-        br: 128000,
-        fid: 0,
-        size: 3760173,
-        vd: -41672
-      },
-      rtype: 0,
-      m: {
-        br: 192000,
-        fid: 0,
-        size: 5640237,
-        vd: -43277
-      },
-      cp: 1416668,
-      mark: 0,
-      rtUrl: null,
-      mst: 9,
       dt: 234947,
       ar: [
         {
-          id: 12084589,
-          name: '妖扬',
-          tns: [],
-          alias: []
+          name: '妖扬'
         },
         {
-          id: 12578371,
-          name: '金天',
-          tns: [],
-          alias: []
+          name: '金天'
         }
       ],
-      pop: 5,
-      pst: 0,
-      t: 0,
-      v: 3,
-      id: 1416767593,
-      publishTime: 0,
-      rurl: null
+      id: 1416767593
     }
   ]
 
@@ -99,7 +47,7 @@ const PlayerPage = () => {
 
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [prevSong, setPrevSong] = useState<IPlayer | null>()
+  const [prevSong, setPrevSong] = useState<ISong | null>()
 
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
 
@@ -200,6 +148,14 @@ const PlayerPage = () => {
     setCurrentIndex(index)
   }, [])
 
+  const handleEnd = useCallback(() => {
+    if (playingMode === EPlayingMode.LOOP_MODE) {
+      handleLoop()
+    } else {
+      handleNext()
+    }
+  }, [playingMode])
+
   const changeMode = useCallback(() => {
     const newMode: EPlayingMode = (playingMode + 1) % 3
     console.log('newMode', newMode)
@@ -250,7 +206,7 @@ const PlayerPage = () => {
           playingMode={playingMode}
         />
       )}
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}></audio>
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd}></audio>
     </div>
   )
 }

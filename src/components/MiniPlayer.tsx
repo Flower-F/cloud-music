@@ -7,19 +7,10 @@ import { useAppDispatch } from '@/store'
 import ProgressCircle from '@/ui/ProgressCircle'
 import { getName } from '@/utils'
 
-export interface IPlayer {
-  /** 歌曲id */
-  id: number
-  /** 名称 */
-  name: string
-  /** 歌曲列表 */
-  ar: { name: string }[]
-  /** 歌曲 */
-  al: { picUrl: string }
-}
+import { ISong } from './SongList'
 
 export interface ICommonPlayerProps {
-  song: IPlayer
+  song: ISong
   percent: number
   isPlaying: boolean
   play: () => void

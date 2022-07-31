@@ -2,15 +2,26 @@ import { FC, memo, useMemo } from 'react'
 import { BsPlayCircle } from 'react-icons/bs'
 import { FaStar } from 'react-icons/fa'
 
+import { useAppDispatch, useAppSelector } from '@/store'
 import { getCount, getName } from '@/utils'
 
 export interface ISong {
+  /** 歌曲id */
+  id: number
   /** 名称 */
   name: string
-  /** 歌手列表 */
-  ar: { name: string }[]
-  /** 歌曲 */
-  al: { name: string }
+  ar: {
+    /** 名称 */
+    name: string
+  }[]
+  al: {
+    /** 图片链接 */
+    picUrl: string
+    /** 名称 */
+    name: string
+  }
+  /** 持续时间 */
+  dt: number
 }
 
 export interface IAlbum {
@@ -55,6 +66,9 @@ const SongList: FC<IProps> = ({ song }) => {
     }
     return song.hotSongs
   }, [song])
+
+  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList } = useAppSelector((store) => store.player)
+  const dispatch = useAppDispatch()
 
   return (
     <div className="h-full rounded-lg bg-highlight_background_color opacity-95">
