@@ -10,12 +10,18 @@ import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayList, playingList, prevSong } = useAppSelector(
-    (store) => store.player
-  )
+  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayingList, playingList, prevSong } =
+    useAppSelector((store) => store.player)
 
-  const { setFullscreen, setIsPlaying, setCurrentIndex, setPlayingList, setPlayingMode, setPrevSong } =
-    playerSlice.actions
+  const {
+    setFullscreen,
+    setIsPlaying,
+    setCurrentIndex,
+    setPlayingList,
+    setSequencePlayingList,
+    setPlayingMode,
+    setPrevSong
+  } = playerSlice.actions
 
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -24,6 +30,7 @@ const PlayerPage = () => {
   const dispatch = useAppDispatch()
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const songReady = useRef(true)
 
   useEffect(() => {
     dispatch(setCurrentIndex(-1))
@@ -32,6 +39,8 @@ const PlayerPage = () => {
   useEffect(() => {
     if (
       !audioRef.current ||
+      !songReady.current ||
+      currentIndex === -1 ||
       playingList.length === 0 ||
       !playingList[currentIndex] ||
       (prevSong && playingList[currentIndex].id === prevSong.id)
@@ -40,10 +49,15 @@ const PlayerPage = () => {
     }
     audioRef.current.src = getSongUrl(playingList[currentIndex].id)
     dispatch(setPrevSong(playingList[currentIndex]))
+    setTimeout(() => {
+      audioRef.current?.play().then(() => {
+        songReady.current = true
+      })
+    }, 0)
     dispatch(setIsPlaying(true))
     setCurrentTime(0)
     setDuration(playingList[currentIndex].dt / 1000)
-  }, [currentIndex])
+  }, [currentIndex, playingList, prevSong])
 
   useEffect(() => {
     if (!audioRef.current || !playingList[currentIndex]) {
@@ -91,6 +105,11 @@ const PlayerPage = () => {
       return
     }
     audioRef.current.currentTime = 0
+    setTimeout(() => {
+      audioRef.current?.play().then(() => {
+        songReady.current = true
+      })
+    }, 0)
   }, [])
 
   const handlePrev = useCallback(() => {
@@ -102,11 +121,9 @@ const PlayerPage = () => {
     if (index < 0) {
       index = playingList.length - 1
     }
-    if (!isPlaying) {
-      dispatch(setIsPlaying(true))
-    }
+    dispatch(setIsPlaying(true))
     dispatch(setCurrentIndex(index))
-  }, [currentIndex, isPlaying])
+  }, [currentIndex, isPlaying, playingList])
 
   const handleNext = useCallback(() => {
     if (playingList.length === 1) {
@@ -117,11 +134,9 @@ const PlayerPage = () => {
     if (index >= playingList.length) {
       index = 0
     }
-    if (!isPlaying) {
-      dispatch(setIsPlaying(true))
-    }
+    dispatch(setIsPlaying(true))
     dispatch(setCurrentIndex(index))
-  }, [currentIndex, isPlaying])
+  }, [currentIndex, isPlaying, playingList])
 
   const handleEnd = useCallback(() => {
     if (playingMode === EPlayingMode.LOOP_MODE) {
@@ -129,7 +144,7 @@ const PlayerPage = () => {
     } else {
       handleNext()
     }
-  }, [playingMode])
+  }, [playingMode, playingList])
 
   const changeMode = useCallback(() => {
     if (!playingList[currentIndex]) {
@@ -138,15 +153,15 @@ const PlayerPage = () => {
 
     const newMode: EPlayingMode = (playingMode + 1) % 3
     if (newMode === EPlayingMode.SEQUENCE_MODE) {
-      dispatch(setPlayingList(sequencePlayList))
-      const index = sequencePlayList.findIndex((item) => item.id === playingList[currentIndex].id)
+      dispatch(setPlayingList(sequencePlayingList))
+      const index = sequencePlayingList.findIndex((item) => item.id === playingList[currentIndex].id)
       dispatch(setCurrentIndex(index))
       Toast.show('顺序播放')
     } else if (newMode === EPlayingMode.LOOP_MODE) {
-      dispatch(setPlayingList(sequencePlayList))
+      dispatch(setPlayingList(sequencePlayingList))
       Toast.show('循环播放')
     } else if (newMode === EPlayingMode.RANDOM_MODE) {
-      const newList = shuffle(sequencePlayList)
+      const newList = shuffle(sequencePlayingList)
       dispatch(setPlayingList(newList))
       const index = newList.findIndex((item) => item.id === playingList[currentIndex].id)
       dispatch(setCurrentIndex(index))
@@ -155,6 +170,18 @@ const PlayerPage = () => {
 
     dispatch(setPlayingMode(newMode))
   }, [playingMode, currentIndex])
+
+  const handleError = useCallback(() => {
+    songReady.current = true
+    const newSequencePlayingList = sequencePlayingList.filter((item) => item.id !== playingList[currentIndex].id)
+    const newPlayingList = playingList.filter((item) => item.id !== playingList[currentIndex].id)
+    console.log('newSequencePlayingList:', newSequencePlayingList)
+    console.log('newPlayingList:', newPlayingList)
+    dispatch(setPlayingList(newPlayingList))
+    dispatch(setSequencePlayingList(newSequencePlayingList))
+    handleNext()
+    Toast.show('暂无音源')
+  }, [playingList])
 
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
@@ -184,7 +211,7 @@ const PlayerPage = () => {
           playingMode={playingMode}
         />
       )}
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd}></audio>
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd} onError={handleError}></audio>
     </>
   )
 }

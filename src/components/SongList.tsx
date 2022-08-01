@@ -69,24 +69,20 @@ const SongList: FC<IProps> = ({ song }) => {
   }, [song])
 
   const { playingList, currentIndex } = useAppSelector((store) => store.player)
-  const { setCurrentIndex, setSequencePlayingList, setPlayingList, setIsPlaying } = playerSlice.actions
+  const { setCurrentIndex, setSequencePlayingList, setPlayingList } = playerSlice.actions
   const dispatch = useAppDispatch()
 
-  const selectItem = useCallback(
-    (index: number) => {
-      dispatch(setCurrentIndex(currentIndex + 1))
-      let newSong: ISong | null = null
-      if (hasCollect(song)) {
-        newSong = song.tracks[index]
-      } else {
-        newSong = song.hotSongs[index]
-      }
-      dispatch(setPlayingList([...playingList, newSong]))
-      dispatch(setSequencePlayingList([...playingList, newSong]))
-      dispatch(setIsPlaying(true))
-    },
-    [hasCollect(song), playingList]
-  )
+  const selectItem = useCallback((index: number) => {
+    dispatch(setCurrentIndex(currentIndex + 1))
+    let newSong: ISong | null = null
+    if (hasCollect(song)) {
+      newSong = song.tracks[index]
+    } else {
+      newSong = song.hotSongs[index]
+    }
+    dispatch(setPlayingList([...playingList, newSong]))
+    dispatch(setSequencePlayingList([...playingList, newSong]))
+  }, [])
 
   return (
     <div className="h-full rounded-lg bg-highlight_background_color opacity-95">

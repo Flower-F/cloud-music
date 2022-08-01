@@ -13,7 +13,7 @@ interface IPlayerState {
   /** 播放列表 */
   playingList: ISong[]
   /** 顺序播放列表 因为存在随机模式所以需要维护播放顺序 */
-  sequencePlayList: ISong[]
+  sequencePlayingList: ISong[]
   /** 当前歌曲的索引 */
   currentIndex: number
   /** 是否展示播放列表 */
@@ -28,7 +28,7 @@ const initialState: IPlayerState = {
   fullscreen: false,
   isPlaying: false,
   playingList: [],
-  sequencePlayList: [],
+  sequencePlayingList: [],
   currentIndex: -1,
   showPlayingList: false,
   playingMode: EPlayingMode.SEQUENCE_MODE,
@@ -49,7 +49,7 @@ export const playerSlice = createSlice({
       state.playingList = action.payload
     },
     setSequencePlayingList: (state: IPlayerState, action: PayloadAction<ISong[]>) => {
-      state.sequencePlayList = action.payload
+      state.sequencePlayingList = action.payload
     },
     setCurrentIndex: (state: IPlayerState, action: PayloadAction<number>) => {
       state.currentIndex = action.payload
