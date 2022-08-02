@@ -46,14 +46,14 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
     if (!normalPlayerRef.current) {
       return
     }
-    normalPlayerRef.current.style.display = 'block'
+    normalPlayerRef.current.style.visibility = 'visible'
   }, [])
 
   const handleExited = useCallback(() => {
     if (!normalPlayerRef.current) {
       return
     }
-    normalPlayerRef.current.style.display = 'none'
+    normalPlayerRef.current.style.visibility = 'hidden'
   }, [])
 
   const toggleToMiniPlayer = useCallback(() => {
