@@ -30,6 +30,7 @@ interface IProps {
 
 const RankList: FC<IProps> = ({ rankList }) => {
   const navigate = useNavigate()
+
   const enterDetail = (id: number) => {
     navigate(`/rank/${id}`)
   }

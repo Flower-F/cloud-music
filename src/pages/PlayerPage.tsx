@@ -181,7 +181,7 @@ const PlayerPage = () => {
     dispatch(setSequencePlayingList(newSequencePlayingList))
     handleNext()
     Toast.show('暂无音源')
-  }, [playingList])
+  }, [playingList, sequencePlayingList])
 
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {

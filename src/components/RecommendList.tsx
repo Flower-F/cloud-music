@@ -23,6 +23,7 @@ interface IProps {
 
 const RecommendList: FC<IProps> = ({ recommendList }) => {
   const navigate = useNavigate()
+
   const enterDetail = (id: number) => {
     navigate(`/recommend/${id}`)
   }

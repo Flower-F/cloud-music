@@ -68,21 +68,32 @@ const SongList: FC<IProps> = ({ song }) => {
     return song.hotSongs
   }, [song])
 
-  const { playingList, currentIndex } = useAppSelector((store) => store.player)
+  const { playingList, currentIndex, sequencePlayingList, prevSong } = useAppSelector((store) => store.player)
   const { setCurrentIndex, setSequencePlayingList, setPlayingList } = playerSlice.actions
   const dispatch = useAppDispatch()
 
-  const selectItem = useCallback((index: number) => {
-    dispatch(setCurrentIndex(currentIndex + 1))
-    let newSong: ISong | null = null
-    if (hasCollect(song)) {
-      newSong = song.tracks[index]
-    } else {
-      newSong = song.hotSongs[index]
-    }
-    dispatch(setPlayingList([...playingList, newSong]))
-    dispatch(setSequencePlayingList([...playingList, newSong]))
-  }, [])
+  const selectItem = useCallback(
+    (index: number) => {
+      let newSong: ISong | null = null
+      if (hasCollect(song)) {
+        newSong = song.tracks[index]
+      } else {
+        newSong = song.hotSongs[index]
+      }
+      if (prevSong && prevSong.id === newSong.id) {
+        return
+      }
+      const existedIndex = playingList.findIndex((item) => item.id === newSong?.id)
+      if (existedIndex !== -1) {
+        dispatch(setCurrentIndex(existedIndex))
+        return
+      }
+      dispatch(setPlayingList([...playingList, newSong]))
+      dispatch(setSequencePlayingList([...sequencePlayingList, newSong]))
+      dispatch(setCurrentIndex(currentIndex + 1))
+    },
+    [song, playingList, sequencePlayingList, prevSong, currentIndex]
+  )
 
   return (
     <div className="h-full rounded-lg bg-highlight_background_color opacity-95">
