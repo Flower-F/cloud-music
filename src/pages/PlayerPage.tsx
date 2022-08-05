@@ -63,7 +63,13 @@ const PlayerPage = () => {
     if (!audioRef.current || !playingList[currentIndex]) {
       return
     }
-    isPlaying ? audioRef.current.play() : audioRef.current.pause()
+    if (isPlaying) {
+      if (audioRef.current.networkState !== 3) {
+        audioRef.current.play()
+      }
+    } else {
+      audioRef.current.pause()
+    }
   }, [isPlaying, currentIndex])
 
   const toggleToPause = useCallback(() => {
@@ -179,9 +185,11 @@ const PlayerPage = () => {
     console.log('newPlayingList:', newPlayingList)
     dispatch(setPlayingList(newPlayingList))
     dispatch(setSequencePlayingList(newSequencePlayingList))
-    handleNext()
+    if (currentIndex >= 0) {
+      dispatch(setCurrentIndex(currentIndex - 1))
+    }
     Toast.show('暂无音源')
-  }, [playingList, sequencePlayingList])
+  }, [playingList, sequencePlayingList, currentIndex])
 
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
