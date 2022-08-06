@@ -145,6 +145,7 @@ const PlayerPage = () => {
   }, [currentIndex, isPlaying, playingList])
 
   const handleEnd = useCallback(() => {
+    // console.log('end')
     if (playingMode === EPlayingMode.LOOP_MODE) {
       handleLoop()
     } else {
@@ -152,30 +153,33 @@ const PlayerPage = () => {
     }
   }, [playingMode, playingList])
 
-  const changeMode = useCallback(() => {
+  useEffect(() => {
     if (!playingList[currentIndex]) {
       return
     }
 
-    const newMode: EPlayingMode = (playingMode + 1) % 3
-    if (newMode === EPlayingMode.SEQUENCE_MODE) {
+    if (playingMode === EPlayingMode.RANDOM_MODE) {
+      const shuffleList = shuffle(sequencePlayingList)
+      dispatch(setPlayingList(shuffleList))
+      const index = shuffleList.findIndex((item) => item.id === playingList[currentIndex].id)
+      dispatch(setCurrentIndex(index))
+      Toast.show('随机播放')
+    } else {
       dispatch(setPlayingList(sequencePlayingList))
       const index = sequencePlayingList.findIndex((item) => item.id === playingList[currentIndex].id)
       dispatch(setCurrentIndex(index))
-      Toast.show('顺序播放')
-    } else if (newMode === EPlayingMode.LOOP_MODE) {
-      dispatch(setPlayingList(sequencePlayingList))
-      Toast.show('循环播放')
-    } else if (newMode === EPlayingMode.RANDOM_MODE) {
-      const newList = shuffle(sequencePlayingList)
-      dispatch(setPlayingList(newList))
-      const index = newList.findIndex((item) => item.id === playingList[currentIndex].id)
-      dispatch(setCurrentIndex(index))
-      Toast.show('随机播放')
+      if (playingMode === EPlayingMode.SEQUENCE_MODE) {
+        Toast.show('顺序播放')
+      } else if (playingMode === EPlayingMode.LOOP_MODE) {
+        Toast.show('循环播放')
+      }
     }
+  }, [playingMode])
 
+  const changeMode = useCallback(() => {
+    const newMode: EPlayingMode = (playingMode + 1) % 3
     dispatch(setPlayingMode(newMode))
-  }, [playingMode, currentIndex])
+  }, [playingMode])
 
   const handleError = useCallback(() => {
     songReady.current = true
@@ -201,7 +205,7 @@ const PlayerPage = () => {
       play: toggleToPlay,
       pause: toggleToPause
     }
-  }, [percent, isPlaying, currentIndex])
+  }, [percent, isPlaying, currentIndex, playingList])
 
   return (
     <>
