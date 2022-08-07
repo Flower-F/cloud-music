@@ -109,10 +109,7 @@ const PlayingList: FC<IProps> = ({
       const newPlayingList = playingList.filter((item) => item.id !== playingList[index].id)
       dispatch(setPlayingList(newPlayingList))
       dispatch(setSequencePlayingList(newSequencePlayingList))
-      if (playingList.length === 1 && index === 0) {
-        dispatch(setIsPlaying(false))
-      }
-      if (index === currentIndex && currentIndex >= 0) {
+      if (currentIndex >= index && currentIndex >= 0) {
         dispatch(setCurrentIndex(currentIndex - 1))
       }
     },
