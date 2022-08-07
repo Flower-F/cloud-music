@@ -136,3 +136,13 @@ body {
   transition: all 0.4s;
   transform: translate3d(0, 100%, 0) scale(0.6);
 }
+
+/* playingList 开启动画 */
+.playing-list-enter {
+  opacity: 0;
+}
+
+.playing-list-enter-active {
+  opacity: 1;
+  transition: all 0.3s;
+}

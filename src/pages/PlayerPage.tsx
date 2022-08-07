@@ -4,14 +4,23 @@ import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } 
 import { EPlayingMode } from '@/api'
 import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
+import PlayingList from '@/components/PlayingList'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import Toast from '@/ui/Toast'
 import { getSongUrl } from '@/utils'
 
 const PlayerPage = () => {
-  const { fullscreen, isPlaying, currentIndex, playingMode, sequencePlayingList, playingList, prevSong } =
-    useAppSelector((store) => store.player)
+  const {
+    fullscreen,
+    isPlaying,
+    currentIndex,
+    playingMode,
+    sequencePlayingList,
+    playingList,
+    prevSong,
+    showPlayingList
+  } = useAppSelector((store) => store.player)
 
   const {
     setFullscreen,
@@ -20,7 +29,8 @@ const PlayerPage = () => {
     setPlayingList,
     setSequencePlayingList,
     setPlayingMode,
-    setPrevSong
+    setPrevSong,
+    setShowPlayingList
   } = playerSlice.actions
 
   const [currentTime, setCurrentTime] = useState(0)
@@ -145,7 +155,6 @@ const PlayerPage = () => {
   }, [currentIndex, isPlaying, playingList])
 
   const handleEnd = useCallback(() => {
-    // console.log('end')
     if (playingMode === EPlayingMode.LOOP_MODE) {
       handleLoop()
     } else {
@@ -185,8 +194,6 @@ const PlayerPage = () => {
     songReady.current = true
     const newSequencePlayingList = sequencePlayingList.filter((item) => item.id !== playingList[currentIndex].id)
     const newPlayingList = playingList.filter((item) => item.id !== playingList[currentIndex].id)
-    console.log('newSequencePlayingList:', newSequencePlayingList)
-    console.log('newPlayingList:', newPlayingList)
     dispatch(setPlayingList(newPlayingList))
     dispatch(setSequencePlayingList(newSequencePlayingList))
     if (currentIndex >= 0) {
@@ -201,6 +208,7 @@ const PlayerPage = () => {
       percent,
       isPlaying,
       setFullscreen,
+      setShowPlayingList,
       dispatch,
       play: toggleToPlay,
       pause: toggleToPause
@@ -223,6 +231,18 @@ const PlayerPage = () => {
           playingMode={playingMode}
         />
       )}
+      <PlayingList
+        playingList={playingList}
+        setShowPlayingList={setShowPlayingList}
+        setCurrentIndex={setCurrentIndex}
+        showPlayingList={showPlayingList}
+        dispatch={dispatch}
+        changeMode={changeMode}
+        playingMode={playingMode}
+        currentIndex={currentIndex}
+        prevSong={prevSong}
+        setIsPlaying={setIsPlaying}
+      />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd} onError={handleError}></audio>
     </>
   )

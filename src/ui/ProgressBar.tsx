@@ -62,6 +62,7 @@ const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) 
     changePercent()
   }, [touch])
 
+  // TODO: 这里还有个bug
   const handleClick = useCallback((e: MouseEvent) => {
     if (!progressBarRef.current) {
       return

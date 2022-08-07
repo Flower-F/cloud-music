@@ -38,7 +38,7 @@ const RankList: FC<IProps> = ({ rankList }) => {
   return (
     <>
       {rankList.length ? (
-        <ul className="mt-3 flex flex-wrap justify-between bg-background_color px-1">
+        <ul className="mt-3 flex flex-wrap justify-between bg-background_color/30 px-1">
           {rankList.map(({ coverImgId, coverImgUrl, name, tracks, updateFrequency, id }, index) => (
             <li
               key={`${coverImgId}${index}`}

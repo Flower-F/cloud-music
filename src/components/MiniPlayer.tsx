@@ -16,12 +16,26 @@ export interface ICommonPlayerProps {
   play: () => void
   pause: () => void
   setFullscreen: ActionCreatorWithPayload<boolean, string>
+  setShowPlayingList: ActionCreatorWithPayload<boolean, string>
   dispatch: ReturnType<typeof useAppDispatch>
 }
 
-const MiniPlayer: FC<ICommonPlayerProps> = ({ song, setFullscreen, dispatch, percent, isPlaying, play, pause }) => {
+const MiniPlayer: FC<ICommonPlayerProps> = ({
+  song,
+  setFullscreen,
+  dispatch,
+  setShowPlayingList,
+  percent,
+  isPlaying,
+  play,
+  pause
+}) => {
   const toggleToNormalPlayer = useCallback(() => {
     dispatch(setFullscreen(true))
+  }, [])
+
+  const setShowingPlayingListTrue = useCallback(() => {
+    dispatch(setShowPlayingList(true))
   }, [])
 
   return (
@@ -58,7 +72,7 @@ const MiniPlayer: FC<ICommonPlayerProps> = ({ song, setFullscreen, dispatch, per
             />
           )}
         </ProgressCircle>
-        <RiPlayListFill className="ml-2.5 h-9 w-9 text-theme_color" />
+        <RiPlayListFill className="ml-2.5 h-9 w-9 text-theme_color" onClick={setShowingPlayingListTrue} />
       </div>
     </div>
   )
