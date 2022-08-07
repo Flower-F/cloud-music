@@ -242,6 +242,9 @@ const PlayerPage = () => {
         currentIndex={currentIndex}
         prevSong={prevSong}
         setIsPlaying={setIsPlaying}
+        setPlayingList={setPlayingList}
+        setSequencePlayingList={setSequencePlayingList}
+        sequencePlayingList={sequencePlayingList}
       />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnd} onError={handleError}></audio>
     </>

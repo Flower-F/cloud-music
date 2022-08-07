@@ -17,6 +17,9 @@ interface IProps {
   setShowPlayingList: ActionCreatorWithPayload<boolean, string>
   setCurrentIndex: ActionCreatorWithPayload<number, string>
   setIsPlaying: ActionCreatorWithPayload<boolean, string>
+  setPlayingList: ActionCreatorWithPayload<ISong[], string>
+  setSequencePlayingList: ActionCreatorWithPayload<ISong[], string>
+  sequencePlayingList: ISong[]
   showPlayingList: boolean
   playingList: ISong[]
   dispatch: ReturnType<typeof useAppDispatch>
@@ -36,7 +39,10 @@ const PlayingList: FC<IProps> = ({
   playingList,
   currentIndex,
   prevSong,
-  setIsPlaying
+  setIsPlaying,
+  setPlayingList,
+  setSequencePlayingList,
+  sequencePlayingList
 }) => {
   const listWrapperRef = useRef<HTMLDivElement | null>(null)
 
@@ -97,6 +103,22 @@ const PlayingList: FC<IProps> = ({
     [prevSong, currentIndex]
   )
 
+  const deleteItem = useCallback(
+    (index: number) => {
+      const newSequencePlayingList = sequencePlayingList.filter((item) => item.id !== playingList[index].id)
+      const newPlayingList = playingList.filter((item) => item.id !== playingList[index].id)
+      dispatch(setPlayingList(newPlayingList))
+      dispatch(setSequencePlayingList(newSequencePlayingList))
+      if (playingList.length === 1 && index === 0) {
+        dispatch(setIsPlaying(false))
+      }
+      if (index === currentIndex && currentIndex >= 0) {
+        dispatch(setCurrentIndex(currentIndex - 1))
+      }
+    },
+    [prevSong, currentIndex, playingList, sequencePlayingList]
+  )
+
   return (
     <CSSTransition
       timeout={300}
@@ -134,7 +156,7 @@ const PlayingList: FC<IProps> = ({
                     <div className="text-nowrap max-w-[50vw]">
                       {item.name} - {getName(item.ar)}
                     </div>
-                    <AiOutlineClose />
+                    <AiOutlineClose className="text-base" onClick={() => deleteItem(index)} />
                   </li>
                 ))}
               </ul>
