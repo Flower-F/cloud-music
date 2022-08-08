@@ -79,3 +79,16 @@ export const getArtistApi = (id: number) => {
     url: `/artists?id=${id}`
   })
 }
+
+// PlayerPage
+export interface ILyricApi {
+  lrc: {
+    lyric: string
+  }
+}
+export const getLyricApi = (id: number) => {
+  return request<ILyricApi>({
+    method: 'GET',
+    url: `/lyric?id=${id}`
+  })
+}

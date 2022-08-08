@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useMemo, useRef } from 'react'
+import { ElementRef, FC, memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { CgPlayButtonO, CgPlayPauseO } from 'react-icons/cg'
 import { FaRandom } from 'react-icons/fa'
 import { ImNext, ImPrevious } from 'react-icons/im'
@@ -8,6 +8,7 @@ import { CSSTransition } from 'react-transition-group'
 
 import { EPlayingMode } from '@/api'
 import ProgressBar from '@/ui/ProgressBar'
+import Scroll from '@/ui/Scroll'
 import { formatPlayingTime, getName } from '@/utils'
 
 import { ICommonPlayerProps } from './MiniPlayer'
@@ -21,6 +22,8 @@ interface IProps {
   handlePrev: () => void
   handleNext: () => void
   changeMode: () => void
+  currentLyric: string
+  currentLine: number
 }
 
 const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
@@ -38,7 +41,9 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   percentChangeCallback,
   handleNext,
   handlePrev,
-  changeMode
+  changeMode,
+  currentLyric,
+  currentLine
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
 
@@ -70,6 +75,26 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
     }
   }, [playingMode])
 
+  type TScrollRef = ElementRef<typeof Scroll>
+  const scrollRef = useRef<TScrollRef | null>(null)
+  const lyricRefs = useRef<any[]>([])
+
+  useEffect(() => {
+    if (!scrollRef.current) {
+      return
+    }
+
+    const betterScroll = scrollRef.current.getScroll()
+    if (currentLine > 5) {
+      // 保持当前歌词在第5条的位置
+      const lineEl = lyricRefs.current[currentLine - 5]?.current
+      betterScroll.scrollToElement(lineEl, 1000)
+    } else {
+      // 如果当前歌词行数小于或等于5, 直接滚动到最顶端
+      betterScroll.scrollTo(0, 0, 1000)
+    }
+  }, [currentLine])
+
   return (
     <CSSTransition
       classNames="normal-player"
@@ -86,7 +111,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <img
                 src={`${song.al.picUrl}?param=400x400`}
                 alt={`${song.name}背景图`}
-                className={`animate-rotating h-full w-full rounded-full ${!isPlaying && 'animate-pause'}`}
+                className="animate-rotating } h-full w-full rounded-full"
               />
             </div>
             {/* 滤镜 */}
@@ -104,8 +129,11 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <img
                 src={`${song.al.picUrl}?param=400x400`}
                 alt="歌曲封面"
-                className="absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50"
+                className={`absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50 ${
+                  !isPlaying && 'animate-pause'
+                }`}
               />
+              <div>{currentLyric}</div>
             </div>
           </>
         )}

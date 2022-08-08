@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash-es'
 import { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { EPlayingMode } from '@/api'
+import { EPlayingMode, getLyricApi } from '@/api'
 import MiniPlayer, { ICommonPlayerProps } from '@/components/MiniPlayer'
 import NormalPlayer from '@/components/NormalPlayer'
 import PlayingList from '@/components/PlayingList'
@@ -41,6 +41,10 @@ const PlayerPage = () => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const songReady = useRef(true)
+
+  const currentLyric = useRef('')
+
+  const currentLine = useRef(0)
 
   useEffect(() => {
     dispatch(setCurrentIndex(-1))
@@ -202,6 +206,33 @@ const PlayerPage = () => {
     Toast.show('暂无音源')
   }, [playingList, sequencePlayingList, currentIndex])
 
+  const getLyric = useCallback((id: number) => {
+    let lyric = ''
+    getLyricApi(id)
+      .then((data) => {
+        console.log(data)
+        lyric = data.lrc.lyric
+        if (!lyric) {
+          currentLyric.current = ''
+          return
+        }
+      })
+      .catch(() => {
+        songReady.current = true
+        audioRef.current?.play()
+      })
+  }, [])
+
+  useEffect(() => {
+    if (currentIndex < 0) {
+      return
+    }
+
+    getLyric(playingList[currentIndex].id)
+    setCurrentTime(0)
+    setDuration((playingList[currentIndex].dt / 1000) | 0)
+  }, [currentIndex, playingList])
+
   const commonProps: ICommonPlayerProps = useMemo(() => {
     return {
       song: playingList[currentIndex],
@@ -229,6 +260,8 @@ const PlayerPage = () => {
           handleNext={handleNext}
           changeMode={changeMode}
           playingMode={playingMode}
+          currentLyric={currentLyric.current}
+          currentLine={currentLine.current}
         />
       )}
       <PlayingList
