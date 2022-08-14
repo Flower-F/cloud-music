@@ -3,9 +3,16 @@ import { noop } from 'lodash-es'
 const timeRegExp = /\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?]/g
 
 /** 播放状态 */
-enum EPlayingState {
+export enum EPlayingState {
   PAUSE,
   PLAYING
+}
+
+export interface ILine {
+  /** 时间 ms */
+  time: number
+  /** 歌词文本 */
+  text: string
 }
 
 /** 歌词解析类 */
@@ -13,12 +20,7 @@ export class LyricParser {
   /** 解析前的歌词 */
   private lrc: string
   /** 解析后的歌词数组 */
-  private lines: {
-    /** 时间 ms */
-    time: number
-    /** 歌词文本 */
-    text: string
-  }[]
+  private lines: ILine[]
   /** 回调函数 */
   private callback: (...args: any[]) => any
   /** 播放状态 */
@@ -168,5 +170,10 @@ export class LyricParser {
   /** 切换到某个时间点播放 */
   public seek(offset: number) {
     this.play(offset, true)
+  }
+
+  /** lines 外部获取接口 */
+  public getLines() {
+    return this.lines
   }
 }

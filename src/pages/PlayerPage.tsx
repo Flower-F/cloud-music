@@ -8,7 +8,7 @@ import PlayingList from '@/components/PlayingList'
 import { playerSlice } from '@/slices'
 import { useAppDispatch, useAppSelector } from '@/store'
 import Toast from '@/ui/Toast'
-import { getSongUrl } from '@/utils'
+import { getSongUrl, LyricParser } from '@/utils'
 
 const PlayerPage = () => {
   const {
@@ -43,7 +43,7 @@ const PlayerPage = () => {
   const songReady = useRef(true)
 
   const currentLyric = useRef('')
-
+  const currentLyricParser = useRef<LyricParser | null>(null)
   const currentLine = useRef(0)
 
   useEffect(() => {
@@ -77,9 +77,13 @@ const PlayerPage = () => {
     if (!audioRef.current || !playingList[currentIndex]) {
       return
     }
+
     if (isPlaying) {
       if (audioRef.current.networkState !== 3) {
         audioRef.current.play()
+        if (currentLyricParser.current) {
+          currentLyricParser.current.togglePlayingState(currentTime * 1000)
+        }
       }
     } else {
       audioRef.current.pause()
@@ -116,6 +120,10 @@ const PlayerPage = () => {
       const newTime = currentPercent * duration
       setCurrentTime(newTime)
       audioRef.current.currentTime = newTime
+
+      if (currentLyricParser.current) {
+        currentLyricParser.current.seek(newTime * 1000)
+      }
     },
     [duration]
   )
@@ -206,16 +214,31 @@ const PlayerPage = () => {
     Toast.show('暂无音源')
   }, [playingList, sequencePlayingList, currentIndex])
 
+  const lyricCallback = ({ line, text }: { line: number; text: string }) => {
+    if (!currentLyric.current) {
+      return
+    }
+    currentLine.current = line
+    currentLyric.current = text
+  }
+
   const getLyric = useCallback((id: number) => {
     let lyric = ''
+    if (currentLyricParser.current) {
+      currentLyricParser.current.stop()
+    }
     getLyricApi(id)
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         lyric = data.lrc.lyric
         if (!lyric) {
-          currentLyric.current = ''
+          currentLyricParser.current = null
           return
         }
+        currentLyricParser.current = new LyricParser(lyric, lyricCallback)
+        currentLyricParser.current.play()
+        currentLine.current = 0
+        currentLyricParser.current.seek(0)
       })
       .catch(() => {
         songReady.current = true
@@ -261,6 +284,7 @@ const PlayerPage = () => {
           changeMode={changeMode}
           playingMode={playingMode}
           currentLyric={currentLyric.current}
+          currentLyricParser={currentLyricParser.current}
           currentLine={currentLine.current}
         />
       )}

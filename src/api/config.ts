@@ -12,6 +12,7 @@ axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
     // Toast.error('网络错误')
+    console.log('Network Error: ', error.message)
     return Promise.reject(new Error(error))
   }
 )

@@ -1,4 +1,4 @@
-import { ElementRef, FC, memo, useCallback, useEffect, useMemo, useRef } from 'react'
+import { createRef, ElementRef, FC, memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { CgPlayButtonO, CgPlayPauseO } from 'react-icons/cg'
 import { FaRandom } from 'react-icons/fa'
 import { ImNext, ImPrevious } from 'react-icons/im'
@@ -7,23 +7,43 @@ import { TbRepeat, TbRepeatOnce } from 'react-icons/tb'
 import { CSSTransition } from 'react-transition-group'
 
 import { EPlayingMode } from '@/api'
+import { useForceUpdate } from '@/hooks'
 import ProgressBar from '@/ui/ProgressBar'
 import Scroll from '@/ui/Scroll'
-import { formatPlayingTime, getName } from '@/utils'
+import { formatPlayingTime, getName, LyricParser } from '@/utils'
 
 import { ICommonPlayerProps } from './MiniPlayer'
 
 interface IProps {
+  /** 是否全屏 */
   fullscreen: boolean
+  /** 歌曲持续时间 */
   duration: number
+  /** 当前播放时间 */
   currentTime: number
+  /** 播放模式 */
   playingMode: EPlayingMode
-  percentChangeCallback: (currentPercent: number, ...args: any[]) => void
-  handlePrev: () => void
-  handleNext: () => void
-  changeMode: () => void
+  /** 当前正在播放的歌词 */
   currentLyric: string
+  /** 歌词解析 */
+  currentLyricParser: LyricParser | null
+  /** 当前的行数 */
   currentLine: number
+  /** 滚动条百分比修改时的回调函数 */
+  percentChangeCallback: (currentPercent: number, ...args: any[]) => void
+  /** 播放上一首 */
+  handlePrev: () => void
+  /** 播放下一首 */
+  handleNext: () => void
+  /** 修改播放模式 */
+  changeMode: () => void
+}
+
+export enum ECurrentState {
+  /** 显示歌词 */
+  LYRIC,
+  /** 显示封面 */
+  COVER
 }
 
 const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
@@ -43,9 +63,11 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   handlePrev,
   changeMode,
   currentLyric,
+  currentLyricParser,
   currentLine
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
+  const forceUpdate = useForceUpdate()
 
   const handleEnter = useCallback(() => {
     if (!normalPlayerRef.current) {
@@ -78,6 +100,16 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   type TScrollRef = ElementRef<typeof Scroll>
   const scrollRef = useRef<TScrollRef | null>(null)
   const lyricRefs = useRef<any[]>([])
+  const currentState = useRef<ECurrentState>(ECurrentState.COVER)
+
+  const toggleCurrentState = useCallback(() => {
+    if (currentState.current === ECurrentState.COVER) {
+      currentState.current = ECurrentState.LYRIC
+    } else {
+      currentState.current = ECurrentState.COVER
+    }
+    forceUpdate()
+  }, [])
 
   useEffect(() => {
     if (!scrollRef.current) {
@@ -111,7 +143,9 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <img
                 src={`${song.al.picUrl}?param=400x400`}
                 alt={`${song.name}背景图`}
-                className="animate-rotating } h-full w-full rounded-full"
+                className={`animate-rotating h-full w-full rounded-full ${
+                  currentState.current === ECurrentState.LYRIC && 'opacity-40'
+                }`}
               />
             </div>
             {/* 滤镜 */}
@@ -125,18 +159,55 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
                 {getName(song.ar)}
               </h3>
             </div>
-            <div className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2">
-              <img
-                src={`${song.al.picUrl}?param=400x400`}
-                alt="歌曲封面"
-                className={`absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] h-[70vw] w-[70vw] animate-normal-rotating rounded-full border-8 border-solid border-white/50 ${
-                  !isPlaying && 'animate-pause'
+
+            <div
+              onClick={toggleCurrentState}
+              className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2"
+            >
+              <div
+                className={`absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] block h-[70vw] w-[70vw] ${
+                  currentState.current === ECurrentState.LYRIC && 'hidden'
                 }`}
-              />
-              <div>{currentLyric}</div>
+              >
+                <div className="h-full w-full rounded-full border-8 border-solid border-white/50">
+                  <img
+                    src={`${song.al.picUrl}?param=400x400`}
+                    alt="歌曲封面"
+                    className={`h-full w-full animate-normal-rotating rounded-full ${!isPlaying && 'animate-pause'}`}
+                  />
+                </div>
+                <p className="mt-1 h-4 w-[70vw] text-center text-lg text-black/60">{currentLyric}</p>
+              </div>
+
+              <div className={`block ${currentState.current === ECurrentState.COVER && 'hidden'}`}>
+                <Scroll ref={scrollRef}>
+                  <div>
+                    {currentLyricParser ? (
+                      currentLyricParser.getLines().map((item, index) => {
+                        // 拿到每一行歌词的 DOM 对象，后面滚动歌词需要
+                        lyricRefs.current[index] = createRef()
+                        return (
+                          <p
+                            className={`py-1 text-lg leading-4 text-black/60 ${
+                              currentLine === index ? 'text-white' : ''
+                            }`}
+                            key={item.text + index}
+                            ref={lyricRefs.current[index]}
+                          >
+                            {item.text}
+                          </p>
+                        )
+                      })
+                    ) : (
+                      <p className="text pure"> 纯音乐，请欣赏。</p>
+                    )}
+                  </div>
+                </Scroll>
+              </div>
             </div>
           </>
         )}
+
         <div className="absolute bottom-12 flex w-full flex-col">
           <div className="mx-auto flex w-[80%] items-center text-sm">
             <div>{formatPlayingTime(currentTime)}</div>
