@@ -7,11 +7,16 @@ import { PULL_DOWN_DISTANCE, PULL_UP_DISTANCE } from '@/constants'
 import PullDownLoading from './PullDownLoading'
 import PullUpLoading from './PullUpLoading'
 
+interface IBetterScrollInstance {
+  scrollToElement: (...args: any[]) => any
+  scrollTo: (...args: any[]) => any
+}
+
 interface ScrollHandle {
   /** 刷新函数 */
   refresh: () => void
   /** BetterScroll 的实例 */
-  getScroll: () => any
+  getScroll: () => IBetterScrollInstance | undefined
 }
 
 interface IProps {

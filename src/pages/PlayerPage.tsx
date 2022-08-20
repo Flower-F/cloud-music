@@ -214,13 +214,10 @@ const PlayerPage = () => {
     Toast.show('暂无音源')
   }, [playingList, sequencePlayingList, currentIndex])
 
-  const lyricCallback = ({ line, text }: { line: number; text: string }) => {
-    if (!currentLyric.current) {
-      return
-    }
+  const lyricCallback = useCallback(({ line, text }: { line: number; text: string }) => {
     currentLine.current = line
     currentLyric.current = text
-  }
+  }, [])
 
   const getLyric = useCallback((id: number) => {
     let lyric = ''
@@ -229,7 +226,6 @@ const PlayerPage = () => {
     }
     getLyricApi(id)
       .then((data) => {
-        // console.log(data)
         lyric = data.lrc.lyric
         if (!lyric) {
           currentLyricParser.current = null

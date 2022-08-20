@@ -115,8 +115,11 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
     if (!scrollRef.current) {
       return
     }
-
     const betterScroll = scrollRef.current.getScroll()
+    if (!betterScroll) {
+      return
+    }
+
     if (currentLine > 5) {
       // 保持当前歌词在第5条的位置
       const lineEl = lyricRefs.current[currentLine - 5]?.current
@@ -160,6 +163,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               </h3>
             </div>
 
+            {/* 歌词封面 */}
             <div
               onClick={toggleCurrentState}
               className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2"
@@ -179,11 +183,12 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
                 <p className="mt-1 h-4 w-[70vw] text-center text-lg text-black/60">{currentLyric}</p>
               </div>
 
+              {/* 滚动歌词 */}
               <div className={`block ${currentState.current === ECurrentState.COVER && 'hidden'}`}>
                 <Scroll ref={scrollRef}>
                   <div>
                     {currentLyricParser ? (
-                      currentLyricParser.getLines().map((item, index) => {
+                      currentLyricParser.lines.map((item, index) => {
                         // 拿到每一行歌词的 DOM 对象，后面滚动歌词需要
                         lyricRefs.current[index] = createRef()
                         return (
