@@ -166,7 +166,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
             <div onClick={toggleCurrentState} className="bottom-16 left-0 right-0 w-full">
               {/* 歌词封面 */}
               <div
-                className={`absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] block h-[70vw] w-[70vw] ${
+                className={`absolute left-1/2 top-1/2 -mt-[45vw] -ml-[35vw] block h-[70vw] w-[70vw] ${
                   currentState.current === ECurrentState.LYRIC && 'hidden'
                 }`}
               >
@@ -184,7 +184,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
 
               {/* 滚动歌词 */}
               <div
-                className={`mx-auto mt-10 block h-screen w-[80vw] overflow-hidden pb-80 text-center ${
+                className={`mx-auto block h-screen w-[80vw] overflow-hidden pt-14 pb-72 text-center ${
                   currentState.current === ECurrentState.COVER && 'hidden'
                 }`}
               >

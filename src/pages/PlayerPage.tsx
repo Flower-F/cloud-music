@@ -87,11 +87,14 @@ const PlayerPage = () => {
       }
     } else {
       audioRef.current.pause()
+      if (currentLyricParser.current) {
+        currentLyricParser.current.togglePlayingState(currentTime * 1000)
+      }
     }
   }, [isPlaying, currentIndex])
 
   const toggleToPause = useCallback(() => {
-    if (!audioRef.current) {
+    if (!audioRef.current || !currentLyricParser.current) {
       return
     }
     if (isPlaying) {
@@ -100,7 +103,7 @@ const PlayerPage = () => {
   }, [isPlaying])
 
   const toggleToPlay = useCallback(() => {
-    if (!audioRef.current) {
+    if (!audioRef.current || !currentLyricParser.current) {
       return
     }
     if (!isPlaying) {
@@ -171,6 +174,10 @@ const PlayerPage = () => {
       handleLoop()
     } else {
       handleNext()
+    }
+
+    if (currentLyricParser.current) {
+      currentLyricParser.current.seek(0)
     }
   }, [playingMode, playingList])
 
