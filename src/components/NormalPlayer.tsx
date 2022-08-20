@@ -163,28 +163,31 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               </h3>
             </div>
 
-            {/* 歌词封面 */}
-            <div
-              onClick={toggleCurrentState}
-              className="absolute top-1/2 bottom-16 left-0 right-0 w-full -translate-y-1/2"
-            >
+            <div onClick={toggleCurrentState} className="bottom-16 left-0 right-0 w-full">
+              {/* 歌词封面 */}
               <div
                 className={`absolute left-1/2 top-1/2 -mt-[35vw] -ml-[35vw] block h-[70vw] w-[70vw] ${
                   currentState.current === ECurrentState.LYRIC && 'hidden'
                 }`}
               >
-                <div className="h-full w-full rounded-full border-8 border-solid border-white/50">
-                  <img
-                    src={`${song.al.picUrl}?param=400x400`}
-                    alt="歌曲封面"
-                    className={`h-full w-full animate-normal-rotating rounded-full ${!isPlaying && 'animate-pause'}`}
-                  />
+                <div className="absolute top-1/2 -translate-y-1/2 ">
+                  <div className="h-full w-full rounded-full border-8 border-solid border-white/50">
+                    <img
+                      src={`${song.al.picUrl}?param=400x400`}
+                      alt="歌曲封面"
+                      className={`h-full w-full animate-normal-rotating rounded-full ${!isPlaying && 'animate-pause'}`}
+                    />
+                  </div>
+                  <p className="mt-2 h-4 w-[70vw] text-center text-lg text-black/60">{currentLyric}</p>
                 </div>
-                <p className="mt-1 h-4 w-[70vw] text-center text-lg text-black/60">{currentLyric}</p>
               </div>
 
               {/* 滚动歌词 */}
-              <div className={`block ${currentState.current === ECurrentState.COVER && 'hidden'}`}>
+              <div
+                className={`mx-auto mt-10 block h-screen w-[80vw] overflow-hidden pb-80 text-center ${
+                  currentState.current === ECurrentState.COVER && 'hidden'
+                }`}
+              >
                 <Scroll ref={scrollRef}>
                   <div>
                     {currentLyricParser ? (
@@ -193,7 +196,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
                         lyricRefs.current[index] = createRef()
                         return (
                           <p
-                            className={`py-1 text-lg leading-4 text-black/60 ${
+                            className={`py-1 text-lg leading-6 text-black/60 ${
                               currentLine === index ? 'text-white' : ''
                             }`}
                             key={item.text + index}

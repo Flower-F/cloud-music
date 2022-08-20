@@ -119,7 +119,6 @@ export class LyricParser {
 
   /** 回调函数封装 */
   private callBackHandler(index: number) {
-    console.log('callback handle', index)
     if (index < 0) {
       return
     }
@@ -134,7 +133,6 @@ export class LyricParser {
    * @param isSeek 用户是否手动调整进度
    */
   private playingRestSongs(isSeek = false) {
-    console.log('playingRestSongs', this.currentLineIndex)
     const line = this.lines[this.currentLineIndex]
 
     let delay

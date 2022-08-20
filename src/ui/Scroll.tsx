@@ -140,23 +140,19 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
     })
 
     // 暴露一些方法给组件的使用者
-    useImperativeHandle(
-      ref,
-      () => ({
-        refresh() {
-          if (betterScroll) {
-            betterScroll.refresh()
-            betterScroll.scrollTo(0, 0)
-          }
-        },
-        getScroll() {
-          if (betterScroll) {
-            return betterScroll
-          }
+    useImperativeHandle(ref, () => ({
+      refresh() {
+        if (betterScroll) {
+          betterScroll.refresh()
+          betterScroll.scrollTo(0, 0)
         }
-      }),
-      []
-    )
+      },
+      getScroll() {
+        if (betterScroll) {
+          return betterScroll
+        }
+      }
+    }))
 
     const scrollRef = useRef<HTMLDivElement | null>(null)
 
