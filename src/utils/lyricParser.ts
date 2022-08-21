@@ -160,7 +160,6 @@ export class LyricParser {
 
   /** 切换播放状态 */
   public togglePlayingState(offset: number) {
-    console.log('toggle state')
     if (this.state === EPlayingState.PLAYING) {
       this.stop()
     } else {

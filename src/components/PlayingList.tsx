@@ -69,22 +69,22 @@ const PlayingList: FC<IProps> = ({
   const playingModeIcon = useMemo(() => {
     if (playingMode === EPlayingMode.RANDOM_MODE) {
       return (
-        <div className="flex items-center">
-          <FaRandom className="mr-1 pl-1 text-2xl" onClick={changeMode} />
+        <div className="flex items-center" onClick={changeMode}>
+          <FaRandom className="mr-1 pl-1 text-2xl" />
           <div>随机播放</div>
         </div>
       )
     } else if (playingMode === EPlayingMode.LOOP_MODE) {
       return (
-        <div className="flex items-center">
-          <TbRepeatOnce className="mr-1 text-2xl" onClick={changeMode} />
+        <div className="flex items-center" onClick={changeMode}>
+          <TbRepeatOnce className="mr-1 text-2xl" />
           <div>循环播放</div>
         </div>
       )
     } else {
       return (
-        <div className="flex items-center">
-          <TbRepeat className="mr-1 text-2xl" onClick={changeMode} />
+        <div className="flex items-center" onClick={changeMode}>
+          <TbRepeat className="mr-1 text-2xl" />
           <div>顺序播放</div>
         </div>
       )

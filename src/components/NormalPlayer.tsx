@@ -64,7 +64,8 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
   changeMode,
   currentLyric,
   currentLyricParser,
-  currentLine
+  currentLine,
+  setShowPlayingList
 }) => {
   const normalPlayerRef = useRef<HTMLDivElement | null>(null)
   const forceUpdate = useForceUpdate()
@@ -111,6 +112,10 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
     forceUpdate()
   }, [])
 
+  const setShowingPlayingListTrue = useCallback(() => {
+    dispatch(setShowPlayingList(true))
+  }, [])
+
   useEffect(() => {
     if (!scrollRef.current) {
       return
@@ -146,7 +151,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <img
                 src={`${song.al.picUrl}?param=400x400`}
                 alt={`${song.name}背景图`}
-                className={`animate-rotating h-full w-full rounded-full ${
+                className={`animate-rotating -mt-[14vw] h-full w-full rounded-full ${
                   currentState.current === ECurrentState.LYRIC && 'opacity-40'
                 }`}
               />
@@ -231,7 +236,7 @@ const NormalPlayer: FC<ICommonPlayerProps & IProps> = ({
               <CgPlayButtonO className="h-14 w-14" onClick={play} />
             )}
             <ImNext className="h-9 w-9" onClick={handleNext} />
-            <RiPlayListFill className="text-4xl" />
+            <RiPlayListFill className="text-4xl" onClick={setShowingPlayingListTrue} />
           </div>
         </div>
       </div>

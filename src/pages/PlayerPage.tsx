@@ -170,6 +170,8 @@ const PlayerPage = () => {
   }, [currentIndex, isPlaying, playingList])
 
   const handleEnd = useCallback(() => {
+    dispatch(setPrevSong(playingList[currentIndex]))
+
     if (playingMode === EPlayingMode.LOOP_MODE) {
       handleLoop()
     } else {
@@ -179,7 +181,7 @@ const PlayerPage = () => {
     if (currentLyricParser.current) {
       currentLyricParser.current.seek(0)
     }
-  }, [playingMode, playingList])
+  }, [playingMode, playingList, currentIndex])
 
   useEffect(() => {
     if (!playingList[currentIndex]) {
