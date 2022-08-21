@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect } from 'react'
-import { FaBars, FaSearch } from 'react-icons/fa'
+import { FaSearch } from 'react-icons/fa'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import PlayerPage from '@/pages/PlayerPage'
@@ -31,12 +31,16 @@ const HomeLayout = () => {
     )
   }, [])
 
+  const enterSearch = useCallback(() => {
+    navigate('/search')
+  }, [])
+
   return (
     <>
       <div className="flex h-12 items-center justify-between bg-theme_color px-3">
-        <FaBars className="text-xl text-light_color" />
+        <div className="text-xl" />
         <div className="text-xl text-light_color">Flower Music</div>
-        <FaSearch className="text-xl text-light_color" />
+        <FaSearch className="text-xl text-light_color" onClick={enterSearch} />
       </div>
       <div className="flex h-11 items-center justify-around bg-theme_color">
         {renderLink('推荐', '/recommend')}

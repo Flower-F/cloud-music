@@ -46,7 +46,7 @@ export const pullUpSingerList = createAsyncThunk(`${namespace}/pullUpSingerList`
   const { setSingerList, setPullUpLoading, setOffset, setIsEnded } = singersSlice.actions
   const { singers } = getState() as RootState
 
-  if (singers.isEnded) {
+  if (singers.isEnded || singers.pullUpLoading) {
     return
   }
 
@@ -74,6 +74,10 @@ export const pullDownSingerList = createAsyncThunk(
   async (_, { dispatch, getState }) => {
     const { setSingerList, setOffset, setPullDownLoading, setIsEnded } = singersSlice.actions
     const { singers } = getState() as RootState
+
+    if (singers.pullDownLoading) {
+      return
+    }
 
     try {
       dispatch(setPullDownLoading(true))

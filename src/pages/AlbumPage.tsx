@@ -25,7 +25,7 @@ const AlbumPage = () => {
   }, [])
 
   const [showStatus, setShowStatus] = useState(true)
-  const handleClick = useCallback(() => {
+  const handleBack = useCallback(() => {
     setShowStatus(false)
   }, [])
 
@@ -38,7 +38,7 @@ const AlbumPage = () => {
           playingList.length > 0 && 'bottom-[60px]'
         }`}
       >
-        <MarqueeHeader title={album?.name || '歌单'} onClick={handleClick} />
+        <MarqueeHeader title={album?.name || '歌单'} onBack={handleBack} />
         <Scroll bounceTop={false}>
           <div>
             {album && (

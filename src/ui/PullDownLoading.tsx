@@ -4,7 +4,7 @@ interface IProps {
   className?: string
 }
 
-const PullDownLoading: FC<IProps> = ({ className }) => {
+const PullDownLoading: FC<IProps> = ({ className = '' }) => {
   return (
     <div className={`mx-auto h-3 w-full text-center text-sm ${className}`}>
       <div className="mr-0.5 inline-block h-full w-0.5 animate-wave bg-theme_color" />

@@ -14,7 +14,7 @@ interface IProps {
   className?: string
 }
 
-const ProgressBar: FC<IProps> = ({ className, percentChangeCallback, percent }) => {
+const ProgressBar: FC<IProps> = ({ className = '', percentChangeCallback, percent }) => {
   const progressBarRef = useRef<HTMLDivElement | null>(null)
   const progressButtonRef = useRef<HTMLDivElement | null>(null)
   const progressRef = useRef<HTMLDivElement | null>(null)

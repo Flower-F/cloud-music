@@ -12,7 +12,7 @@ import Scroll from '@/ui/Scroll'
 
 const ArtistPage = () => {
   const [showStatus, setShowStatus] = useState(true)
-  const handleClick = useCallback(() => {
+  const handleBack = useCallback(() => {
     setShowStatus(false)
   }, [])
 
@@ -100,7 +100,7 @@ const ArtistPage = () => {
           playingList.length > 0 && 'bottom-[60px]'
         }`}
       >
-        <MarqueeHeader isMarquee={false} title={artist?.name || '歌手'} onClick={handleClick} ref={marqueeHeaderRef} />
+        <MarqueeHeader isMarquee={false} title={artist?.name || '歌手'} onBack={handleBack} ref={marqueeHeaderRef} />
         <div
           className="relative z-50 h-0 w-full origin-top bg-cover pt-[75%]"
           style={backgroundStyle}

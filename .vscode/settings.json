@@ -25,6 +25,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.words": [
+    "Netease",
     "toplist"
   ],
   "stylelint.validate": [

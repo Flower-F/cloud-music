@@ -4,7 +4,7 @@ interface IProps {
   className?: string
 }
 
-const PullUpLoading: FC<IProps> = ({ className }) => {
+const PullUpLoading: FC<IProps> = ({ className = '' }) => {
   return (
     <div className={`rounded-xl py-4 ${className}`}>
       <div className="flex justify-center">

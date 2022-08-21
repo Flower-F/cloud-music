@@ -2,8 +2,8 @@ import { forwardRef, memo } from 'react'
 import { IoArrowBackOutline } from 'react-icons/io5'
 
 interface IProps {
-  /** 点击事件 */
-  onClick?: (...args: any[]) => any
+  /** 点击返回事件 */
+  onBack?: (...args: any[]) => any
   /** 是否为滚动条 */
   isMarquee?: boolean
   /** 标题语录 */
@@ -12,11 +12,11 @@ interface IProps {
 }
 
 const MarqueeHeader = forwardRef<HTMLDivElement | null, IProps>(
-  ({ onClick, isMarquee = true, title, className }, ref) => {
+  ({ onBack, isMarquee = true, title, className = '' }, ref) => {
     return (
       <div className={`bg-marquee fixed z-[100] flex h-10 w-full items-center px-1 text-white ${className}`} ref={ref}>
         <div className="bg-filter-dark absolute z-50 flex h-9 w-9 items-center justify-center rounded-full text-2xl">
-          <IoArrowBackOutline onClick={onClick} />
+          <IoArrowBackOutline onClick={onBack} />
         </div>
         {isMarquee ? (
           <h1 className="absolute animate-marquee overflow-hidden whitespace-nowrap tracking-wider">

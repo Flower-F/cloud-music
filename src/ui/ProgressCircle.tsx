@@ -8,7 +8,7 @@ interface IProps {
   className?: string
 }
 
-const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, children, className }) => {
+const ProgressCircle: FC<PropsWithChildren<IProps>> = ({ radius, percent, children, className = '' }) => {
   const dashArray = Math.PI * 100
   const dashOffset = (1 - percent) * dashArray
 

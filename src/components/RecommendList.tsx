@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { IoHeadsetSharp } from 'react-icons/io5'
 import LazyLoad from 'react-lazyload'
 import { useNavigate } from 'react-router-dom'
@@ -24,9 +24,9 @@ interface IProps {
 const RecommendList: FC<IProps> = ({ recommendList }) => {
   const navigate = useNavigate()
 
-  const enterDetail = (id: number) => {
+  const enterDetail = useCallback((id: number) => {
     navigate(`/recommend/${id}`)
-  }
+  }, [])
 
   return (
     <div className="mx-auto px-[2%]">

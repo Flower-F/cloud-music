@@ -19,7 +19,7 @@ interface IProps {
   className?: string
 }
 
-const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick, className }) => {
+const Horizon: FC<IProps> = ({ list, title = '', oldValue = '', onClick, className = '' }) => {
   const handleClick = useCallback((item: ISingerConfig) => {
     if (onClick) {
       onClick(item.key)

@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import LazyLoad from 'react-lazyload'
 import { useNavigate } from 'react-router-dom'
 
@@ -31,9 +31,9 @@ interface IProps {
 const RankList: FC<IProps> = ({ rankList }) => {
   const navigate = useNavigate()
 
-  const enterDetail = (id: number) => {
+  const enterDetail = useCallback((id: number) => {
     navigate(`/rank/${id}`)
-  }
+  }, [])
 
   return (
     <>

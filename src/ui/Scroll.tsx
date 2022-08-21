@@ -57,7 +57,7 @@ const Scroll = forwardRef<ScrollHandle, PropsWithChildren<IProps>>(
       pullDown = noop,
       onScrollCallback = noop,
       children,
-      className
+      className = ''
     },
     ref
   ) => {
