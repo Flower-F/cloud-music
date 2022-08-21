@@ -18,7 +18,7 @@ const ArtistPage = () => {
 
   const navigate = useNavigate()
   const goBack = useCallback(() => {
-    navigate('/singer')
+    navigate(-1)
   }, [])
 
   const { enterLoading, artist } = useAppSelector((store) => store.artist)

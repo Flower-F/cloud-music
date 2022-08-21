@@ -54,7 +54,7 @@ const PlayerPage = () => {
     if (
       !audioRef.current ||
       !songReady.current ||
-      currentIndex === -1 ||
+      currentIndex < 0 ||
       playingList.length === 0 ||
       !playingList[currentIndex] ||
       (prevSong && playingList[currentIndex].id === prevSong.id)

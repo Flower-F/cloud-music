@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
@@ -10,12 +10,7 @@ import EnterLoading from '@/ui/EnterLoading'
 import MarqueeHeader from '@/ui/MarqueeHeader'
 import Scroll from '@/ui/Scroll'
 
-interface IProps {
-  /** 返回的链接 */
-  backLink: string
-}
-
-const AlbumPage: FC<IProps> = ({ backLink }) => {
+const AlbumPage = () => {
   const { enterLoading, album } = useAppSelector((store) => store.album)
 
   const params = useParams()
@@ -26,7 +21,7 @@ const AlbumPage: FC<IProps> = ({ backLink }) => {
 
   const navigate = useNavigate()
   const goBack = useCallback(() => {
-    navigate(backLink)
+    navigate(-1)
   }, [])
 
   const [showStatus, setShowStatus] = useState(true)
