@@ -92,3 +92,37 @@ export const getLyricApi = (id: number) => {
     url: `/lyric?id=${id}`
   })
 }
+
+// SearchPage
+export interface IHotKeywordsApi {
+  result: {
+    hots: any[]
+  }
+}
+export const getHotKeywordsApi = () => {
+  return request<IHotKeywordsApi>({
+    method: 'GET',
+    url: '/search/hot'
+  })
+}
+export interface ISuggestListApi {
+  result: {
+    playlists: any[]
+    artists: any[]
+  }
+}
+export const getSuggestListApi = (query: string) => {
+  return request<ISuggestListApi>({
+    method: 'GET',
+    url: `/search/suggest?keywords=${query}`
+  })
+}
+export interface IResultSongListApi {
+  songs: any[]
+}
+export const getResultSongListApi = (query: string) => {
+  return request<IResultSongListApi>({
+    method: 'GET',
+    url: `/search?keywords=${query}`
+  })
+}

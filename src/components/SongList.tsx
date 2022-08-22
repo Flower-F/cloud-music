@@ -26,6 +26,8 @@ export interface ISong {
 }
 
 export interface IAlbum {
+  accountId: number
+  id: number
   creator: {
     /** 作者头像 */
     avatarUrl: string
@@ -56,7 +58,7 @@ interface IProps {
   song: IAlbum | IArtist
 }
 
-const hasCollect = (song: IAlbum | IArtist): song is IAlbum => {
+export const hasCollect = (song: IAlbum | IArtist): song is IAlbum => {
   return 'tracks' in song
 }
 

@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import defaultSingerImage from '@/assets/images/default-singer.png'
 
 export interface ISinger {
-  /** 歌手id */
   id: number
+  accountId: number
   /** 图片链接 */
   picUrl: string
   /** 歌手名称 */

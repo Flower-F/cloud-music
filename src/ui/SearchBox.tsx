@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es'
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TiDeleteOutline } from 'react-icons/ti'
 
 interface IProps {
@@ -23,6 +23,10 @@ const SearchBox: FC<IProps> = ({ newQuery, handleQueryRequest, className }) => {
     queryRef.current?.focus()
   }, [])
 
+  const handleQueryChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value)
+  }, [])
+
   useEffect(() => {
     queryRef.current?.focus()
   }, [])
@@ -30,10 +34,6 @@ const SearchBox: FC<IProps> = ({ newQuery, handleQueryRequest, className }) => {
   useEffect(() => {
     handleQueryRequestDebounce(query)
   }, [query])
-
-  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.currentTarget.value)
-  }
 
   useEffect(() => {
     if (newQuery !== query) {
@@ -51,9 +51,12 @@ const SearchBox: FC<IProps> = ({ newQuery, handleQueryRequest, className }) => {
         onChange={handleQueryChange}
         className="h-6 w-full flex-1 bg-transparent text-lg text-light_color outline-none placeholder:text-light_color/60"
       />
-      <TiDeleteOutline onClick={clearQuery} className={`hidden text-2xl text-white ${query && 'block'}`} />
+      <TiDeleteOutline
+        onClick={clearQuery}
+        className={`visible text-2xl text-white ${query.length === 0 && 'invisible'}`}
+      />
     </div>
   )
 }
 
-export default SearchBox
+export default memo(SearchBox)
